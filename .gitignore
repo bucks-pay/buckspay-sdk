@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+.turbo/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+!.env.example
+npm-debug.log*
+pnpm-debug.log*
+
+# Internal planning & design docs (not part of the open-source SDK)
+plans/
+docs/

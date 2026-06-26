@@ -1,0 +1,45 @@
+{
+  "name": "@buckspay/signers",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./wallets-kit": {
+      "types": "./dist/wallets-kit.d.ts",
+      "import": "./dist/wallets-kit.js",
+      "require": "./dist/wallets-kit.cjs"
+    },
+    "./passkey": {
+      "types": "./dist/passkey.d.ts",
+      "import": "./dist/passkey.js",
+      "require": "./dist/passkey.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist coverage .turbo"
+  },
+  "dependencies": {
+    "@buckspay/core": "workspace:*",
+    "@creit.tech/stellar-wallets-kit": "^1.7.0",
+    "@stellar/stellar-sdk": "^14.6.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}
