@@ -1,0 +1,21 @@
+{
+  "name": "@buckspay/spike-passkey-contract",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "tsx src/deploy.ts",
+    "spike": "tsx src/run.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^14.6.1",
+    "dotenv": "^17.4.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}
