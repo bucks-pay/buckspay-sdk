@@ -11,14 +11,14 @@
       "require": "./dist/index.cjs"
     },
     "./wallets-kit": {
-      "types": "./dist/wallets-kit.d.ts",
-      "import": "./dist/wallets-kit.js",
-      "require": "./dist/wallets-kit.cjs"
+      "types": "./dist/wallets-kit/index.d.ts",
+      "import": "./dist/wallets-kit/index.js",
+      "require": "./dist/wallets-kit/index.cjs"
     },
     "./passkey": {
-      "types": "./dist/passkey.d.ts",
-      "import": "./dist/passkey.js",
-      "require": "./dist/passkey.cjs"
+      "types": "./dist/passkey/index.d.ts",
+      "import": "./dist/passkey/index.js",
+      "require": "./dist/passkey/index.cjs"
     }
   },
   "main": "./dist/index.cjs",

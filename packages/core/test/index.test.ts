@@ -13,10 +13,13 @@ describe("@buckspay/core public entry", () => {
     // else in the barrel is `export type` and must not appear as a runtime key.
     expect(Object.keys(core).sort()).toEqual(
       [
+        "BuckspayClient",
         "BuckspayError",
         "GasAbstractionEngine",
         "USDC_DECIMALS",
         "buildUnsignedEntry",
+        "createBuckspayClient",
+        "createBuckspayConfig",
         "getLatestLedger",
         "randomNonce",
         "simulateRecording",

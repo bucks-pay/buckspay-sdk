@@ -39,3 +39,6 @@ export type {
   SorobanSimulator
 } from "./auth-entry-builder";
 export { GasAbstractionEngine } from "./gas-abstraction-engine";
+export { BuckspayClient } from "./client";
+export type { AccountSimContext } from "./client";
+export { createBuckspayClient, createBuckspayConfig } from "./config";
