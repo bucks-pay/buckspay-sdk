@@ -11,9 +11,9 @@
       "require": "./dist/index.cjs"
     },
     "./buckspay-facilitator": {
-      "types": "./dist/buckspay-facilitator.d.ts",
-      "import": "./dist/buckspay-facilitator.js",
-      "require": "./dist/buckspay-facilitator.cjs"
+      "types": "./dist/buckspay-facilitator/index.d.ts",
+      "import": "./dist/buckspay-facilitator/index.js",
+      "require": "./dist/buckspay-facilitator/index.cjs"
     }
   },
   "main": "./dist/index.cjs",

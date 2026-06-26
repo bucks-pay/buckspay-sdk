@@ -18,6 +18,7 @@ export type {
   Network,
   PreparedIntent,
   Receipt,
+  RelayPayload,
   Relayer,
   Signature,
   SignedIntent,
