@@ -24,3 +24,17 @@ export type {
   SignerKey,
   SignerType
 } from "./types";
+export {
+  buildUnsignedEntry,
+  getLatestLedger,
+  randomNonce,
+  simulateRecording,
+  toStroops,
+  USDC_DECIMALS
+} from "./auth-entry-builder";
+export type {
+  RecordingResult,
+  RpcFetch,
+  SorobanSimulateRaw,
+  SorobanSimulator
+} from "./auth-entry-builder";

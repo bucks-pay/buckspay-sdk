@@ -8,8 +8,21 @@ describe("@buckspay/core public entry", () => {
     expect(new BuckspayError("INVALID_CONFIG", "x")).toBeInstanceOf(Error);
   });
 
-  it("does not leak unexpected runtime exports (types erase at build)", () => {
-    // Only BuckspayError is a runtime value; everything else is type-only.
-    expect(Object.keys(core)).toEqual(["BuckspayError"]);
+  it("exposes exactly the runtime values; all interface/type exports erase at build", () => {
+    // BuckspayError + the auth-entry-builder runtime functions/const. Everything
+    // else in the barrel is `export type` and must not appear as a runtime key.
+    expect(Object.keys(core).sort()).toEqual(
+      [
+        "BuckspayError",
+        "USDC_DECIMALS",
+        "buildUnsignedEntry",
+        "getLatestLedger",
+        "randomNonce",
+        "simulateRecording",
+        "toStroops"
+      ].sort()
+    );
+    expect(Object.keys(core)).not.toContain("Network");
+    expect(Object.keys(core)).not.toContain("Relayer");
   });
 });
