@@ -14,6 +14,7 @@ describe("@buckspay/core public entry", () => {
     expect(Object.keys(core).sort()).toEqual(
       [
         "BuckspayError",
+        "GasAbstractionEngine",
         "USDC_DECIMALS",
         "buildUnsignedEntry",
         "getLatestLedger",

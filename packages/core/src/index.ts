@@ -38,3 +38,4 @@ export type {
   SorobanSimulateRaw,
   SorobanSimulator
 } from "./auth-entry-builder";
+export { GasAbstractionEngine } from "./gas-abstraction-engine";
