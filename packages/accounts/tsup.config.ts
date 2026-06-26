@@ -1,7 +1,13 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/classic.ts", "src/oz-contract.ts"],
+  // Object entries → nested dist output (dist/classic/index.js …) so each subpath
+  // export resolves to its own folder and tree-shakes independently.
+  entry: {
+    index: "src/index.ts",
+    "classic/index": "src/classic/index.ts",
+    "oz-contract/index": "src/oz-contract/index.ts"
+  },
   format: ["esm", "cjs"],
   dts: true,
   sourcemap: true,

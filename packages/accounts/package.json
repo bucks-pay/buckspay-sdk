@@ -11,14 +11,14 @@
       "require": "./dist/index.cjs"
     },
     "./classic": {
-      "types": "./dist/classic.d.ts",
-      "import": "./dist/classic.js",
-      "require": "./dist/classic.cjs"
+      "types": "./dist/classic/index.d.ts",
+      "import": "./dist/classic/index.js",
+      "require": "./dist/classic/index.cjs"
     },
     "./oz-contract": {
-      "types": "./dist/oz-contract.d.ts",
-      "import": "./dist/oz-contract.js",
-      "require": "./dist/oz-contract.cjs"
+      "types": "./dist/oz-contract/index.d.ts",
+      "import": "./dist/oz-contract/index.js",
+      "require": "./dist/oz-contract/index.cjs"
     }
   },
   "main": "./dist/index.cjs",

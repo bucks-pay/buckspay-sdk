@@ -66,6 +66,24 @@ export function walletsKit(opts: KitOptions, injected?: WalletsKitLike): Buckspa
       }
       const signature = normalizeSignature(signedAuthEntry);
       return { signature, publicKey: address };
+    },
+
+    async signTransaction(txXdr: string, ctx: { network: Network; address: string }): Promise<string> {
+      // Classic sponsored onboarding signs the full sponsor-sandwich transaction
+      // (not an auth-entry). The kit's SEP-43 signTransaction returns the signed
+      // envelope XDR; the wallet holds the key, the SDK only passes XDR through.
+      const kit = await getKit();
+      try {
+        const { signedTxXdr } = await kit.signTransaction(txXdr, {
+          address: ctx.address,
+          networkPassphrase: passphraseFor(ctx.network)
+        });
+        return signedTxXdr;
+      } catch (cause) {
+        throw new BuckspayError("SIGNATURE_REJECTED", "wallet rejected the transaction signature", {
+          cause
+        });
+      }
     }
   };
 }

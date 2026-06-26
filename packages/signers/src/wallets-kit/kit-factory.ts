@@ -8,6 +8,10 @@ export interface WalletsKitLike {
     preimageXdr: string,
     opts: { address: string; networkPassphrase?: string }
   ): Promise<{ signedAuthEntry: string }>;
+  signTransaction(
+    txXdr: string,
+    opts: { address: string; networkPassphrase?: string }
+  ): Promise<{ signedTxXdr: string }>;
 }
 
 // `typeof import(...)` types the loader against the REAL library surface, so a

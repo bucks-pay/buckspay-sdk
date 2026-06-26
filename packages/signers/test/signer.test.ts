@@ -17,6 +17,7 @@ function mockKit(overrides: Partial<WalletsKitLike> = {}): WalletsKitLike {
     setWallet: vi.fn(),
     getAddress: vi.fn().mockResolvedValue({ address: G_ADDR }),
     signAuthEntry: vi.fn().mockResolvedValue({ signedAuthEntry: bytesToBase64(SIG_64) }),
+    signTransaction: vi.fn().mockResolvedValue({ signedTxXdr: "SIGNED_TX_XDR" }),
     ...overrides
   };
 }
@@ -64,6 +65,29 @@ describe("walletsKit signer", () => {
     const sig = await signer.signAuthEntry(payload);
     expect(sig.signature.length).toBe(64);
     expect(Array.from(sig.signature)).toEqual(Array.from(SIG_64));
+  });
+
+  it("signTransaction delegates to kit.signTransaction and returns signedTxXdr", async () => {
+    const kit = mockKit();
+    const signer = walletsKit({ network: "testnet" }, kit);
+    expect(signer.signTransaction).toBeTypeOf("function");
+    const out = await signer.signTransaction?.("ENVELOPE_XDR", { network: "testnet", address: G_ADDR });
+    expect(out).toBe("SIGNED_TX_XDR");
+    expect(kit.signTransaction).toHaveBeenCalledWith(
+      "ENVELOPE_XDR",
+      expect.objectContaining({ address: G_ADDR })
+    );
+  });
+
+  it("maps a transaction-sign rejection to BuckspayError SIGNATURE_REJECTED", async () => {
+    const { BuckspayError } = await import("@buckspay/core");
+    const kit = mockKit({
+      signTransaction: vi.fn().mockRejectedValue(new Error("User declined the request"))
+    });
+    const signer = walletsKit({ network: "testnet" }, kit);
+    await expect(
+      signer.signTransaction?.("ENVELOPE_XDR", { network: "testnet", address: G_ADDR })
+    ).rejects.toBeInstanceOf(BuckspayError);
   });
 
   it("maps a kit rejection (user cancel) to BuckspayError SIGNATURE_REJECTED", async () => {
