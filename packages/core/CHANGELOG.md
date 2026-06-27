@@ -1,5 +1,11 @@
 # @buckspay/core
 
+## 0.1.1
+
+### Patch Changes
+
+- Add a concrete `SorobanSimulator` + `createRpcSimContext(rpcUrl)` (RPC-backed recording simulation via raw `simulateTransaction`). This makes the flagship `BuckspayClient.prepare → sign → send` flow usable in production: pass the sim context as the second argument to `createBuckspayClient` / `createBuckspayConfig`. Backward-compatible (additive); the sim context stays optional.
+
 ## 0.1.0
 
 ### Minor Changes

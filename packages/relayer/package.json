@@ -1,6 +1,6 @@
 {
   "name": "@buckspay/relayer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "license": "MIT",
   "description": "Buckspay SDK relayer: a typed, zod-validated client for the Buckspay facilitator (relay, account state, sponsored onboarding) for gasless Stellar USDC.",

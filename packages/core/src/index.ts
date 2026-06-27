@@ -39,6 +39,7 @@ export type {
   SorobanSimulateRaw,
   SorobanSimulator
 } from "./auth-entry-builder";
+export { createRpcSimContext, createSorobanSimulator } from "./soroban-rpc";
 export { GasAbstractionEngine } from "./gas-abstraction-engine";
 export { BuckspayClient } from "./client";
 export type { AccountSimContext } from "./client";

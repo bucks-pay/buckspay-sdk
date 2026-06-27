@@ -20,6 +20,8 @@ describe("@buckspay/core public entry", () => {
         "buildUnsignedEntry",
         "createBuckspayClient",
         "createBuckspayConfig",
+        "createRpcSimContext",
+        "createSorobanSimulator",
         "getLatestLedger",
         "randomNonce",
         "simulateRecording",
