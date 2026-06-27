@@ -1,8 +1,35 @@
 {
   "name": "@buckspay/relayer",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "license": "MIT",
+  "description": "Buckspay SDK relayer: a typed, zod-validated client for the Buckspay facilitator (relay, account state, sponsored onboarding) for gasless Stellar USDC.",
+  "keywords": [
+    "stellar",
+    "soroban",
+    "facilitator",
+    "relayer",
+    "paymaster",
+    "gasless",
+    "usdc",
+    "x402",
+    "web3",
+    "sdk"
+  ],
+  "homepage": "https://github.com/bucks-pay/buckspay-sdk/tree/main/packages/relayer#readme",
+  "bugs": "https://github.com/bucks-pay/buckspay-sdk/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bucks-pay/buckspay-sdk.git",
+    "directory": "packages/relayer"
+  },
+  "author": "Buckspay",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "exports": {
     ".": {
@@ -19,7 +46,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
@@ -28,7 +57,7 @@
     "clean": "rm -rf dist coverage .turbo"
   },
   "dependencies": {
-    "@buckspay/core": "workspace:*",
+    "@buckspay/core": "workspace:^",
     "zod": "^3.23.8"
   },
   "devDependencies": {

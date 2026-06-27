@@ -1,8 +1,35 @@
 {
   "name": "@buckspay/core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "license": "MIT",
+  "description": "Framework-agnostic core of the Buckspay SDK: gas-abstraction engine, prepare/sign/send client, and the typed account/signer/relayer ports for gasless Stellar (Soroban) USDC payments.",
+  "keywords": [
+    "stellar",
+    "soroban",
+    "gas-abstraction",
+    "account-abstraction",
+    "usdc",
+    "gasless",
+    "smart-wallet",
+    "passkey",
+    "web3",
+    "sdk"
+  ],
+  "homepage": "https://github.com/bucks-pay/buckspay-sdk/tree/main/packages/core#readme",
+  "bugs": "https://github.com/bucks-pay/buckspay-sdk/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bucks-pay/buckspay-sdk.git",
+    "directory": "packages/core"
+  },
+  "author": "Buckspay",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "exports": {
     ".": {
@@ -14,7 +41,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "test": "vitest run",

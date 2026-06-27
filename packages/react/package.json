@@ -1,8 +1,35 @@
 {
   "name": "@buckspay/react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "license": "MIT",
+  "description": "React 19 hooks for the Buckspay SDK: BuckspayProvider, useWallet, useStellarPay for gasless Stellar (Soroban) USDC payments.",
+  "keywords": [
+    "stellar",
+    "soroban",
+    "react",
+    "hooks",
+    "gasless",
+    "account-abstraction",
+    "usdc",
+    "smart-wallet",
+    "web3",
+    "sdk"
+  ],
+  "homepage": "https://github.com/bucks-pay/buckspay-sdk/tree/main/packages/react#readme",
+  "bugs": "https://github.com/bucks-pay/buckspay-sdk/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bucks-pay/buckspay-sdk.git",
+    "directory": "packages/react"
+  },
+  "author": "Buckspay",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "exports": {
     ".": {
@@ -14,7 +41,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
@@ -26,7 +55,7 @@
     "react": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "@buckspay/core": "workspace:*",
+    "@buckspay/core": "workspace:^",
     "zustand": "^5.0.2"
   },
   "devDependencies": {
