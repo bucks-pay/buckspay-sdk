@@ -76,6 +76,12 @@ export const onboardSubmitSchema = z.object({
   ok: z.boolean()
 });
 
+/** POST /stellar/contract/deploy response (plan 01): `{ ok?, address: C…, chain?, txHash?, ledger? }`. */
+export const deployContractSchema = z.object({
+  ok: z.boolean().optional(),
+  address: z.string().regex(/^C[A-Z2-7]{55}$/, "facilitator returned a non-C address")
+});
+
 interface FacilitatorErrorBody {
   error?: string;
   message?: string;

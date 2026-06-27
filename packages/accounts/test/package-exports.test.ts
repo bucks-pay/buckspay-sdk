@@ -12,10 +12,11 @@ describe("@buckspay/accounts package surface", () => {
     expect(typeof adapter.assembleSignedEntry).toBe("function");
   });
 
-  it("root + oz-contract subpaths still resolve (kept for Sprint 4)", async () => {
+  it("root resolves and oz-contract subpath exports a contract AccountAdapter (Sprint 4)", async () => {
     const root = await import("../src/index.js");
-    const oz = await import("../src/oz-contract/index.js");
+    const { ozContractAccount } = await import("../src/oz-contract/index.js");
     expect(typeof root.version).toBe("string");
-    expect(typeof oz.version).toBe("string");
+    expect(typeof ozContractAccount).toBe("function");
+    expect(ozContractAccount().model).toBe("contract");
   });
 });

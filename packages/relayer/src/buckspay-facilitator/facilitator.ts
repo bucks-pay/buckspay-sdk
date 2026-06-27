@@ -8,6 +8,7 @@ import {
 } from "@buckspay/core";
 import {
   accountStateSchema,
+  deployContractSchema,
   mapFacilitatorError,
   onboardBuildSchema,
   onboardSubmitSchema,
@@ -84,7 +85,12 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
     },
 
     async getAccountState(address: string): Promise<AccountState> {
-      const data = await request(`/stellar/account/${address}?chain=${chain}`, { method: "GET" });
+      // Contract (C…) accounts read from /stellar/contract/:address; classic (G…) from
+      // /stellar/account/:pk. Both return the same AccountState shape.
+      const path = address.startsWith("C")
+        ? `/stellar/contract/${address}?chain=${chain}`
+        : `/stellar/account/${address}?chain=${chain}`;
+      const data = await request(path, { method: "GET" });
       const parsed = accountStateSchema.safeParse(data);
       if (!parsed.success) {
         throw new BuckspayError("RELAYER_REJECTED", "facilitator returned invalid account state", {
@@ -123,15 +129,20 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
       return { ok: parsed.data.ok };
     },
 
-    // Non-async + Promise.reject (not a synchronous throw) so callers get a
-    // rejected promise, matching the Relayer contract. Wired in Sprint 4 / oz-contract.
-    deployContract(): Promise<{ address: string }> {
-      return Promise.reject(
-        new BuckspayError(
-          "INVALID_CONFIG",
-          "deployContract is not available in SP-1 sprint 2 (implemented in Sprint 4 / oz-contract)"
-        )
-      );
+    async deployContract(input: { passkeyPublicKey: string }): Promise<{ address: string }> {
+      // Sponsor-paid OZ smart-account deploy (plan 01). The SDK sends only the passkey
+      // PUBLIC key + chain; the facilitator holds the sponsor secret and enforces the Wasm pin.
+      const data = await request("/stellar/contract/deploy", {
+        method: "POST",
+        body: { passkeyPublicKey: input.passkeyPublicKey, chain }
+      });
+      const parsed = deployContractSchema.safeParse(data);
+      if (!parsed.success) {
+        throw new BuckspayError("RELAYER_REJECTED", "facilitator returned an invalid deploy response", {
+          cause: parsed.error
+        });
+      }
+      return { address: parsed.data.address };
     }
   };
 }

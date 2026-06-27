@@ -1,0 +1,71 @@
+import { createHash } from "node:crypto";
+import { Address, Networks, StrKey, hash, xdr } from "@stellar/stellar-sdk";
+import { BuckspayError } from "@buckspay/core";
+import type { BuckspaySigner, Network } from "@buckspay/core";
+
+export interface OzContractOptions {
+  /** Advisory: pinned OZ Wasm hash (the facilitator enforces the real pin). */
+  wasmHash?: string;
+  /**
+   * Sponsor (deployer) address — the facilitator's public sponsor account. Required to
+   * derive the C-address offline (the SDK never holds the sponsor secret). The contract
+   * model needs this for `BuckspayClient.connect()` (which calls resolveAddress first).
+   */
+  sponsorAddress?: string;
+  /** Network whose passphrase folds into the derivation. Defaults to testnet. */
+  network?: Network;
+}
+
+/** MUST match facilitator `contractSalt` (plan 01): sha256(pubkeyBytes). */
+export function contractSalt(passkeyPublicKey: string): Buffer {
+  return createHash("sha256").update(Buffer.from(passkeyPublicKey, "hex")).digest();
+}
+
+/**
+ * Deterministic C-address from (deployer=sponsor, salt=sha256(pubkey), networkId).
+ * BYTE-IDENTICAL to the facilitator's `derivedContractAddress` (plan 01, validated
+ * on-chain): same `ContractIdPreimage::Address` preimage. The contract id depends only
+ * on deployer + salt + network — NOT on the Wasm hash or constructor args.
+ */
+export function deriveContractAddress(
+  passkeyPublicKey: string,
+  sponsorAddress: string,
+  networkPassphrase: string = Networks.TESTNET
+): string {
+  const networkId = hash(Buffer.from(networkPassphrase));
+  const preimage = xdr.HashIdPreimage.envelopeTypeContractId(
+    new xdr.HashIdPreimageContractId({
+      networkId,
+      contractIdPreimage: xdr.ContractIdPreimage.contractIdPreimageFromAddress(
+        new xdr.ContractIdPreimageFromAddress({
+          address: new Address(sponsorAddress).toScAddress(),
+          salt: contractSalt(passkeyPublicKey)
+        })
+      )
+    })
+  );
+  return StrKey.encodeContract(hash(preimage.toXDR()));
+}
+
+/**
+ * Resolve the passkey contract account's C-address. The SDK holds no sponsor key, so
+ * offline derivation needs the (public) sponsor address; the relayer remains
+ * authoritative and `ensureReady` re-checks parity against the deployed address.
+ */
+export async function resolveContractAddress(
+  signer: BuckspaySigner,
+  opts: OzContractOptions
+): Promise<string> {
+  const key = await signer.getPublicKey();
+  if (key.type !== "secp256r1") {
+    throw new BuckspayError("INVALID_CONFIG", "oz-contract: requires a secp256r1 (passkey) signer");
+  }
+  if (!opts.sponsorAddress) {
+    throw new BuckspayError(
+      "INVALID_CONFIG",
+      "oz-contract: resolveAddress needs sponsorAddress for offline derivation; pass it via ozContractAccount({ sponsorAddress })"
+    );
+  }
+  const passphrase = opts.network === "pubnet" ? Networks.PUBLIC : Networks.TESTNET;
+  return deriveContractAddress(key.publicKey, opts.sponsorAddress, passphrase);
+}
