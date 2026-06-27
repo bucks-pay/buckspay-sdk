@@ -2,7 +2,20 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["**/dist/**", "**/node_modules/**", "**/coverage/**", "**/*.config.*", "scripts/**"]
+    // Test code is covered by `tsc` (strict) + the vitest runner, not eslint —
+    // consistent across packages (most keep tests in an un-linted `test/` dir;
+    // @buckspay/react colocates them in `src/`, hence the explicit test globs).
+    ignores: [
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/coverage/**",
+      "**/*.config.*",
+      "scripts/**",
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/test/**",
+      "**/vitest.setup.ts"
+    ]
   },
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,

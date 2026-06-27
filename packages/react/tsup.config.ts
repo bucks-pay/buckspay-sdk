@@ -8,5 +8,6 @@ export default defineConfig({
   clean: true,
   treeshake: true,
   target: "es2022",
-  external: ["react", "react-dom"]
+  // Keep react/react-dom/core as peers — never bundle them into the client island.
+  external: ["react", "react-dom", "@buckspay/core"]
 });

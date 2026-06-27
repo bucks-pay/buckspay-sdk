@@ -1,12 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { version } from "./index.js";
+import * as api from "./index";
 
-describe("@buckspay/react", () => {
-  it("exports a string version", () => {
-    expect(typeof version).toBe("string");
-  });
-
-  it("runs in a jsdom environment", () => {
-    expect(typeof document).toBe("object");
+describe("@buckspay/react public surface", () => {
+  it("exports exactly the three contracted members (README §4.6)", () => {
+    expect(Object.keys(api).sort()).toEqual(["BuckspayProvider", "useStellarPay", "useWallet"]);
   });
 });
