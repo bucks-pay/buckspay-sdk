@@ -1,6 +1,6 @@
 {
   "name": "@buckspay/signers",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "license": "MIT",
   "description": "Buckspay SDK signers: Stellar Wallets Kit (Freighter/xBull/LOBSTR) BuckspaySigner for gasless Soroban auth-entry signing.",
@@ -50,6 +50,16 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "wallets-kit": [
+        "./dist/wallets-kit/index.d.ts"
+      ],
+      "passkey": [
+        "./dist/passkey/index.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],

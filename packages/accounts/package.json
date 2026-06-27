@@ -1,6 +1,6 @@
 {
   "name": "@buckspay/accounts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "license": "MIT",
   "description": "Buckspay SDK account adapters: classic (G-address) Stellar account model for gasless USDC transfers, with sponsored onboarding via a facilitator.",
@@ -50,6 +50,16 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "classic": [
+        "./dist/classic/index.d.ts"
+      ],
+      "oz-contract": [
+        "./dist/oz-contract/index.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],
