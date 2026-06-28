@@ -1,0 +1,25 @@
+{
+  "name": "@buckspay/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:e2e": "vitest run --project node",
+    "test:web": "playwright test",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@buckspay/core": "workspace:*",
+    "@buckspay/accounts": "workspace:*",
+    "@buckspay/signers": "workspace:*",
+    "@buckspay/relayer": "workspace:*",
+    "@stellar/stellar-sdk": "^14.6.1",
+    "@noble/curves": "^1.6.0",
+    "@noble/hashes": "^1.5.0",
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8",
+    "zod": "^3.23.8"
+  }
+}

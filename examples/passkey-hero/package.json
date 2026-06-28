@@ -1,0 +1,28 @@
+{
+  "name": "@buckspay/example-passkey-hero",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "@buckspay/core": "workspace:*",
+    "@buckspay/accounts": "workspace:*",
+    "@buckspay/signers": "workspace:*",
+    "@buckspay/relayer": "workspace:*",
+    "@buckspay/react": "workspace:*",
+    "@stellar/stellar-sdk": "^14.6.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.0"
+  }
+}

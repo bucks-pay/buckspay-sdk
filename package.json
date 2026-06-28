@@ -12,6 +12,8 @@
     "test": "turbo run test",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
+    "e2e": "pnpm --filter @buckspay/e2e test:e2e",
+    "e2e:web": "pnpm --filter @buckspay/e2e test:web",
     "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",

@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { Address, Networks, StrKey, hash, xdr } from "@stellar/stellar-sdk";
 import { BuckspayError } from "@buckspay/core";
 import type { BuckspaySigner, Network } from "@buckspay/core";
@@ -16,9 +15,13 @@ export interface OzContractOptions {
   network?: Network;
 }
 
-/** MUST match facilitator `contractSalt` (plan 01): sha256(pubkeyBytes). */
+/**
+ * MUST match facilitator `contractSalt` (plan 01): sha256(pubkeyBytes). Uses the
+ * stellar-sdk's isomorphic `hash` (NOT node:crypto) so the SDK runs in the browser —
+ * same SHA-256 as the facilitator, so the derivation stays byte-identical.
+ */
 export function contractSalt(passkeyPublicKey: string): Buffer {
-  return createHash("sha256").update(Buffer.from(passkeyPublicKey, "hex")).digest();
+  return Buffer.from(hash(Buffer.from(passkeyPublicKey, "hex")));
 }
 
 /**
