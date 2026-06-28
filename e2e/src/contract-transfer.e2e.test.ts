@@ -80,7 +80,14 @@ describe.skipIf(!READY)("contract+passkey transfer (testnet)", () => {
     expect(wallet.model).toBe("contract");
     expect(wallet.address).toMatch(/^C[A-Z2-7]{55}$/);
 
-    const state = await wallet.getState();
+    // connect() already waited for materialization, but a separate getState() can still hit
+    // a lagging load-balanced public-RPC node. Poll until the deploy is visible (eventual
+    // consistency); a dedicated/consistent RPC in production wouldn't need this.
+    let state = await wallet.getState();
+    for (let i = 0; i < 15 && !state.exists; i++) {
+      await new Promise((r) => setTimeout(r, 1000));
+      state = await wallet.getState();
+    }
     expect(state.exists).toBe(true);
 
     // The freshly-deployed C-account holds no USDC — fund it (0.1 USDC) so the transfer can settle.

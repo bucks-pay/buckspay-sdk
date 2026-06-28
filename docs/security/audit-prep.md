@@ -50,7 +50,7 @@ that are **not buckspay code**:
 | Licenses within allow-list | `pnpm licenses` |
 | OZ Wasm hash pinned (real spike value) | `pnpm --filter @buckspay/accounts exec vitest run oz-wasm-pin` |
 | Mainnet gated | `pnpm --filter @buckspay/core exec vitest run network-gate` |
-| e2e green on testnet (plan 01) | `BUCKSPAY_E2E=1 pnpm e2e` |
+| e2e green on testnet (classic + contract/passkey flows) | `BUCKSPAY_E2E=1 pnpm e2e` |
 | `pnpm audit` reviewed (transitive advisories accepted/resolved) | `pnpm audit --audit-level=high --prod` |
 
 Run all at once: `bash scripts/release-gate.sh`.

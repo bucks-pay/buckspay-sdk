@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { Address, Keypair, nativeToScVal, StrKey } from "@stellar/stellar-sdk";
+import { Address, Keypair, nativeToScVal, Networks, StrKey, Transaction, TransactionBuilder } from "@stellar/stellar-sdk";
 import { createSorobanSimulator, createRpcSimContext } from "../src/soroban-rpc";
 import type { RpcFetch } from "../src/auth-entry-builder";
 import type { Call } from "../src/types";
@@ -13,6 +13,19 @@ const call: Call = {
   fn: "transfer",
   args: [
     new Address(FROM).toScVal(),
+    new Address(TO).toScVal(),
+    nativeToScVal(15_000_000n, { type: "i128" })
+  ]
+};
+
+// Contract/passkey model: `from` is a C-address (which can't source a transaction).
+const C_FROM = StrKey.encodeContract(Buffer.alloc(32, 9));
+const SPONSOR = Keypair.fromRawEd25519Seed(Buffer.alloc(32, 7)).publicKey();
+const contractCall: Call = {
+  contract: SAC,
+  fn: "transfer",
+  args: [
+    new Address(C_FROM).toScVal(),
     new Address(TO).toScVal(),
     nativeToScVal(15_000_000n, { type: "i128" })
   ]
@@ -74,6 +87,30 @@ describe("createSorobanSimulator", () => {
       auth: [],
       minResourceFee: "0"
     });
+  });
+
+  it("frames a contract-model (C-address) sim with the funded simSource G-address", async () => {
+    const fetchMock = vi
+      .fn<RpcFetch>()
+      .mockResolvedValue(jsonRpc({ jsonrpc: "2.0", id: 1, result: { minResourceFee: "1", results: [{ auth: [] }] } }));
+    const sim = createSorobanSimulator("https://rpc.test", fetchMock, SPONSOR);
+    await sim.simulate({ from: C_FROM, call: contractCall, network: "testnet" });
+
+    // A C-address can't source a tx; the recording sim must be framed by the sponsor G.
+    const [, init] = fetchMock.mock.calls[0]!;
+    const sent = JSON.parse(init.body as string) as { params: { transaction: string } };
+    const tx = TransactionBuilder.fromXDR(sent.params.transaction, Networks.TESTNET);
+    expect(tx).toBeInstanceOf(Transaction);
+    expect((tx as Transaction).source).toBe(SPONSOR);
+  });
+
+  it("throws INVALID_CONFIG for a contract-model sim when simSource is missing", async () => {
+    const fetchMock = vi.fn<RpcFetch>();
+    const sim = createSorobanSimulator("https://rpc.test", fetchMock);
+    await expect(sim.simulate({ from: C_FROM, call: contractCall, network: "testnet" })).rejects.toMatchObject({
+      code: "INVALID_CONFIG"
+    });
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
 

@@ -1,7 +1,4 @@
 import { Account, Contract, Networks, TransactionBuilder } from "@stellar/stellar-sdk";
-
-/** A throwaway, valid G… (all-zero ed25519) used only to frame a contract recording sim. */
-const PLACEHOLDER_SOURCE = "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF";
 import { z } from "zod";
 import { BuckspayError } from "./errors";
 import {
@@ -45,15 +42,32 @@ const simulateResponseSchema = z.object({
  * A reverting simulation maps to `SIMULATION_FAILED`; transport failure to
  * `RELAYER_UNREACHABLE`. `fetchImpl` is injectable for tests.
  */
-export function createSorobanSimulator(rpcUrl: string, fetchImpl: RpcFetch = fetch): SorobanSimulator {
+export function createSorobanSimulator(
+  rpcUrl: string,
+  fetchImpl: RpcFetch = fetch,
+  simSource?: string
+): SorobanSimulator {
   return {
     async simulate({ from, call, network }) {
       const op = new Contract(call.contract).call(call.fn, ...call.args);
-      // Recording sim: the source account's sequence is irrelevant AND it only frames the
-      // invocation (the auth recording is keyed by `from` inside the args). `Account`
-      // rejects a contract (C…) address, so for the contract model we frame the sim with a
-      // throwaway valid G… placeholder; the recorded auth entry is unaffected.
-      const sourceId = from.startsWith("G") ? from : PLACEHOLDER_SOURCE;
+      // A recording sim must be framed by an account that EXISTS on-chain: the host resolves
+      // the invocation — and the SAC balance footprint — against that account's ledger state.
+      // For the classic model `from` is itself a real G…. For the contract model `from` is a
+      // C… (which `Account` rejects anyway), so we frame with `simSource` — the facilitator
+      // sponsor's public key: a funded, existing G…, mirroring the on-chain-validated spike.
+      // A throwaway/non-existent placeholder makes simulateTransaction resolve the footprint
+      // against a state that can't see the contract's balance → spurious "zero balance" reverts.
+      let sourceId: string;
+      if (from.startsWith("G")) {
+        sourceId = from;
+      } else if (simSource && simSource.startsWith("G")) {
+        sourceId = simSource;
+      } else {
+        throw new BuckspayError(
+          "INVALID_CONFIG",
+          "contract-model simulation needs a funded G-address `simSource` (the facilitator sponsor's public key) to frame the recording sim — pass it via createRpcSimContext(rpcUrl, { simSource })"
+        );
+      }
       const tx = new TransactionBuilder(new Account(sourceId, "0"), {
         fee: "100",
         networkPassphrase: PASSPHRASE[network]
@@ -105,13 +119,19 @@ export function createSorobanSimulator(rpcUrl: string, fetchImpl: RpcFetch = fet
  * RPC-backed recording simulator + a current-ledger source, both pointed at the
  * same Soroban RPC. Pass it as the second argument to `createBuckspayClient` /
  * `createBuckspayConfig`.
+ *
+ * For the **contract/passkey** account model, pass `deps.simSource` — a funded,
+ * existing G-address (the facilitator sponsor's public key). A C-address can't
+ * frame a transaction, and the recording sim must run against an account that
+ * exists on-chain or the SAC balance footprint resolves to zero. The classic
+ * model needs no `simSource` (its `from` is already a real G-address).
  */
 export function createRpcSimContext(
   rpcUrl: string,
-  deps?: { fetchImpl?: RpcFetch; randomNonce?: () => bigint }
+  deps?: { fetchImpl?: RpcFetch; randomNonce?: () => bigint; simSource?: string }
 ): AccountSimContext {
   return {
-    simulator: createSorobanSimulator(rpcUrl, deps?.fetchImpl),
+    simulator: createSorobanSimulator(rpcUrl, deps?.fetchImpl, deps?.simSource),
     getLatestLedger: () => getLatestLedger(rpcUrl, deps?.fetchImpl),
     randomNonce: deps?.randomNonce ?? defaultRandomNonce
   };

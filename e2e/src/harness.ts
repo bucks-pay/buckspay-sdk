@@ -30,7 +30,11 @@ export function buildClient(model: AccountModel, signerOverride?: BuckspaySigner
         });
   const signer =
     signerOverride ?? (model === "classic" ? walletsKit({ network: "testnet" }) : passkey({ rpId: e2eEnv.RP_ID }));
-  const sim = createRpcSimContext(e2eEnv.SOROBAN_RPC_URL);
+  // The contract model frames its recording sim with the sponsor's public G-address
+  // (must exist on-chain); the classic model ignores simSource (its `from` is a real G).
+  const sim = createRpcSimContext(e2eEnv.SOROBAN_RPC_URL, {
+    ...(e2eEnv.E2E_SPONSOR_G ? { simSource: e2eEnv.E2E_SPONSOR_G } : {})
+  });
   const client = createBuckspayClient(
     {
       network: "testnet",
