@@ -1,4 +1,7 @@
 import { Account, Contract, Networks, TransactionBuilder } from "@stellar/stellar-sdk";
+
+/** A throwaway, valid G… (all-zero ed25519) used only to frame a contract recording sim. */
+const PLACEHOLDER_SOURCE = "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF";
 import { z } from "zod";
 import { BuckspayError } from "./errors";
 import {
@@ -46,8 +49,12 @@ export function createSorobanSimulator(rpcUrl: string, fetchImpl: RpcFetch = fet
   return {
     async simulate({ from, call, network }) {
       const op = new Contract(call.contract).call(call.fn, ...call.args);
-      // Recording sim: the source account's sequence is irrelevant.
-      const tx = new TransactionBuilder(new Account(from, "0"), {
+      // Recording sim: the source account's sequence is irrelevant AND it only frames the
+      // invocation (the auth recording is keyed by `from` inside the args). `Account`
+      // rejects a contract (C…) address, so for the contract model we frame the sim with a
+      // throwaway valid G… placeholder; the recorded auth entry is unaffected.
+      const sourceId = from.startsWith("G") ? from : PLACEHOLDER_SOURCE;
+      const tx = new TransactionBuilder(new Account(sourceId, "0"), {
         fee: "100",
         networkPassphrase: PASSPHRASE[network]
       })
