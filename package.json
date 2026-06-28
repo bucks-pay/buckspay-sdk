@@ -17,6 +17,8 @@
     "docs:typecheck": "pnpm --filter @buckspay/docs-examples typecheck",
     "docs:links": "markdown-link-check -q -c .markdown-link-check.json docs/guide/*.md",
     "docs:api": "typedoc",
+    "audit": "pnpm audit --audit-level=high --prod",
+    "licenses": "node scripts/check-licenses.mjs",
     "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",

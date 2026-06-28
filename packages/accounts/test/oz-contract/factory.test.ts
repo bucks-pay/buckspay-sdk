@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { ozContractAccount } from "../../src/oz-contract/index.js";
+import { OZ_SMART_ACCOUNT_WASM_HASH } from "../../src/oz-contract/wasm-pin.js";
 
 describe("ozContractAccount factory", () => {
   it("is an AccountAdapter with model contract", () => {
@@ -10,7 +11,7 @@ describe("ozContractAccount factory", () => {
     expect(typeof a.buildUnsignedEntry).toBe("function");
     expect(typeof a.assembleSignedEntry).toBe("function");
   });
-  it("accepts an optional wasmHash", () => {
-    expect(ozContractAccount({ wasmHash: "ab".repeat(32) }).model).toBe("contract");
+  it("accepts the pinned wasmHash override (Sprint 5/03 pin guard)", () => {
+    expect(ozContractAccount({ wasmHash: OZ_SMART_ACCOUNT_WASM_HASH }).model).toBe("contract");
   });
 });

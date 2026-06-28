@@ -6,6 +6,8 @@ import {
   type SorobanSimulator
 } from "./auth-entry-builder";
 import { GasAbstractionEngine } from "./gas-abstraction-engine";
+import { boundExpirationLedger } from "./expiration";
+import { resolveNetwork } from "./network-gate";
 import { BuckspayError } from "./errors";
 import type {
   AccountState,
@@ -44,6 +46,10 @@ export class BuckspayClient {
   private address: string | null = null;
 
   constructor(config: BuckspayConfig, sim?: AccountSimContext) {
+    // Mainnet gate: pubnet is refused unless BUCKSPAY_ALLOW_MAINNET=1 (Node env), so a
+    // default/forgotten config cannot move real funds. (Browser opt-in is a future flag.)
+    const allowMainnet = typeof process !== "undefined" && process.env?.BUCKSPAY_ALLOW_MAINNET === "1";
+    resolveNetwork(config.network, { allowMainnet });
     this.config = config;
     this.engine = new GasAbstractionEngine(config.gas);
     this.sim = sim ?? null;
@@ -103,7 +109,7 @@ export class BuckspayClient {
     await simulateRecording({ from, call, network: this.config.network, simulator: this.sim.simulator });
 
     const latestLedger = await this.sim.getLatestLedger();
-    const signatureExpirationLedger = latestLedger + EXPIRY_LEDGER_DELTA;
+    const signatureExpirationLedger = boundExpirationLedger(latestLedger, latestLedger + EXPIRY_LEDGER_DELTA);
 
     const unsignedEntry = this.config.account.buildUnsignedEntry({ from, call, nonce });
 

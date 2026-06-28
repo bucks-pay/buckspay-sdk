@@ -1,0 +1,31 @@
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly, so newly-disclosed advisories surface before mainnet.
+    - cron: "0 6 * * 1"
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: bash scripts/check-no-secrets-in-src.sh
+      - run: bash scripts/check-threat-model.sh
+      - run: node scripts/check-licenses.mjs
+      # Transitive advisories from wallets-kit connectors are tracked in audit-prep.md;
+      # report them without blocking the merge until upstream/overrides land.
+      - run: pnpm audit --audit-level=high --prod
+        continue-on-error: true

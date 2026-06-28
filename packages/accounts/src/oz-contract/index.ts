@@ -19,11 +19,15 @@ import { ensureContractReady } from "./ensureReady.js";
 import { buildContractEntry } from "./buildEntry.js";
 import { assembleContractEntry } from "./assemble.js";
 import type { OzContractOptions } from "./resolveAddress.js";
+import { assertPinnedWasmHash, OZ_SMART_ACCOUNT_WASM_HASH } from "./wasm-pin.js";
 
 export type { OzContractOptions } from "./resolveAddress.js";
 export { deriveContractAddress, contractSalt } from "./resolveAddress.js";
+export { OZ_SMART_ACCOUNT_WASM_HASH, assertPinnedWasmHash } from "./wasm-pin.js";
 
 export function ozContractAccount(opts: OzContractOptions = {}): AccountAdapter {
+  // Pin guard: refuse any Wasm hash other than the on-chain-validated pinned one.
+  assertPinnedWasmHash(opts.wasmHash ?? OZ_SMART_ACCOUNT_WASM_HASH);
   return {
     model: "contract",
     resolveAddress: (signer: BuckspaySigner) => resolveContractAddress(signer, opts),
