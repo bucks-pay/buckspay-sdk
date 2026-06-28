@@ -18,7 +18,11 @@ const signer = {
 function relayer(overrides: Partial<Record<string, unknown>> = {}) {
   return {
     relay: vi.fn(),
-    getAccountState: vi.fn().mockResolvedValue({ exists: false, hasUsdcTrustline: false }),
+    // pre-deploy check: not on-chain; after deploy: materialized (RPC indexed).
+    getAccountState: vi
+      .fn()
+      .mockResolvedValueOnce({ exists: false, hasUsdcTrustline: false })
+      .mockResolvedValue({ exists: true, hasUsdcTrustline: false }),
     buildOnboard: vi.fn(),
     submitOnboard: vi.fn(),
     deployContract: vi.fn().mockResolvedValue({ address: C }),

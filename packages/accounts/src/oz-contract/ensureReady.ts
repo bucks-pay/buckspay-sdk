@@ -1,5 +1,7 @@
 import { BuckspayError } from "@buckspay/core";
-import type { EnsureReadyInput } from "@buckspay/core";
+import type { EnsureReadyInput, Relayer } from "@buckspay/core";
+
+const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
 
 /**
  * Ensure the passkey contract account is deployed. If `getAccountState` reports it's
@@ -30,4 +32,21 @@ export async function ensureContractReady(input: EnsureReadyInput): Promise<void
       `oz-contract: relayer deployed ${deployed.address} but client derived ${address} — salt/deployer mismatch`
     );
   }
+
+  // The deploy confirmed on-chain, but Soroban RPC indexes the new contract-data entry
+  // with a brief lag. Poll until the account is queryable so connect() guarantees a ready
+  // account — otherwise a caller's immediate getState()/pay() would see exists:false.
+  await waitForMaterialization(relayer, address);
+}
+
+async function waitForMaterialization(relayer: Relayer, address: string, attempts = 10): Promise<void> {
+  for (let i = 0; i < attempts; i++) {
+    const s = await relayer.getAccountState(address);
+    if (s.exists) return;
+    await sleep(1000);
+  }
+  throw new BuckspayError(
+    "ACCOUNT_NOT_READY",
+    `oz-contract: deploy confirmed but ${address} not queryable after ${attempts}s (RPC indexing lag)`
+  );
 }
