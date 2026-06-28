@@ -10,6 +10,6 @@ coverage/
 npm-debug.log*
 pnpm-debug.log*
 plans/
-docs/
+docs/specs/
 VERSIONING.md
 spikes/

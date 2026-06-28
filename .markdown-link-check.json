@@ -1,0 +1,9 @@
+{
+  "ignorePatterns": [
+    { "pattern": "^http://localhost" },
+    { "pattern": "stellar.expert" },
+    { "pattern": "^../api/" }
+  ],
+  "retryOn429": true,
+  "aliveStatusCodes": [200, 206, 301, 302]
+}

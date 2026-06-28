@@ -3,6 +3,7 @@ packages:
   - "spikes/*"
   - "e2e"
   - "examples/*"
+  - "docs/examples"
 # esbuild (used by tsup + vitest) needs its postinstall to fetch the platform
 # binary; pnpm 10+ blocks build scripts unless allow-listed here.
 allowBuilds:

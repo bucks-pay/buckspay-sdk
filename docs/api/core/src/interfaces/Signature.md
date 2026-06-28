@@ -1,0 +1,29 @@
+[**buckspay-sdk**](../../../README.md)
+
+***
+
+[buckspay-sdk](../../../README.md) / [core/src](../README.md) / Signature
+
+# Interface: Signature
+
+Defined in: [packages/core/src/types.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/e72c277e7ff52faad26c1268225fd15d97119646/packages/core/src/types.ts#L26)
+
+## Properties
+
+### publicKey
+
+> **publicKey**: `string`
+
+Defined in: [packages/core/src/types.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/e72c277e7ff52faad26c1268225fd15d97119646/packages/core/src/types.ts#L30)
+
+echoes the signer public key used to build credentials.
+
+***
+
+### signature
+
+> **signature**: `Uint8Array`
+
+Defined in: [packages/core/src/types.ts:28](https://github.com/bucks-pay/buckspay-sdk/blob/e72c277e7ff52faad26c1268225fd15d97119646/packages/core/src/types.ts#L28)
+
+raw signature bytes; 64 bytes for ed25519, contract-defined for passkey.

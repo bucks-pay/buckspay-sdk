@@ -1,0 +1,18 @@
+{
+  "name": "@buckspay/docs-examples",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "typecheck": "tsc --noEmit" },
+  "devDependencies": {
+    "@buckspay/core": "workspace:*",
+    "@buckspay/accounts": "workspace:*",
+    "@buckspay/signers": "workspace:*",
+    "@buckspay/relayer": "workspace:*",
+    "@buckspay/react": "workspace:*",
+    "@stellar/stellar-sdk": "^14.6.1",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "typescript": "^5.6.0"
+  }
+}
