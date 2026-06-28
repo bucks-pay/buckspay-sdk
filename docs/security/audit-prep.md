@@ -22,15 +22,22 @@ buckspay **deploys + authorizes against** OZ contracts but does **not author the
 logic**. The SDK's security responsibility ends at producing correct, bounded, validated auth
 entries and never holding secrets. The on-chain `__check_auth` is the sole signature verifier.
 
-## Known accepted risks (tracked, not blockers for testnet v1)
+## Transitive risks from `@creit.tech/stellar-wallets-kit` (status)
 
-- **Transitive advisories + copyleft via `@creit.tech/stellar-wallets-kit`.** Its multi-wallet
-  connectors pull Trezor/xBull/LOBSTR/Near/Hot/WalletConnect/ethereumjs, which carry
-  `pnpm audit` advisories (high/critical) and copyleft/Unknown licenses (AGPL `ua-parser-js`,
-  LGPL `rpc-websockets`, GPL `@lobstrco/*`, MPL `@ethereumjs/*`). These are **not buckspay code**
-  and the copyleft is confined to connector modules the Stellar gasless path never exercises.
-  **Before mainnet:** resolve via `pnpm overrides` / upstream fixes, or narrow the wallets-kit
-  connector surface. The license gate exempts them explicitly (`scripts/check-licenses.mjs`).
+Its multi-wallet connectors (Trezor/xBull/LOBSTR/Near/Hot/WalletConnect/ethereumjs) pull deps
+that are **not buckspay code**:
+
+- **Advisories — RESOLVED (high + critical).** All 5 high + 1 critical were `protobufjs <7.6.1`.
+  Pinned to the patched `>=7.6.1 <8` via a `pnpm overrides` entry in `pnpm-workspace.yaml`
+  (kept on the 7.x line to avoid a major bump). `pnpm audit --audit-level=high --prod` is now
+  clean; the full workspace suite stays green. Remaining: **1 low + 1 moderate**, accepted —
+  not high-severity, no patch path that doesn't churn the connector tree; re-checked weekly by CI.
+- **Copyleft/Unknown licenses — accepted.** AGPL `ua-parser-js`, LGPL `rpc-websockets`,
+  GPL `@lobstrco/*`, MPL `@ethereumjs/*`, plus several `Unknown`. The copyleft is confined to
+  connector modules the Stellar gasless path never exercises; they are not redistributed as
+  part of any `@buckspay/*` package. The license gate exempts them explicitly, with a per-package
+  reason (`scripts/check-licenses.mjs`). **Before mainnet:** narrow the wallets-kit connector
+  surface (or vendor a minimal connector) to drop the copyleft tree entirely.
 
 ## Release-blocker checklist
 

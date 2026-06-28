@@ -4,6 +4,10 @@ packages:
   - "e2e"
   - "examples/*"
   - "docs/examples"
+# Security overrides (pre-mainnet): force-patch transitive advisories from
+# @creit.tech/stellar-wallets-kit connectors. protobufjs <7.6.1 has the high+critical CVEs.
+overrides:
+  protobufjs@<7.6.1: ">=7.6.1 <8"
 # esbuild (used by tsup + vitest) needs its postinstall to fetch the platform
 # binary; pnpm 10+ blocks build scripts unless allow-listed here.
 allowBuilds:
