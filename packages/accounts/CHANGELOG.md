@@ -1,5 +1,26 @@
 # @buckspay/accounts
 
+## 0.1.3
+
+### Patch Changes
+
+- Sprint 5 (hero hardening), all backward-compatible:
+
+  - **`@buckspay/accounts`** — browser-safe **isomorphic SHA-256** for the C-address salt
+    (was `node:crypto`, which broke the browser build of `oz-contract`); same hash, so the
+    derivation stays byte-identical. Plus an OZ Smart Account **Wasm-hash pin guard**
+    (`assertPinnedWasmHash`) — `ozContractAccount` refuses any Wasm hash but the pinned one.
+  - **`@buckspay/core`** — `boundExpirationLedger` caps `signatureExpirationLedger` to
+    `MAX_EXPIRATION_LEDGERS` (no widened replay window), and a **mainnet gate**: `pubnet` is
+    refused unless `BUCKSPAY_ALLOW_MAINNET=1`.
+  - **`@buckspay/react`** — `BuckspayProvider` accepts an optional `sim` prop, enabling
+    `useStellarPay().pay()` (the recording simulator for `prepare()`).
+
+  Pre-1.0 fix + backward-compatible feature → `patch` per VERSIONING.md (0.1.2 → 0.1.3, lockstep).
+
+- Updated dependencies
+  - @buckspay/core@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
