@@ -10,7 +10,10 @@ export const MAX_EXPIRATION_LEDGERS = 600;
  */
 export function boundExpirationLedger(currentLedger: number, requested: number): number {
   if (requested <= currentLedger) {
-    throw new BuckspayError("AUTH_EXPIRED", `auth entry already expired: ledger ${requested} <= current ${currentLedger}`);
+    throw new BuckspayError(
+      "AUTH_EXPIRED",
+      `auth entry already expired: ledger ${String(requested)} <= current ${String(currentLedger)}`
+    );
   }
   const ceiling = currentLedger + MAX_EXPIRATION_LEDGERS;
   return Math.min(requested, ceiling);

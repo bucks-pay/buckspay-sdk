@@ -60,7 +60,7 @@ export function createSorobanSimulator(
       let sourceId: string;
       if (from.startsWith("G")) {
         sourceId = from;
-      } else if (simSource && simSource.startsWith("G")) {
+      } else if (simSource?.startsWith("G")) {
         sourceId = simSource;
       } else {
         throw new BuckspayError(
@@ -135,4 +135,33 @@ export function createRpcSimContext(
     getLatestLedger: () => getLatestLedger(rpcUrl, deps?.fetchImpl),
     randomNonce: deps?.randomNonce ?? defaultRandomNonce
   };
+}
+
+/**
+ * Mainnet (pubnet) sim-context preset. The **contract/passkey** account model's
+ * recording sim must be framed by a funded, existing G-address — the facilitator
+ * sponsor's PUBLIC key — because a C-address can't frame a transaction and a
+ * throwaway source resolves the SAC balance footprint to zero (see
+ * `createSorobanSimulator`). This convenience forces that `simSource` so a pubnet
+ * caller can never omit it; it is otherwise `createRpcSimContext` unchanged.
+ *
+ * `sponsorAddress` is PUBLIC (a `G…`); the SDK never holds the sponsor secret.
+ * The classic model also works through this (its `from` is already a real G, so
+ * the simSource is simply unused).
+ */
+export function mainnetSimContext(
+  rpcUrl: string,
+  deps: { sponsorAddress: string; fetchImpl?: RpcFetch; randomNonce?: () => bigint }
+): AccountSimContext {
+  if (!deps.sponsorAddress.startsWith("G")) {
+    throw new BuckspayError(
+      "INVALID_CONFIG",
+      "mainnetSimContext: sponsorAddress must be a funded G-address (the facilitator sponsor's PUBLIC key)"
+    );
+  }
+  return createRpcSimContext(rpcUrl, {
+    simSource: deps.sponsorAddress,
+    ...(deps.fetchImpl ? { fetchImpl: deps.fetchImpl } : {}),
+    ...(deps.randomNonce ? { randomNonce: deps.randomNonce } : {})
+  });
 }

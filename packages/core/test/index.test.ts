@@ -23,6 +23,7 @@ describe("@buckspay/core public entry", () => {
         "createRpcSimContext",
         "createSorobanSimulator",
         "getLatestLedger",
+        "mainnetSimContext",
         "randomNonce",
         "simulateRecording",
         "toStroops"

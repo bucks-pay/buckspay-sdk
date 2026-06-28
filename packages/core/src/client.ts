@@ -46,9 +46,13 @@ export class BuckspayClient {
   private address: string | null = null;
 
   constructor(config: BuckspayConfig, sim?: AccountSimContext) {
-    // Mainnet gate: pubnet is refused unless BUCKSPAY_ALLOW_MAINNET=1 (Node env), so a
-    // default/forgotten config cannot move real funds. (Browser opt-in is a future flag.)
-    const allowMainnet = typeof process !== "undefined" && process.env?.BUCKSPAY_ALLOW_MAINNET === "1";
+    // Mainnet gate: pubnet is refused unless a deliberate opt-in is present, so a
+    // default/forgotten config cannot move real funds. Two equivalent signals, ORed:
+    //   - Node env `BUCKSPAY_ALLOW_MAINNET=1` (servers / CI), and
+    //   - config `allowMainnet: true` (browsers, which have no `process.env`).
+    // `resolveNetwork` stays the single gate — this only computes the boolean it takes.
+    const envOptIn = typeof process !== "undefined" && process.env.BUCKSPAY_ALLOW_MAINNET === "1";
+    const allowMainnet = envOptIn || config.allowMainnet === true;
     resolveNetwork(config.network, { allowMainnet });
     this.config = config;
     this.engine = new GasAbstractionEngine(config.gas);

@@ -166,6 +166,13 @@ export interface BuckspayConfig {
   signer: BuckspaySigner;
   relayer: Relayer;
   gas: GasConfig;
+  /**
+   * Explicit mainnet (pubnet) opt-in for environments with no `process.env`
+   * (browsers). ORed with the Node env `BUCKSPAY_ALLOW_MAINNET=1`. Pubnet stays
+   * refused unless at least one signal is present; testnet ignores this flag.
+   * `resolveNetwork` remains the single gate — this flag only feeds it.
+   */
+  allowMainnet?: boolean;
 }
 
 export interface BuckspayState {
