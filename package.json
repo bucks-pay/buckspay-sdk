@@ -19,6 +19,7 @@
     "docs:api": "typedoc",
     "audit": "pnpm audit --audit-level=high --prod",
     "licenses": "node scripts/check-licenses.mjs",
+    "verify:wasm": "node scripts/verify-wasm-hash.mjs",
     "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",

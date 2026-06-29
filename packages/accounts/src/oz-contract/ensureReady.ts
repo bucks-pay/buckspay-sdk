@@ -47,6 +47,6 @@ async function waitForMaterialization(relayer: Relayer, address: string, attempt
   }
   throw new BuckspayError(
     "ACCOUNT_NOT_READY",
-    `oz-contract: deploy confirmed but ${address} not queryable after ${attempts}s (RPC indexing lag)`
+    `oz-contract: deploy confirmed but ${address} not queryable after ${String(attempts)}s (RPC indexing lag)`
   );
 }

@@ -8,19 +8,25 @@ The SDK packages — `core`, `accounts/oz-contract`, `signers/passkey`,
 `relayer/buckspay-facilitator`, `react` — and the facilitator's new `contract` endpoints +
 the relay `from`=C-address path. **Focus areas:** auth-entry construction, the `__check_auth`
 secp256r1 signature format, expiration/nonce handling, the relayer trust boundary, and the
-BFF key boundary.
+BFF key boundary. Also **in scope: the deployed `minimal-passkey-account` smart-account wrapper**
+(`spikes/passkey-contract/contract/src/lib.rs`) — buckspay-authored `__constructor`/`__check_auth`
+around OZ's audited verifier; see `contract-provenance.md`.
 
 ## Scope (out / deferred)
 
-The audited **OpenZeppelin Smart Account contract** itself (we pin its Wasm hash, we do not
-re-audit OZ's code), the wallet/authenticator implementations (Freighter, platform WebAuthn),
-and SP-2 features (token-gas, batch, sessions, social login).
+OpenZeppelin's audited WebAuthn/secp256r1 **verifier** (`stellar_accounts::verifiers::webauthn::verify`)
+— we pin the wasm that calls it and do not re-audit OZ's verifier; the buckspay wrapper around it
+is **in** scope (above). Also out of scope: the wallet/authenticator implementations (Freighter,
+platform WebAuthn) and SP-2 features (token-gas, batch, sessions, social login).
 
 ## Contracts vs SDK boundary
 
-buckspay **deploys + authorizes against** OZ contracts but does **not author the contract
-logic**. The SDK's security responsibility ends at producing correct, bounded, validated auth
-entries and never holding secrets. The on-chain `__check_auth` is the sole signature verifier.
+buckspay **deploys + authorizes against** a smart-account contract. It does **not** author the
+cryptographic verifier (OZ's audited `verify`), but it **does** author the thin
+`minimal-passkey-account` wrapper around it (`__constructor`/`__check_auth`) — that wrapper is in
+audit scope (see `contract-provenance.md`). The SDK's off-chain responsibility ends at producing
+correct, bounded, validated auth entries and never holding secrets. The on-chain `__check_auth`
+(wrapper) → `verify` (OZ) is the sole signature verifier.
 
 ## Transitive risks from `@creit.tech/stellar-wallets-kit` (status)
 
