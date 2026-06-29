@@ -26,3 +26,26 @@ lives in `examples/passkey-hero/`:
 ```
 pnpm --filter @buckspay/example-passkey-hero dev
 ```
+
+## Mainnet (pubnet) — supported via explicit opt-in
+
+Mainnet is **supported**, and **OFF by default**. Both flows (classic `G…` and
+contract/passkey `C…`) run gasless on pubnet once you deliberately opt in:
+
+- **Browser:** `allowMainnet: true` in the `BuckspayConfig`.
+- **Node:** `BUCKSPAY_ALLOW_MAINNET=1`.
+
+Without the opt-in, constructing a client on `"pubnet"` throws `BuckspayError("INVALID_CONFIG")`
+— a default or forgotten config can never move real funds. Mainnet specifics:
+
+- **USDC = 7 decimals**, and **you pass Circle's pubnet USDC SAC** (`C…`) — the SDK is
+  asset-agnostic and never hardcodes it.
+- The contract model needs a **funded sponsor `G…` as `simSource`** (the same public key the
+  facilitator submits with) — use `createRpcSimContext(pubnetRpcUrl, { simSource })` or the
+  `mainnetSimContext` preset.
+- Use a **dedicated, consistent Soroban RPC** (the shared public load balancer is
+  eventually-consistent). See the runnable `docs/examples/08-mainnet.ts`.
+
+Going live is a deliberate, audited step: follow the **[mainnet cutover runbook](../ops/mainnet-cutover.md)**
+(pre-flight checklist → GO/NO-GO gate → rollback / kill-switch). The real pubnet path is proven by
+a guarded e2e smoke (`BUCKSPAY_E2E_MAINNET=1`, tiny 0.0001 USDC transfers).

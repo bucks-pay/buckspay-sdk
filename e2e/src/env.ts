@@ -30,8 +30,46 @@ const schema = z.object({
     .string()
     .regex(/^G[A-Z2-7]{55}$/)
     .optional(),
-  RP_ID: z.string().default("localhost")
+  RP_ID: z.string().default("localhost"),
+
+  // ── MAINNET (pubnet) smoke — second-tier gate ─────────────────────────────
+  // Opt-in flag, distinct from BUCKSPAY_E2E, so a testnet run can NEVER touch
+  // real funds by accident. All pubnet vars are TEST-RUNNER-ONLY, gitignored.
+  BUCKSPAY_E2E_MAINNET: z.literal("1").optional(),
+  // Dedicated, consistent pubnet RPC (NOT a flaky public load balancer).
+  SOROBAN_RPC_URL_PUBNET: z.string().url().optional(),
+  // Circle's pubnet USDC SAC (C…), passed by the caller — never hardcoded.
+  E2E_USDC_PUBNET_SAC: z
+    .string()
+    .regex(/^C[A-Z2-7]{55}$/)
+    .optional(),
+  E2E_SPONSOR_G_PUBNET: z
+    .string()
+    .regex(/^G[A-Z2-7]{55}$/)
+    .optional(),
+  E2E_PAYER_SECRET_PUBNET: z
+    .string()
+    .regex(/^S[A-Z2-7]{55}$/)
+    .optional(),
+  E2E_MERCHANT_G_PUBNET: z
+    .string()
+    .regex(/^G[A-Z2-7]{55}$/)
+    .optional()
 });
 
 export const e2eEnv = schema.parse(process.env);
 export const E2E_ENABLED = e2eEnv.BUCKSPAY_E2E === "1";
+
+/**
+ * Mainnet smoke is enabled only when the dedicated flag is set AND every pubnet
+ * secret is present. This is the single source of the mainnet gate; the test
+ * files just `skipIf(!MAINNET_ENABLED)`.
+ */
+export const MAINNET_ENABLED =
+  e2eEnv.BUCKSPAY_E2E_MAINNET === "1" &&
+  !!e2eEnv.SOROBAN_RPC_URL_PUBNET &&
+  !!e2eEnv.FACILITATOR_API_KEY &&
+  !!e2eEnv.E2E_USDC_PUBNET_SAC &&
+  !!e2eEnv.E2E_SPONSOR_G_PUBNET &&
+  !!e2eEnv.E2E_PAYER_SECRET_PUBNET &&
+  !!e2eEnv.E2E_MERCHANT_G_PUBNET;

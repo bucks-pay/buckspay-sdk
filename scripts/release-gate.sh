@@ -29,12 +29,13 @@ item "secret-rotation runbook present"       hard test -f docs/security/secret-r
 item "no unexpected copyleft in prod tree"   hard pnpm --filter @buckspay/signers exec vitest run no-unexpected-copyleft
 item "wasm-hash pin reproducible"            hard node scripts/verify-wasm-hash.mjs
 item "cross-repo wasm-pin parity"            hard bash scripts/check-pin-parity.sh
+item "cutover runbook present"               hard bash scripts/check-cutover-runbook.sh
 
-# Gated mainnet smoke (sprint-6/06): honors BUCKSPAY_MAINNET_SMOKE; skips when unset.
-if [ "${BUCKSPAY_MAINNET_SMOKE:-}" = "1" ]; then
-  item "mainnet smoke (sprint-6/06)" soft pnpm mainnet:smoke
+# Gated mainnet smoke (sprint-6/06): honors BUCKSPAY_E2E_MAINNET; skips when unset.
+if [ "${BUCKSPAY_E2E_MAINNET:-}" = "1" ]; then
+  item "mainnet smoke (sprint-6/06)" soft env BUCKSPAY_E2E=1 pnpm e2e
 else
-  echo "SKIP  mainnet smoke (set BUCKSPAY_MAINNET_SMOKE=1 to run)"
+  echo "SKIP  mainnet smoke (set BUCKSPAY_E2E_MAINNET=1 to run)"
 fi
 
 # e2e honors the BUCKSPAY_E2E gate; skips cleanly when unconfigured.

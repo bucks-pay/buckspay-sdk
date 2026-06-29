@@ -47,3 +47,43 @@ export function buildClient(model: AccountModel, signerOverride?: BuckspaySigner
   );
   return { client, relayer };
 }
+
+/**
+ * Build a real pubnet `BuckspayClient` for the guarded mainnet smoke. Distinct from
+ * `buildClient` so a testnet run can never accidentally pick up pubnet config. Mainnet
+ * is opt-in at three layers: the env gate (MAINNET_ENABLED), `allowMainnet: true` here,
+ * and the contract model's pubnet `simSource`. The pubnet RPC is dedicated/consistent.
+ */
+export function buildMainnetClient(model: AccountModel, signerOverride?: BuckspaySigner) {
+  const relayer = buckspayFacilitator({
+    url: e2eEnv.FACILITATOR_URL,
+    ...(e2eEnv.FACILITATOR_API_KEY ? { apiKey: e2eEnv.FACILITATOR_API_KEY } : {}),
+    network: "pubnet"
+  });
+  const account =
+    model === "classic"
+      ? classicAccount()
+      : ozContractAccount({
+          network: "pubnet",
+          ...(e2eEnv.E2E_SPONSOR_G_PUBNET ? { sponsorAddress: e2eEnv.E2E_SPONSOR_G_PUBNET } : {})
+        });
+  const signer =
+    signerOverride ?? (model === "classic" ? walletsKit({ network: "pubnet" }) : passkey({ rpId: e2eEnv.RP_ID }));
+  // The contract model frames its recording sim with the sponsor's pubnet G-address.
+  const sim = createRpcSimContext(e2eEnv.SOROBAN_RPC_URL_PUBNET ?? "https://mainnet.sorobanrpc.com", {
+    ...(e2eEnv.E2E_SPONSOR_G_PUBNET ? { simSource: e2eEnv.E2E_SPONSOR_G_PUBNET } : {})
+  });
+  const client = createBuckspayClient(
+    {
+      network: "pubnet",
+      account,
+      signer,
+      relayer,
+      gas: { mode: "sponsored" },
+      // Deliberate, audited mainnet opt-in — without this resolveNetwork() throws.
+      allowMainnet: true
+    },
+    sim
+  );
+  return { client, relayer };
+}

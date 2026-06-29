@@ -82,7 +82,8 @@ Extends the checklist above with the mainnet-cutover items. Each maps 1:1 to a l
 | No **unexpected** copyleft in prod tree | `pnpm --filter @buckspay/signers exec vitest run no-unexpected-copyleft` | guard |
 | OZ wasm-hash pin reproducible (sprint-6/02) | `node scripts/verify-wasm-hash.mjs` | guard |
 | Cross-repo wasm-pin parity (sprint-6/02) | `bash scripts/check-pin-parity.sh` | guard |
-| Gated mainnet smoke (sprint-6/06) | `BUCKSPAY_MAINNET_SMOKE=1 pnpm mainnet:smoke` | gated (skips when unset) |
+| Mainnet cutover runbook present (sprint-6/06) | `bash scripts/check-cutover-runbook.sh` | guard |
+| Gated mainnet smoke (sprint-6/06) | `BUCKSPAY_E2E_MAINNET=1 BUCKSPAY_E2E=1 pnpm e2e` | gated (skips when unset) |
 
 > **Copyleft note:** this gate enforces "no copyleft **outside** the accepted wallets-kit tree",
 > not "zero copyleft" — the multi-wallet connectors are an accepted, confined risk (see the
