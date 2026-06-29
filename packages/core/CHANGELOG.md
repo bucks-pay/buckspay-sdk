@@ -1,5 +1,34 @@
 # @buckspay/core
 
+## 0.1.4
+
+### Patch Changes
+
+- 77d7b43: Enable mainnet from the browser. `BuckspayConfig` gains an optional `allowMainnet`
+  flag — a deliberate, reviewable opt-in for environments with no `process.env`
+  (browsers) that is ORed with the existing Node `BUCKSPAY_ALLOW_MAINNET=1` env.
+  Pubnet stays refused unless one of the two signals is present; `resolveNetwork`
+  remains the single gate.
+
+  Adds the `mainnetSimContext(rpcUrl, { sponsorAddress })` preset: a thin wrapper over
+  `createRpcSimContext` that forces the funded sponsor G-address as the recording sim's
+  `simSource`, so the contract/passkey account model on pubnet can never omit it (a
+  missing source otherwise resolves the SAC balance footprint to zero). `sponsorAddress`
+  is the sponsor's PUBLIC key only — no secret enters the SDK.
+
+- 7ae6cfa: Mainnet (Stellar pubnet) is now supported via explicit opt-in.
+
+  Gasless USDC payments — both the classic (G-account + Wallets Kit) and the
+  contract/passkey (C-account, OpenZeppelin Smart Account) flows — run on pubnet
+  when the caller explicitly opts in (`allowMainnet: true` in the browser config /
+  `BUCKSPAY_ALLOW_MAINNET=1` in Node). Mainnet is OFF by default: without the opt-in,
+  `resolveNetwork("pubnet", …)` throws `INVALID_CONFIG`, so no default or forgotten
+  configuration can move real funds. The real pubnet path is proven by a guarded e2e
+  smoke (tiny 0.0001 USDC transfers) and gated behind the mainnet cutover runbook.
+
+  No breaking changes: testnet behavior and the public API surface (README §4) are
+  unchanged. Pre-1.0 → patch per VERSIONING.md §4.1.
+
 ## 0.1.3
 
 ### Patch Changes
