@@ -45,6 +45,16 @@
       "types": "./dist/passkey/index.d.ts",
       "import": "./dist/passkey/index.js",
       "require": "./dist/passkey/index.cjs"
+    },
+    "./social": {
+      "types": "./dist/social/index.d.ts",
+      "import": "./dist/social/index.js",
+      "require": "./dist/social/index.cjs"
+    },
+    "./email": {
+      "types": "./dist/email/index.d.ts",
+      "import": "./dist/email/index.js",
+      "require": "./dist/email/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
@@ -57,6 +67,12 @@
       ],
       "passkey": [
         "./dist/passkey/index.d.ts"
+      ],
+      "social": [
+        "./dist/social/index.d.ts"
+      ],
+      "email": [
+        "./dist/email/index.d.ts"
       ]
     }
   },

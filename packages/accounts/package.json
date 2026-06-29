@@ -45,6 +45,11 @@
       "types": "./dist/oz-contract/index.d.ts",
       "import": "./dist/oz-contract/index.js",
       "require": "./dist/oz-contract/index.cjs"
+    },
+    "./policy": {
+      "types": "./dist/policy/index.d.ts",
+      "import": "./dist/policy/index.js",
+      "require": "./dist/policy/index.cjs"
     }
   },
   "main": "./dist/index.cjs",

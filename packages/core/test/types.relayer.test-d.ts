@@ -9,7 +9,7 @@ describe("§4.3 relayer types", () => {
     expectTypeOf<AccountState["usdcBalance"]>().toEqualTypeOf<string | undefined>();
   });
 
-  it("RelayPayload matches facilitator stellarSorobanSchema fields exactly", () => {
+  it("RelayPayload matches facilitator stellarSorobanSchema fields (+ optional SP-2 fee fields)", () => {
     expectTypeOf<RelayPayload>().toEqualTypeOf<{
       token: string;
       from: string;
@@ -18,6 +18,8 @@ describe("§4.3 relayer types", () => {
       authorizationEntryXdr: string;
       nonce: string;
       signatureExpirationLedger: number;
+      feeAuthorizationEntryXdr?: string;
+      feeToken?: string;
     }>();
   });
 

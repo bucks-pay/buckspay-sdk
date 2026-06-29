@@ -18,8 +18,10 @@ import type {
 } from "../src/types";
 
 describe("§4.4 engine/intents/client/config/state types", () => {
-  it("GasConfig is sponsored-only in v1", () => {
-    expectTypeOf<GasConfig>().toEqualTypeOf<{ mode: "sponsored" }>();
+  it("GasConfig is the sponsored | token discriminated union (SP-2)", () => {
+    expectTypeOf<GasConfig>().toEqualTypeOf<
+      { mode: "sponsored" } | { mode: "token"; token: string; maxFee?: string }
+    >();
   });
 
   it("PreparedIntent carries the unsigned entry and preimage", () => {

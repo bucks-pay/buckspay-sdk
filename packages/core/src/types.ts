@@ -42,6 +42,12 @@ export interface BuckspaySigner {
    * structurally and raises ACCOUNT_NOT_READY if a signer can't sign txs.
    */
   signTransaction?(txXdr: string, ctx: { network: Network; address: string }): Promise<string>;
+  /**
+   * Social/email signers only (SP-2 sprint-4): run the provider's auth flow and
+   * resolve the Stellar key. wallets-kit / passkey signers omit it. After it
+   * resolves, getPublicKey()/signAuthEntry() operate on the provider-issued key.
+   */
+  authenticate?(params?: Record<string, unknown>): Promise<AuthDetails>;
 }
 
 export interface Call {
@@ -102,6 +108,9 @@ export interface RelayPayload {
   authorizationEntryXdr: string; // base64, signed
   nonce: string; // decimal string
   signatureExpirationLedger: number;
+  // SP-2 sprint-1 (gas mode "token") — present only when paying gas in a token.
+  feeAuthorizationEntryXdr?: string;
+  feeToken?: string;
 }
 
 /** EXACT shape of facilitator /relay response (soroban). The relayer adapter maps
@@ -126,10 +135,55 @@ export interface Relayer {
 
 // ── §4.4 Engine, intents, client, config, state ────────────────────────────
 
-// GasConfig stays a `type`, not an interface: in SP-2 it becomes a discriminated
-// union (sponsored | token | self), which an interface cannot express.
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export type GasConfig = { mode: "sponsored" }; // v1: sponsored only
+// GasConfig is a discriminated union: `sponsored` (v1, gasless) | `token` (SP-2
+// sprint-1: the fee is paid in a stablecoin via the FeeForwarder). A union is not an
+// object-type alias, so no consistent-type-definitions exception is needed.
+export type GasConfig =
+  | { mode: "sponsored" }
+  | { mode: "token"; token: string; maxFee?: string };
+
+/** FeeForwarder quote returned by the facilitator (`POST /fee/quote`) — SP-2 sprint-1. */
+export interface FeeQuote {
+  forwarder: string;
+  token: string;
+  estimatedXlmFee: string;
+  tokenAmount: string;
+  expiresAtLedger: number;
+}
+
+/** Resolved identity a social/email provider hands back — SP-2 sprint-4. */
+export interface AuthDetails {
+  publicKey: string;
+  provider: string;
+  expiresAt?: number;
+}
+
+/** Session policy — SP-2 sprint-3; compiled to an on-chain policy signer in `__check_auth`. */
+export type SessionPolicy =
+  | { kind: "spendLimit"; token: string; max: string; period: "day" | "week" | "month" | "total" }
+  | { kind: "allowlist"; contracts: string[] };
+
+export interface SessionGrant {
+  sessionKey: SignerKey;
+  policies: SessionPolicy[];
+  expiresAt: number;
+}
+
+export interface Session {
+  id: string;
+  account: string;
+  sessionKey: string;
+  policies: SessionPolicy[];
+  expiresAt: number;
+}
+
+/** Swap quote — SP-2 sprint-6 (stretch). */
+export interface SwapQuote {
+  tokenIn: string;
+  tokenOut: string;
+  amountIn: string;
+  amountOut: string;
+}
 
 export interface PreparedIntent {
   from: string;
@@ -141,6 +195,10 @@ export interface PreparedIntent {
   network: Network;
   unsignedEntry: xdr.SorobanAuthorizationEntry;
   preimageXdr: string;
+  // SP-2 sprint-1 (gas mode "token") — the second auth entry authorizing the fee payment.
+  feeUnsignedEntry?: xdr.SorobanAuthorizationEntry;
+  feePreimageXdr?: string;
+  feeQuote?: FeeQuote;
 }
 
 export interface SignedIntent {
@@ -152,6 +210,9 @@ export interface SignedIntent {
   signatureExpirationLedger: number;
   network: Network;
   authorizationEntryXdr: string; // signed, base64
+  // SP-2 sprint-1 (gas mode "token") — the signed fee auth entry + its token.
+  feeAuthorizationEntryXdr?: string;
+  feeToken?: string;
 }
 
 export interface BuckspayWallet {

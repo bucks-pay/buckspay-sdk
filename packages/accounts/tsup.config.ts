@@ -6,7 +6,8 @@ export default defineConfig({
   entry: {
     index: "src/index.ts",
     "classic/index": "src/classic/index.ts",
-    "oz-contract/index": "src/oz-contract/index.ts"
+    "oz-contract/index": "src/oz-contract/index.ts",
+    "policy/index": "src/policy/index.ts"
   },
   format: ["esm", "cjs"],
   dts: true,

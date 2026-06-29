@@ -1,0 +1,68 @@
+{
+  "name": "@buckspay/react-native",
+  "version": "0.1.4",
+  "type": "module",
+  "license": "MIT",
+  "description": "React Native bindings for the Buckspay SDK: native passkey + secure storage + the BuckspayProvider/useWallet/useStellarPay hooks for gasless Stellar (Soroban) USDC payments on mobile.",
+  "keywords": [
+    "stellar",
+    "soroban",
+    "react-native",
+    "mobile",
+    "passkey",
+    "gasless",
+    "account-abstraction",
+    "usdc",
+    "smart-wallet",
+    "sdk"
+  ],
+  "homepage": "https://github.com/bucks-pay/buckspay-sdk/tree/main/packages/react-native#readme",
+  "bugs": "https://github.com/bucks-pay/buckspay-sdk/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bucks-pay/buckspay-sdk.git",
+    "directory": "packages/react-native"
+  },
+  "author": "Buckspay",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist coverage .turbo"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@buckspay/core": "workspace:^",
+    "@buckspay/react": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

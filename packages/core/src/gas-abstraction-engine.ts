@@ -16,10 +16,14 @@ export class GasAbstractionEngine {
     // so widen to `string` before comparing (the literal type would make the
     // guard look unreachable to the type checker).
     const mode: string = (gas as { mode: string }).mode;
-    if (mode !== "sponsored") {
+    // `sponsored` is fully implemented. `token` (SP-2 sprint-1, FeeForwarder) is an
+    // ACCEPTED config that fails closed downstream in `BuckspayClient.prepare`
+    // (TOKEN_GAS_REJECTED) until sprint-1 wires it — so the feature gate lives where
+    // the feature will be built, not here. Any other mode is rejected at construction.
+    if (mode !== "sponsored" && mode !== "token") {
       throw new BuckspayError(
         "INVALID_CONFIG",
-        `unsupported gas mode "${mode}"; v1 supports "sponsored" only`
+        `unsupported gas mode "${mode}"; supported: "sponsored", "token"`
       );
     }
   }

@@ -216,6 +216,28 @@ importers:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@22.20.0)(jsdom@25.0.1(bufferutil@4.1.0)(utf-8-validate@6.0.6))
 
+  packages/nextjs:
+    dependencies:
+      '@buckspay/core':
+        specifier: workspace:^
+        version: link:../core
+      '@buckspay/relayer':
+        specifier: workspace:^
+        version: link:../relayer
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.15)(tsx@4.22.4)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.9(@types/node@22.20.0)(jsdom@25.0.1(bufferutil@4.1.0)(utf-8-validate@6.0.6))
+
   packages/react:
     dependencies:
       '@buckspay/core':
@@ -246,6 +268,31 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.2.7(react@19.2.7)
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.15)(tsx@4.22.4)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.9(@types/node@22.20.0)(jsdom@25.0.1(bufferutil@4.1.0)(utf-8-validate@6.0.6))
+
+  packages/react-native:
+    dependencies:
+      '@buckspay/core':
+        specifier: workspace:^
+        version: link:../core
+      '@buckspay/react':
+        specifier: workspace:^
+        version: link:../react
+    devDependencies:
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.17
+      react:
+        specifier: ^19.0.0
+        version: 19.2.7
       tsup:
         specifier: ^8.3.5
         version: 8.5.1(postcss@8.5.15)(tsx@4.22.4)(typescript@5.9.3)(yaml@2.9.0)

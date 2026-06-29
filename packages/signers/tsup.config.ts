@@ -6,7 +6,9 @@ export default defineConfig({
   entry: {
     index: "src/index.ts",
     "wallets-kit/index": "src/wallets-kit/index.ts",
-    "passkey/index": "src/passkey/index.ts"
+    "passkey/index": "src/passkey/index.ts",
+    "social/index": "src/social/index.ts",
+    "email/index": "src/email/index.ts"
   },
   format: ["esm", "cjs"],
   dts: true,

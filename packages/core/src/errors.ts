@@ -13,7 +13,14 @@ export type BuckspayErrorCode =
   | "INSUFFICIENT_SPONSOR"
   | "INSUFFICIENT_BALANCE"
   | "INVALID_CONFIG"
-  | "UNKNOWN";
+  | "UNKNOWN"
+  // ── SP-2 feature codes (sprint-0/01 lands the union; each sprint maps its code) ──
+  | "TOKEN_GAS_REJECTED"
+  | "BATCH_TOO_LARGE"
+  | "SESSION_EXPIRED"
+  | "SESSION_POLICY_VIOLATION"
+  | "AUTH_PROVIDER_ERROR"
+  | "SWAP_FAILED";
 
 /**
  * The single error type thrown across `@buckspay/*`. Carries a machine-readable

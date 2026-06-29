@@ -96,6 +96,14 @@ export class BuckspayClient {
   }
 
   async prepare(calls: Call[]): Promise<PreparedIntent> {
+    // SP-2: gas mode "token" lands in sprint-1 (FeeForwarder). Until then, fail closed so a
+    // token config can never silently fall through to the sponsored path.
+    if (this.config.gas.mode === "token") {
+      throw new BuckspayError(
+        "TOKEN_GAS_REJECTED",
+        "gas mode 'token' (fee in stablecoin) is not available until SP-2 sprint-1"
+      );
+    }
     const call = calls[0]; // v1: single transfer call (batch is SP-2)
     if (!call) {
       throw new BuckspayError("INVALID_CONFIG", "prepare() requires at least one call");

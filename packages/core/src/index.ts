@@ -44,3 +44,13 @@ export { GasAbstractionEngine } from "./gas-abstraction-engine";
 export { BuckspayClient } from "./client";
 export type { AccountSimContext } from "./client";
 export { createBuckspayClient, createBuckspayConfig } from "./config";
+export { batch, MAX_BATCH_CALLS } from "./batch";
+export type { BatchBuilder } from "./batch";
+export type {
+  AuthDetails,
+  FeeQuote,
+  Session,
+  SessionGrant,
+  SessionPolicy,
+  SwapQuote
+} from "./types";
