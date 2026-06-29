@@ -38,12 +38,20 @@ that are **not buckspay code**:
   (kept on the 7.x line to avoid a major bump). `pnpm audit --audit-level=high --prod` is now
   clean; the full workspace suite stays green. Remaining: **1 low + 1 moderate**, accepted —
   not high-severity, no patch path that doesn't churn the connector tree; re-checked weekly by CI.
-- **Copyleft/Unknown licenses — accepted.** AGPL `ua-parser-js`, LGPL `rpc-websockets`,
-  GPL `@lobstrco/*`, MPL `@ethereumjs/*`, plus several `Unknown`. The copyleft is confined to
-  connector modules the Stellar gasless path never exercises; they are not redistributed as
-  part of any `@buckspay/*` package. The license gate exempts them explicitly, with a per-package
-  reason (`scripts/check-licenses.mjs`). **Before mainnet:** narrow the wallets-kit connector
-  surface (or vendor a minimal connector) to drop the copyleft tree entirely.
+- **Copyleft/Unknown licenses — ACCEPTED (confined + CI-locked).** AGPL `ua-parser-js`, LGPL
+  `rpc-websockets`, GPL `@lobstrco/*`, MPL `@ethereumjs/*`, plus several `Unknown` (Trezor/Near/
+  Hot/xBull connectors). All are **hard transitive deps of `@creit.tech/stellar-wallets-kit`** —
+  connector modules the Stellar gasless path never exercises; they are not redistributed as part
+  of any `@buckspay/*` package. **Finding (sprint-6/05):** narrowing the runtime module set does
+  **not** remove them — they are declared by the umbrella package, so importing it pulls the whole
+  tree regardless of which modules are instantiated (the signer already wires only Freighter/xBull/
+  LOBSTR). The license gate exempts exactly this set with a per-package reason
+  (`scripts/check-licenses.mjs`), and a guard locks the acceptance: any copyleft/Unknown dep
+  **outside** the known wallets-kit set fails CI
+  (`pnpm --filter @buckspay/signers exec vitest run no-unexpected-copyleft`). **Clean-slate fix
+  (deferred, deliberate product decision):** vendor a Freighter-only connector via
+  `@stellar/freighter-api` and drop `@creit.tech/stellar-wallets-kit` entirely — this removes the
+  copyleft tree but loses multi-wallet (xBull/LOBSTR) support, so it was not taken in SP-1.
 
 ## Release-blocker checklist
 
@@ -61,8 +69,33 @@ that are **not buckspay code**:
 
 Run all at once: `bash scripts/release-gate.sh`.
 
+## Mainnet release blockers (M3 — sprint-6)
+
+Extends the checklist above with the mainnet-cutover items. Each maps 1:1 to a line in
+`scripts/release-gate.sh`.
+
+| Blocker | Verification command | Status |
+|---|---|---|
+| Secrets rotated (no tracked `.env*`, sponsor ≠ leaked `G`) | `bash scripts/check-no-committed-env.sh` | guard |
+| Secret-rotation runbook present | `test -f docs/security/secret-rotation.md` | doc |
+| Licenses within allow-list (copyleft confined to wallets-kit) | `node scripts/check-licenses.mjs` | guard |
+| No **unexpected** copyleft in prod tree | `pnpm --filter @buckspay/signers exec vitest run no-unexpected-copyleft` | guard |
+| OZ wasm-hash pin reproducible (sprint-6/02) | `node scripts/verify-wasm-hash.mjs` | guard |
+| Cross-repo wasm-pin parity (sprint-6/02) | `bash scripts/check-pin-parity.sh` | guard |
+| Gated mainnet smoke (sprint-6/06) | `BUCKSPAY_MAINNET_SMOKE=1 pnpm mainnet:smoke` | gated (skips when unset) |
+
+> **Copyleft note:** this gate enforces "no copyleft **outside** the accepted wallets-kit tree",
+> not "zero copyleft" — the multi-wallet connectors are an accepted, confined risk (see the
+> transitive-risks section above). Flipping to zero-copyleft requires the deferred Freighter-only
+> vendoring.
+
 ## Sign-off
+
+The audit sign-off is filled by the auditor once `bash scripts/release-gate.sh` is green
+end-to-end. The **scope hash** ties a specific audit to a specific tree state — recompute with
+`bash scripts/audit-scope-hash.sh`; if it no longer matches, in-scope code changed after sign-off
+and the audit must be re-validated.
 
 | Auditor | Date | Scope hash | Result |
 |---|---|---|---|
-| _(pending)_ | | | |
+| _(pending — engagement not yet run)_ | | `963d5e9e36f38dcb16719da305372ae6af2ea0cb981ff96fbe8a506637f944d9` | _(pending)_ |

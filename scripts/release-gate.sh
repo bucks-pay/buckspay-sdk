@@ -23,6 +23,20 @@ item "OZ wasm hash pinned"       hard pnpm --filter @buckspay/accounts exec vite
 item "licenses allow-list"       hard node scripts/check-licenses.mjs
 item "pnpm audit (transitive)"   soft pnpm audit --audit-level=high --prod
 
+# --- sprint-6 mainnet closeout blockers ---
+item "no committed env / sponsor != leaked"  hard bash scripts/check-no-committed-env.sh
+item "secret-rotation runbook present"       hard test -f docs/security/secret-rotation.md
+item "no unexpected copyleft in prod tree"   hard pnpm --filter @buckspay/signers exec vitest run no-unexpected-copyleft
+item "wasm-hash pin reproducible"            hard node scripts/verify-wasm-hash.mjs
+item "cross-repo wasm-pin parity"            hard bash scripts/check-pin-parity.sh
+
+# Gated mainnet smoke (sprint-6/06): honors BUCKSPAY_MAINNET_SMOKE; skips when unset.
+if [ "${BUCKSPAY_MAINNET_SMOKE:-}" = "1" ]; then
+  item "mainnet smoke (sprint-6/06)" soft pnpm mainnet:smoke
+else
+  echo "SKIP  mainnet smoke (set BUCKSPAY_MAINNET_SMOKE=1 to run)"
+fi
+
 # e2e honors the BUCKSPAY_E2E gate; skips cleanly when unconfigured.
 if [ "${BUCKSPAY_E2E:-}" = "1" ]; then
   item "e2e testnet" soft pnpm e2e
