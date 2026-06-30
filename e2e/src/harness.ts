@@ -1,4 +1,10 @@
-import { createBuckspayClient, createRpcSimContext, type AccountModel, type BuckspaySigner } from "@buckspay/core";
+import {
+  createBuckspayClient,
+  createRpcSimContext,
+  type AccountModel,
+  type BuckspaySigner,
+  type GasConfig
+} from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
 import { ozContractAccount } from "@buckspay/accounts/oz-contract";
 import { walletsKit } from "@buckspay/signers/wallets-kit";
@@ -14,7 +20,7 @@ import { e2eEnv } from "./env.js";
  * For unattended node e2e the caller injects a deterministic signer (Tasks 3-4); for
  * config tests the default wallets-kit/passkey signers are enough to assert assembly.
  */
-export function buildClient(model: AccountModel, signerOverride?: BuckspaySigner) {
+export function buildClient(model: AccountModel, signerOverride?: BuckspaySigner, gasOverride?: GasConfig) {
   const relayer = buckspayFacilitator({
     url: e2eEnv.FACILITATOR_URL,
     // The server-side test runner may supply the key; the browser demo never does.
@@ -41,7 +47,9 @@ export function buildClient(model: AccountModel, signerOverride?: BuckspaySigner
       account,
       signer,
       relayer,
-      gas: { mode: "sponsored" }
+      // Default sponsored (every SP-1 e2e call site is unchanged); SP-2 gas-in-token passes
+      // `{ mode: "token", token }`. `?? ` keeps the key always present (exactOptionalPropertyTypes).
+      gas: gasOverride ?? { mode: "sponsored" }
     },
     sim
   );
@@ -54,7 +62,7 @@ export function buildClient(model: AccountModel, signerOverride?: BuckspaySigner
  * is opt-in at three layers: the env gate (MAINNET_ENABLED), `allowMainnet: true` here,
  * and the contract model's pubnet `simSource`. The pubnet RPC is dedicated/consistent.
  */
-export function buildMainnetClient(model: AccountModel, signerOverride?: BuckspaySigner) {
+export function buildMainnetClient(model: AccountModel, signerOverride?: BuckspaySigner, gasOverride?: GasConfig) {
   const relayer = buckspayFacilitator({
     url: e2eEnv.FACILITATOR_URL,
     ...(e2eEnv.FACILITATOR_API_KEY ? { apiKey: e2eEnv.FACILITATOR_API_KEY } : {}),
@@ -79,7 +87,7 @@ export function buildMainnetClient(model: AccountModel, signerOverride?: Buckspa
       account,
       signer,
       relayer,
-      gas: { mode: "sponsored" },
+      gas: gasOverride ?? { mode: "sponsored" },
       // Deliberate, audited mainnet opt-in — without this resolveNetwork() throws.
       allowMainnet: true
     },
