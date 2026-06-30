@@ -1,0 +1,137 @@
+---
+title: "Social login"
+description: "Sign users in with Google, Apple, or Discord via web3auth — the provider secret stays server-side, never in the browser bundle."
+---
+
+The social signer lets users authenticate with an OAuth provider (Google, Apple, Discord) through
+web3auth. The OAuth public flow runs in the browser; the provider secret and verifier callback are
+handled by your backend signer-proxy. A Stellar ed25519 key backs the resulting account — the user
+never manages a seed phrase.
+
+## When to use
+
+Choose `socialSigner` when you want a familiar sign-in button (Google, Apple, Discord) without
+requiring your users to install a wallet or remember a seed phrase. The resulting key backs a
+classic `G…` account.
+
+<Warning>
+  The web3auth **client secret** must never be included in a browser bundle. Configure a
+  same-origin `proxyUrl` pointing at your backend signer-proxy, which is created with
+  `createSignerProxyRoute` from `@buckspay/nextjs`. Only the public OAuth flow runs in the
+  browser; the secret callback and verifier go through your server.
+</Warning>
+
+## Factory
+
+```ts
+import { socialSigner } from "@buckspay/signers/social";
+
+const signer = socialSigner({
+  provider: "web3auth",
+  clientId: "BNxxxx-your-web3auth-client-id",
+  network:  "testnet",
+  proxyUrl: "/api/buckspay/auth/social"
+});
+```
+
+`socialSigner(opts)` accepts a `SocialSignerOptions` object:
+
+| Option | Type | Required | Description |
+|---|---|---|---|
+| `provider` | `"web3auth"` | Yes | OAuth provider backend (only `"web3auth"` in v1) |
+| `clientId` | `string` | Yes | Your web3auth project client ID (public — safe in browser) |
+| `network` | `"testnet" \| "pubnet"` | Yes | Stellar network to target |
+| `proxyUrl` | `string` | No | Same-origin route to the `@buckspay/nextjs` signer-proxy |
+
+## Authentication
+
+Call `signer.authenticate?.(params)` before the payment. It runs the provider's OAuth flow and
+resolves an `AuthDetails` object:
+
+```ts
+const details = await signer.authenticate?.({ loginProvider: "google" });
+// details: AuthDetails { publicKey: "G…", provider: "web3auth" }
+```
+
+After `authenticate()` returns, the signer's `getPublicKey()` and `signAuthEntry()` are ready.
+Provider or network failures surface as `BuckspayError` with code `AUTH_PROVIDER_ERROR`.
+
+## Server-side proxy
+
+Mount the signer-proxy in your backend (for example, a Next.js App Router route):
+
+```ts
+// app/api/buckspay/auth/social/route.ts
+import { createSignerProxyRoute } from "@buckspay/nextjs";
+export const POST = createSignerProxyRoute({ provider: "web3auth", network: "testnet" });
+```
+
+The proxy receives the OAuth callback and calls the facilitator's `POST /auth/social` endpoint
+with the secret — only public key material is returned to the browser.
+
+## Example
+
+{/* @snippet:start 12-social-login.ts */}
+```ts
+// Recipe 12 — SOCIAL LOGIN (web3auth) → gasless USDC. Browser app.
+//
+// The user signs in with Google/Apple/Discord via web3auth. The PUBLIC OAuth runs in the
+// browser; the SECRET verifier callback is completed by YOUR backend's signer-proxy
+// (`@buckspay/nextjs` createSignerProxyRoute → facilitator POST /auth/social). web3auth
+// hands back a Stellar ed25519 key — the smart-account signer. No web3auth secret and no
+// private key ever reach this bundle.
+import { createBuckspayClient, createRpcSimContext, type BuckspayConfig } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { socialSigner } from "@buckspay/signers/social";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+const USDC_SAC_TESTNET = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const MERCHANT = "GA6HCMBLTZS5VYYBCATRBR5VBZJEH5C2OON6XQGB3RNYDDAQ7JZ65YQH";
+
+// The social ed25519 key backs the classic account (its G-address IS the account).
+const signer = socialSigner({
+  provider: "web3auth",
+  clientId: "BNxxxx-your-web3auth-client-id",
+  network: "testnet",
+  // YOUR same-origin signer-proxy route; it forwards to the facilitator with the secret server-side.
+  proxyUrl: "/api/buckspay/auth/social"
+});
+
+export const socialConfig: BuckspayConfig = {
+  network: "testnet",
+  account: classicAccount(),
+  signer,
+  // url points at YOUR backend relay route (apiKey server-side), never the raw facilitator key.
+  relayer: buckspayFacilitator({ url: "/api/buckspay/relay", network: "testnet" }),
+  gas: { mode: "sponsored" }
+};
+
+export const socialClient = createBuckspayClient(
+  socialConfig,
+  createRpcSimContext("https://soroban-testnet.stellar.org")
+);
+
+export async function payWithSocialLogin(): Promise<void> {
+  // 1. Run the provider OAuth flow → resolves the Stellar ed25519 key.
+  const details = await signer.authenticate?.({ loginProvider: "google" });
+  console.log("signed in as", details?.publicKey, "via", details?.provider);
+
+  // 2. From here it is an ordinary gasless payment — accounts/relayer/engine are untouched.
+  await socialClient.connect();
+  const call = socialClient.transfer({ token: USDC_SAC_TESTNET, to: MERCHANT, amount: "1.50" });
+  const receipt = await socialClient.pay([call]);
+  console.log(receipt.transferTx);
+}
+```
+{/* @snippet:end */}
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Email OTP" href="/signers/email-otp">
+    No OAuth required — authenticate with a code sent to the user's inbox.
+  </Card>
+  <Card title="Facilitator and BFF" href="/concepts/facilitator-and-bff">
+    How the signer-proxy and API key work together server-side.
+  </Card>
+</CardGroup>

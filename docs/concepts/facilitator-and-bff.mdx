@@ -1,0 +1,114 @@
+---
+title: "Facilitator and BFF"
+description: "The relayer's role in the payment flow, and why your API key must stay server-side behind a same-origin BFF."
+---
+
+## The facilitator's role
+
+The Buckspay facilitator is the off-chain relay service that takes a signed Stellar
+authorization entry, wraps it in a fee-bump transaction, and submits it to the network. It
+is what makes the payment gasless: the facilitator's sponsor account sources the XLM fee so
+the payer does not need any.
+
+In the SDK the facilitator is represented as a `Relayer` — the third config slot in
+`createBuckspayClient`. You construct one with `buckspayFacilitator({ url, network })` from
+`@buckspay/relayer/buckspay-facilitator`.
+
+## The same-origin BFF boundary
+
+The facilitator authenticates callers via an API key. **The API key must never reach the
+browser.** A browser bundle is inspectable by any user; shipping the key client-side exposes
+it to replay attacks and quota abuse.
+
+The standard pattern is a **Backend for Frontend (BFF)** route on your own server:
+
+1. The browser runs `prepare()` and `sign()`, then POSTs the `SignedIntent` to your backend.
+2. Your backend validates business rules (intent not expired, amount within tolerance, etc.).
+3. Your backend calls `server.send(signed)` using a `createBuckspayClient` that is configured
+   with `buckspayFacilitator({ url, apiKey, network })` — the `apiKey` is an environment
+   variable, never bundled.
+
+<Warning>
+  The `apiKey` passed to `buckspayFacilitator` must only appear in server-side code. If you
+  import a module containing the key in a browser bundle, any user can extract it from the
+  network tab.
+</Warning>
+
+The `RelayPayload` that `send()` forwards is byte-identical to what the facilitator expects —
+the BFF is a pass-through after your validation, not a translation layer.
+
+## BFF example
+
+The example below is the canonical server-side pattern. It is the only Buckspay example that
+passes an `apiKey` — all browser examples omit it and point `url` at a same-origin route
+like `/api/gasless`.
+
+{/* @snippet:start 07-bff-relay.ts */}
+```ts
+// SERVER-ONLY — this file holds the facilitator API key. NEVER import it in a browser
+// bundle. It is the BFF boundary: the browser POSTs a SignedIntent here; this validates
+// and forwards to the facilitator with the secret key server-side.
+import { createBuckspayClient, createRpcSimContext, type Receipt, type SignedIntent } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+// account/signer are unused by send() (the intent is already signed); only the relayer
+// (with the server-side key) and gas engine matter here.
+const server = createBuckspayClient(
+  {
+    network: "testnet",
+    account: classicAccount(),
+    signer: walletsKit({ network: "testnet" }),
+    relayer: buckspayFacilitator({
+      url: process.env.FACILITATOR_URL ?? "http://localhost:3000",
+      // server-side secret — never shipped to the browser
+      ...(process.env.FACILITATOR_API_KEY ? { apiKey: process.env.FACILITATOR_API_KEY } : {}),
+      network: "testnet"
+    }),
+    gas: { mode: "sponsored" }
+  },
+  createRpcSimContext(process.env.SOROBAN_RPC_URL ?? "https://soroban-testnet.stellar.org")
+);
+
+/** BFF handler: validate business rules, then relay. `RelayPayload` is byte-identical to the legacy body. */
+export async function bffRelay(signed: SignedIntent): Promise<Receipt> {
+  // ... your business validation: intent exists / not expired / amount tolerance / sponsorship budget ...
+  return server.send(signed);
+}
+```
+{/* @snippet:end */}
+
+## What stays in the browser
+
+The browser-side `buckspayFacilitator` call omits `apiKey` entirely and points `url` at your
+BFF route:
+
+```ts
+relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" })
+```
+
+The SDK sends a `POST /relay` to that route with the serialized `RelayPayload`. Your BFF
+handler validates, then calls the real facilitator with the key.
+
+## Migration from direct fetch
+
+If you currently `fetch` the facilitator directly from a backend route (hand-building the
+`SorobanRelayBody`), the migration is:
+
+- Delete the hand-rolled `signTransferAuth` / `normalizeSignature` helpers — `walletsKit`
+  absorbs the double-encode quirk of Freighter automatically.
+- Replace the raw `fetch` with `server.send(signed)`, where `server` is a
+  `createBuckspayClient` with `buckspayFacilitator({ url, apiKey, network })`.
+- Keep your rail schema and BFF route path unchanged.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Networks" href="/concepts/networks">
+    Testnet vs. pubnet, the mainnet opt-in, and USDC decimals.
+  </Card>
+  <Card title="Prepare → Sign → Send" href="/concepts/prepare-sign-send">
+    The three-phase flow and where the BFF slot fits in.
+  </Card>
+</CardGroup>

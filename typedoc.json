@@ -6,12 +6,18 @@
     "packages/core/src/index.ts",
     "packages/accounts/src/classic/index.ts",
     "packages/accounts/src/oz-contract/index.ts",
+    "packages/accounts/src/policy/index.ts",
+    "packages/accounts/src/policy-account/index.ts",
     "packages/signers/src/wallets-kit/index.ts",
     "packages/signers/src/passkey/index.ts",
+    "packages/signers/src/social/index.ts",
+    "packages/signers/src/email/index.ts",
     "packages/relayer/src/buckspay-facilitator/index.ts",
-    "packages/react/src/index.ts"
+    "packages/nextjs/src/index.ts",
+    "packages/react/src/index.ts",
+    "packages/react-native/src/index.ts"
   ],
-  "out": "docs/api",
+  "out": "docs/sdk-reference",
   "readme": "none",
   "githubPages": false,
   "excludeInternal": true

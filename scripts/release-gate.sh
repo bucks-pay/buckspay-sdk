@@ -25,12 +25,14 @@ item "pnpm audit (transitive)"   soft pnpm audit --audit-level=high --prod
 
 # --- mainnet closeout blockers ---
 item "no committed env / sponsor != leaked"  hard bash scripts/check-no-committed-env.sh
-item "secret-rotation runbook present"       hard test -f docs/security/secret-rotation.md
+item "secret-rotation runbook present"       hard test -f docs/production/security/secret-rotation.mdx
 item "no unexpected copyleft in prod tree"   hard pnpm --filter @buckspay/signers exec vitest run no-unexpected-copyleft
 item "wasm-hash pin reproducible"            hard node scripts/verify-wasm-hash.mjs
 item "cross-repo wasm-pin parity"            hard bash scripts/check-pin-parity.sh
 item "cutover runbook present"               hard bash scripts/check-cutover-runbook.sh
 item "feature docs + examples present"       hard bash scripts/check-feature-docs.sh
+item "doc snippets no drift"                 hard node scripts/check-doc-snippets.mjs
+item "docs no internal refs"                 hard bash scripts/check-docs-no-internal-refs.sh
 
 # --- onboarding/sessions/swap contract blockers ---
 # The contract decision gates (fee-forwarder / multicall / policy-signer) gate gas-in-token /

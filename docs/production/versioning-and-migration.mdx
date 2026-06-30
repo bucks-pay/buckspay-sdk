@@ -1,0 +1,93 @@
+---
+title: "Versioning and migration"
+description: "How @buckspay/* packages are versioned, what your ^ pin actually resolves, and how to migrate across breaking changes."
+---
+
+## Versioning policy
+
+All `@buckspay/*` packages follow [SemVer 2.0.0](https://semver.org/) and are managed with
+[Changesets](https://github.com/changesets/changesets) in a monorepo.
+
+### Lockstep releases
+
+**All five packages share a single version and are released together:**
+
+- `@buckspay/core`
+- `@buckspay/signers`
+- `@buckspay/accounts`
+- `@buckspay/relayer`
+- `@buckspay/react`
+
+`@buckspay/react@0.3.0` always pairs with `@buckspay/core@0.3.0`. This removes the
+compatibility matrix — one version number answers "which packages work together?"
+
+### Bump rules while pre-1.0
+
+The SDK is currently in `0.x`. The bump rules below apply **until `1.0.0`**:
+
+| Change | Bump | Example |
+|---|---|---|
+| Breaking API change (rename, remove, behavior change) | **minor** | `0.3.0 → 0.4.0` |
+| New backward-compatible feature | patch | `0.3.0 → 0.3.1` |
+| Bug fix | patch | `0.3.0 → 0.3.1` |
+
+`major` is reserved for the one-time graduation to `1.0.0`. It is never used before then.
+
+### How `^` behaves on a `0.x` version
+
+npm's caret on a `0.x` range **behaves like a tilde — it allows patch updates only**:
+
+| Pin | Resolves to |
+|---|---|
+| `^0.3.0` | `>=0.3.0 <0.4.0` (patch updates only) |
+| `~0.3.0` | `>=0.3.0 <0.4.0` (same result) |
+
+A consumer on `@buckspay/react@^0.3.0` automatically gets bug fixes and new features within
+`0.3.x`, but **must explicitly update** to `0.4.0` when a breaking change ships. This is
+intentional: you can't accidentally take a breaking change from a `^` range.
+
+**Recommendation:** pin all five packages with `^`:
+
+```bash
+pnpm add @buckspay/core@^0.x.y @buckspay/react@^0.x.y
+```
+
+Because versions are lockstep, a single version number covers the whole suite.
+
+### Changelogs
+
+Each package ships a `CHANGELOG.md` generated from changeset summaries. Read it before
+upgrading across a `minor` bump to understand what the breaking change requires.
+
+---
+
+## Migrating to a new version
+
+### Patch updates (`0.x.y → 0.x.z`)
+
+No action required. Your `^0.x.y` pin resolves the new patch automatically. No public API
+changed.
+
+### Minor updates (`0.x.y → 0.(x+1).0`) — breaking changes
+
+A minor bump signals a **breaking API change** under the pre-1.0 rules. Steps:
+
+1. **Read the CHANGELOG** for each affected package. The changeset summary describes exactly
+   what changed and what the replacement looks like.
+2. **Update your pin** in `package.json` from `^0.x.y` to `^0.(x+1).0`.
+3. **Update all five packages together** — because they are lockstep, mixing versions
+   (e.g. `core@0.4.0` with `react@0.3.x`) is unsupported and may cause type errors at build time.
+4. **Fix call sites** per the CHANGELOG. Breaking changes are accompanied by a migration note
+   that shows the before/after.
+
+### Future: upgrading to `1.0.0`
+
+When `1.0.0` ships, the `^` caret regains its usual meaning: `^1.0.0` resolves
+`>=1.0.0 <2.0.0`. Packages will graduate from `0.x` lockstep at the same time, so the
+migration from `0.x` to `1.0.0` is a single coordinated bump across the suite. Migration
+notes will be published in each package's `CHANGELOG.md`.
+
+<Note>
+  Breaking changes in `1.x+` cost a `major` bump, so `^1.0.0` will never silently take a
+  breaking change — this is the standard SemVer guarantee that `0.x` does not provide.
+</Note>

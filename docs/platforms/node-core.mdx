@@ -1,0 +1,112 @@
+---
+title: "Node / Core — @buckspay/core"
+description: "Use createBuckspayClient directly — no React. Suitable for server scripts, CLI tools, and backend workers."
+---
+
+`@buckspay/core` is the platform-agnostic heart of the SDK. You can use it directly — without
+any React layer — in Node.js scripts, backend workers, or any environment where you control
+the signer manually.
+
+The surface is the same three-phase flow described in [Prepare → Sign → Send](/concepts/prepare-sign-send):
+`createBuckspayClient` assembles the client; `createRpcSimContext` gives `prepare()` a Soroban
+simulator; then `connect()` → `pay()` (or the split `prepare` / `sign` / `send`) executes the
+payment.
+
+<Steps>
+
+### Install
+
+```bash
+pnpm add @buckspay/core @buckspay/accounts @buckspay/signers @buckspay/relayer
+```
+
+### Create the client
+
+```ts
+import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+const client = createBuckspayClient(
+  {
+    network: "testnet",
+    account: classicAccount(),
+    signer: walletsKit({ network: "testnet" }),
+    relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+    gas: { mode: "sponsored" }
+  },
+  createRpcSimContext("https://soroban-testnet.stellar.org")
+);
+```
+
+### Connect and pay
+
+```ts
+await client.connect();
+const call = client.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" });
+const receipt = await client.pay([call]);
+console.log(receipt.transferTx);
+```
+
+</Steps>
+
+## When to use the core directly
+
+| Scenario | Recommended approach |
+|---|---|
+| React / React Native app | [`@buckspay/react`](/platforms/web-react) or [`@buckspay/react-native`](/platforms/react-native) |
+| Next.js App Router BFF route | [`@buckspay/nextjs`](/platforms/nextjs-bff) |
+| Node.js script, backend worker, or CLI | `@buckspay/core` directly |
+| Server-side relay (any framework) | `createBuckspayClient` + `buckspayFacilitator({ apiKey })` — server-only |
+
+<Note>
+  When using `@buckspay/core` in a server-side relay, pass `apiKey` to `buckspayFacilitator`
+  as an environment variable. The API key must never appear in a browser bundle.
+</Note>
+
+## Full quickstart example
+
+{/* @snippet:start 01-quickstart-classic.ts */}
+```ts
+// Quickstart — classic gasless USDC transfer (browser; NO apiKey).
+import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+const USDC_SAC: string = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const MERCHANT: string = "GA6HCMBLTZS5VYYBCATRBR5VBZJEH5C2OON6XQGB3RNYDDAQ7JZ65YQH";
+
+export async function quickstart(): Promise<void> {
+  const buckspay = createBuckspayClient(
+    {
+      network: "testnet",
+      account: classicAccount(),
+      signer: walletsKit({ network: "testnet" }),
+      // url points at YOUR backend, which forwards to the facilitator with the key server-side.
+      relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+      gas: { mode: "sponsored" }
+    },
+    // prepare() simulates against the Soroban RPC.
+    createRpcSimContext("https://soroban-testnet.stellar.org")
+  );
+
+  await buckspay.connect(); // wallet + ensureReady
+  const call = buckspay.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" });
+  const receipt = await buckspay.pay([call]); // prepare → sign → send
+  console.log(receipt.transferTx); // settled on testnet
+}
+```
+{/* @snippet:end */}
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" href="/get-started/quickstart">
+    The full quickstart walkthrough with a classic G-address account.
+  </Card>
+  <Card title="Prepare → Sign → Send" href="/concepts/prepare-sign-send">
+    The three-phase flow and where the BFF slot fits.
+  </Card>
+</CardGroup>

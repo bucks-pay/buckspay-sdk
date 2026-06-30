@@ -1,0 +1,113 @@
+---
+title: "Account models"
+description: "Classic G-addresses vs. passkey smart-contract accounts — when to use each."
+---
+
+Buckspay separates *who signs* (`BuckspaySigner`) from *what account signs* (`AccountAdapter`).
+They are **orthogonal**: you can pair any signer with any account type. The two account models
+ship in v1.
+
+## Comparison
+
+| | Classic | Passkey / contract |
+|---|---|---|
+| User prerequisite | A Stellar wallet (Freighter / xBull / LOBSTR) | A device with WebAuthn support |
+| Address | `G…` account | `C…` contract account |
+| Materialization | Sponsored onboarding (account + trustline) | Sponsored OZ Smart Account deploy |
+| Signature verified by | The network (Ed25519) | The contract's `__check_auth` (secp256r1) |
+| Best for | Existing Stellar users | New users and passwordless onboarding |
+
+## Classic account (`G…`)
+
+For users who already have a Stellar wallet (Freighter, xBull, LOBSTR). Calling `connect()`
+resolves the `G…` address and runs sponsored onboarding — it creates the account and adds the
+USDC trustline — if either is missing.
+
+The network verifies the user's signature via standard Ed25519 authentication. No contract is
+involved.
+
+The `classicAccount()` adapter is imported from `@buckspay/accounts/classic`; the matching
+signer is `walletsKit` from `@buckspay/signers/wallets-kit`.
+
+{/* @snippet:start 02a-classic-account.ts */}
+```ts
+// Recipe A — classic wallet account (G…), for users who already have a Stellar wallet.
+import { createBuckspayClient, createRpcSimContext, type BuckspayConfig } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+export const classicConfig: BuckspayConfig = {
+  network: "testnet",
+  account: classicAccount(),
+  signer: walletsKit({ network: "testnet" }),
+  relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+  gas: { mode: "sponsored" }
+};
+
+// connect() resolves the G… address and runs sponsored onboarding (account + USDC trustline) if missing.
+export const classicClient = createBuckspayClient(
+  classicConfig,
+  createRpcSimContext("https://soroban-testnet.stellar.org")
+);
+```
+{/* @snippet:end */}
+
+## Passkey / contract account (`C…`)
+
+The hero flow for new users. `connect()` creates a WebAuthn credential, derives the
+deterministic `C…` address, and deploys the OpenZeppelin Smart Account **sponsored** by the
+facilitator. The user only taps an authenticator prompt — no seed phrase, no XLM balance
+required.
+
+Signing happens in the device authenticator (secp256r1). The contract's `__check_auth`
+verifies the signature on-chain. See [Gasless on Stellar](/concepts/gasless-on-stellar) for
+the mechanics.
+
+The `ozContractAccount()` adapter is imported from `@buckspay/accounts/oz-contract`;
+`sponsorAddress` is the facilitator's public sponsor `G…` address, needed to derive the `C…`
+address offline.
+
+{/* @snippet:start 02b-passkey-account.ts */}
+```ts
+// Recipe B — passkey smart account (C…), the hero flow. Browser only (uses window).
+import { createBuckspayClient, createRpcSimContext, type BuckspayConfig } from "@buckspay/core";
+import { ozContractAccount } from "@buckspay/accounts/oz-contract";
+import { passkey } from "@buckspay/signers/passkey";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+// Public facilitator sponsor/deployer G-address (derives the deterministic C-address).
+const SPONSOR_G: string = "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN";
+
+export const passkeyConfig: BuckspayConfig = {
+  network: "testnet",
+  account: ozContractAccount({ network: "testnet", sponsorAddress: SPONSOR_G }),
+  // create()s a passkey, derives the C-address, deploys the OZ Smart Account sponsored.
+  signer: passkey({ rpId: window.location.hostname, rpName: "buckspay" }),
+  relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+  gas: { mode: "sponsored" }
+};
+
+export const passkeyClient = createBuckspayClient(
+  passkeyConfig,
+  createRpcSimContext("https://soroban-testnet.stellar.org")
+);
+```
+{/* @snippet:end */}
+
+## The `AccountAdapter` seam
+
+`AccountAdapter` is the interface both models implement. OZ Smart Accounts is the only
+contract implementation in v1, but the interface is open — you can wire in any conforming
+adapter without changing the rest of the client.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Prepare → Sign → Send" href="/concepts/prepare-sign-send">
+    The three-phase flow every Buckspay payment follows.
+  </Card>
+  <Card title="Gasless on Stellar" href="/concepts/gasless-on-stellar">
+    The native Stellar mechanisms behind sponsored and contract accounts.
+  </Card>
+</CardGroup>

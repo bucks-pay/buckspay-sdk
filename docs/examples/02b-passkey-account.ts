@@ -5,14 +5,14 @@ import { passkey } from "@buckspay/signers/passkey";
 import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
 
 // Public facilitator sponsor/deployer G-address (derives the deterministic C-address).
-const SPONSOR_G: string = "GDKAC6N4HXVZ5 ".trim();
+const SPONSOR_G: string = "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN";
 
 export const passkeyConfig: BuckspayConfig = {
   network: "testnet",
   account: ozContractAccount({ network: "testnet", sponsorAddress: SPONSOR_G }),
   // create()s a passkey, derives the C-address, deploys the OZ Smart Account sponsored.
   signer: passkey({ rpId: window.location.hostname, rpName: "buckspay" }),
-  relayer: buckspayFacilitator({ url: "/facilitator", network: "testnet" }),
+  relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
   gas: { mode: "sponsored" }
 };
 

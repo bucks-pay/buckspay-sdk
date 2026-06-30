@@ -1,0 +1,66 @@
+---
+title: "Spend limit policy"
+description: "Cap a session key's cumulative token spend over a rolling period — enforced on-chain in __check_auth."
+---
+
+`spendLimit` caps how much of a given token a session key may spend over a rolling time
+window. The limit is enforced **on-chain** in the contract's `__check_auth` — not in the
+SDK, not in the facilitator. A stolen session blob still cannot exceed its configured cap.
+
+## Usage
+
+```ts
+import { spendLimit } from "@buckspay/accounts/policy";
+
+const policy = spendLimit({
+  token: USDC_SAC,    // C-address of the token to cap
+  max: "100",         // maximum spend in display units (e.g. "100" = 100 USDC)
+  period: "day"       // rolling window: "day" | "week" | "month" | "total"
+});
+```
+
+Pass the policy in the `policies` array when calling `grantSession`:
+
+```ts
+const { session } = await client.grantSession({
+  sessionKey: { type: "ed25519", publicKey: sessionKp.publicKey() },
+  policies: [spendLimit({ token: USDC_SAC, max: "100", period: "day" })],
+  expiresAt: Date.now() + 86_400_000
+});
+```
+
+## Period values
+
+| Value | Window |
+|---|---|
+| `"day"` | Rolling 24-hour window |
+| `"week"` | Rolling 7-day window |
+| `"month"` | Rolling 30-day window |
+| `"total"` | Lifetime cap for the session (no reset) |
+
+## What happens when the limit is exceeded
+
+A payment that would exceed the cap is rejected by the contract during `__check_auth`. The
+facilitator maps the on-chain rejection to `BuckspayError("SESSION_POLICY_VIOLATION")`.
+
+<Note>
+  The limit is per-session, per-token. Two separate sessions each with `max: "100"` can each
+  spend up to 100 USDC independently.
+</Note>
+
+## Combining policies
+
+`spendLimit` is commonly paired with `allowlist` so the session key is scoped both by
+spend and by callable contracts. See [Sessions overview](/features/sessions/overview) for
+the full lifecycle example.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Allowlist policy" href="/features/sessions/allowlist">
+    Restrict which contracts the session key may call.
+  </Card>
+  <Card title="Sessions overview" href="/features/sessions/overview">
+    Full lifecycle: grant, serialize, use, and revoke a session.
+  </Card>
+</CardGroup>

@@ -1,0 +1,1209 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Buckspay Facilitator & BFF API",
+    "version": "0.2.0",
+    "description": "HTTP wire contract for the Buckspay SDK. The SDK calls these endpoints internally via `@buckspay/relayer`; this reference is for teams building their own BFF relay route or calling the facilitator from server-side code.\n\nAll facilitator endpoints require the `x-api-key` header. **The API key is a server-side secret — it must only appear in BFF or server-side code and must never be shipped to a browser bundle.** Use `createRelayRoute` and `createSignerProxyRoute` from `@buckspay/nextjs` to build compliant BFF handlers."
+  },
+  "servers": [
+    {
+      "url": "{facilitatorUrl}",
+      "description": "Buckspay facilitator (all endpoints). Set via BUCKSPAY_FACILITATOR_URL on the server.",
+      "variables": {
+        "facilitatorUrl": {
+          "default": "https://facilitator.buckspay.com",
+          "description": "Base URL of the Buckspay facilitator service."
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "FacilitatorApiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Relay",
+      "description": "Submit a signed Soroban authorization entry for gasless relaying to the Stellar network."
+    },
+    {
+      "name": "Fee",
+      "description": "Quote the fee-token amount required for gas-in-token (token gas mode) before building the forward() invocation."
+    },
+    {
+      "name": "Account State",
+      "description": "Read on-chain state for classic G-addresses and contract C-addresses."
+    },
+    {
+      "name": "Onboarding",
+      "description": "Build and submit the sponsored onboarding transaction; deploy passkey smart-accounts and policy session-accounts."
+    },
+    {
+      "name": "Auth",
+      "description": "Signer-proxy for social and email authentication. The BFF forwards these requests to the facilitator; provider secrets remain server-side."
+    },
+    {
+      "name": "Swap",
+      "description": "Quote a gasless EVM token swap. Requires `swapChain` to be configured in the relayer."
+    }
+  ],
+  "paths": {
+    "/relay": {
+      "post": {
+        "summary": "Relay a signed payment",
+        "operationId": "postRelay",
+        "tags": ["Relay"],
+        "description": "Submit a signed Soroban `SorobanAuthorizationEntry` (base64 XDR) to the facilitator. The facilitator wraps it in a fee-bump transaction, submits it to Stellar, and returns a `Receipt`.\n\nIn gas-in-token mode, set `feeToken` and ensure `authorizationEntryXdr` encodes the `FeeForwarder.forward()` invocation (a single host-function op that includes the actual transfer as a sub-invocation). No separate fee auth entry is needed.\n\n**The API key is injected server-side by the BFF; the browser never sends this header directly.**",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelayPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment relayed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The payload was rejected by the facilitator. The `error` field contains the machine-readable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "session_policy_violation": {
+                    "summary": "Session spend limit exceeded",
+                    "value": {
+                      "error": "session_policy_violation",
+                      "message": "transfer exceeds session spend limit"
+                    }
+                  },
+                  "auth_expired": {
+                    "summary": "Authorization entry expired",
+                    "value": {
+                      "error": "auth_expired",
+                      "message": "signatureExpirationLedger is in the past"
+                    }
+                  },
+                  "simulation_failed": {
+                    "summary": "Soroban simulation failed",
+                    "value": {
+                      "error": "simulation_failed",
+                      "message": "soroban simulation rejected the invocation"
+                    }
+                  },
+                  "tx_reverted": {
+                    "summary": "Transaction reverted on-chain",
+                    "value": {
+                      "error": "tx_reverted",
+                      "message": "transaction was submitted but reverted"
+                    }
+                  },
+                  "recipient_not_allowed": {
+                    "summary": "Recipient address not on allowlist",
+                    "value": {
+                      "error": "recipient_not_allowed",
+                      "message": "recipient is not in the session allowlist"
+                    }
+                  },
+                  "invalid_payload": {
+                    "summary": "Payload failed schema validation",
+                    "value": {
+                      "error": "invalid_payload"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "unauthorized"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Facilitator could not reach Stellar Horizon or the submission failed infrastructure-side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "horizon_unreachable": {
+                    "value": { "error": "horizon_unreachable" }
+                  },
+                  "submission_failed": {
+                    "value": { "error": "submission_failed" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fee/quote": {
+      "post": {
+        "summary": "Quote a gas-in-token fee",
+        "operationId": "postFeeQuote",
+        "tags": ["Fee"],
+        "description": "Request a fee quote for paying Soroban gas in a token instead of XLM. The facilitator simulates the calls, prices the XLM fee as a token amount, and returns the quote including the `FeeForwarder` contract address and a ledger-based expiry.\n\nThe SDK uses this quote to build the `FeeForwarder.forward()` authorization entry before calling `POST /relay` with `feeToken` set.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeeQuoteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fee quote computed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeeQuote"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The calls could not be simulated or the token is not supported.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "simulation_failed",
+                  "message": "could not simulate the provided calls"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "unauthorized" }
+              }
+            }
+          },
+          "502": {
+            "description": "Facilitator could not reach Stellar Horizon.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "horizon_unreachable" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stellar/account/{publicKey}": {
+      "get": {
+        "summary": "Get classic account state",
+        "operationId": "getStellarAccount",
+        "tags": ["Account State"],
+        "description": "Returns on-chain state for a classic Stellar G-address: whether it exists, whether it has a USDC trustline, and its XLM and USDC balances. Used by the SDK to gate the onboarding flow and to display account state in UI.",
+        "parameters": [
+          {
+            "name": "publicKey",
+            "in": "path",
+            "required": true,
+            "description": "Stellar classic public key (G-address, StrKey encoded).",
+            "schema": {
+              "type": "string",
+              "pattern": "^G[A-Z2-7]{55}$",
+              "example": "GABC1234..."
+            }
+          },
+          {
+            "name": "chain",
+            "in": "query",
+            "required": true,
+            "description": "Network to query.",
+            "schema": {
+              "$ref": "#/components/schemas/FacilitatorChain"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account state returned.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AccountState" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid address or query parameter.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "502": {
+            "description": "Facilitator could not reach Stellar Horizon.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stellar/contract/{address}": {
+      "get": {
+        "summary": "Get contract account state",
+        "operationId": "getStellarContract",
+        "tags": ["Account State"],
+        "description": "Returns on-chain state for a passkey smart-account or policy session-account (C-address). Same response shape as the classic account endpoint. The SDK routes G-addresses to `/stellar/account/:pk` and C-addresses here.",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "description": "Contract address (C-address, StrKey encoded).",
+            "schema": {
+              "type": "string",
+              "pattern": "^C[A-Z2-7]{55}$",
+              "example": "CABC1234..."
+            }
+          },
+          {
+            "name": "chain",
+            "in": "query",
+            "required": true,
+            "description": "Network to query.",
+            "schema": {
+              "$ref": "#/components/schemas/FacilitatorChain"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract account state returned.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AccountState" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid address or query parameter.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "502": {
+            "description": "Facilitator could not reach Stellar Horizon.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stellar/onboard/build": {
+      "post": {
+        "summary": "Build onboarding transaction",
+        "operationId": "postStellarOnboardBuild",
+        "tags": ["Onboarding"],
+        "description": "Build the sponsor-funded onboarding transaction for a classic G-address: creates the account if needed and establishes the USDC trustline. The facilitator returns the unsigned transaction XDR for the user to sign and submit via `POST /stellar/onboard/submit`.\n\nIf the account is already fully onboarded, `nothingToDo: true` is returned and no XDR needs to be signed.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardBuildRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Onboarding transaction built or account already onboarded.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OnboardBuildResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Could not build the onboarding transaction.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "build_failed" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "502": {
+            "description": "Facilitator could not reach Stellar Horizon.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stellar/onboard/submit": {
+      "post": {
+        "summary": "Submit signed onboarding transaction",
+        "operationId": "postStellarOnboardSubmit",
+        "tags": ["Onboarding"],
+        "description": "Submit the user-signed onboarding transaction XDR from `POST /stellar/onboard/build`. The facilitator fee-bumps it (so the user does not need XLM for fees) and submits it to Stellar.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardSubmitRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Onboarding transaction submitted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["ok"],
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "description": "Always `true` on success."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The signed transaction was rejected.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "submit_failed": { "value": { "error": "submit_failed" } },
+                  "invalid_onboard_tx": { "value": { "error": "invalid_onboard_tx" } }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "502": {
+            "description": "Facilitator could not reach Stellar Horizon.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stellar/contract/deploy": {
+      "post": {
+        "summary": "Deploy a passkey smart-account",
+        "operationId": "postStellarContractDeploy",
+        "tags": ["Onboarding"],
+        "description": "Sponsor-deploy a passkey smart-account (secp256r1 / WebAuthn). The SDK sends the passkey's 65-byte uncompressed public key; the facilitator holds the sponsor secret, enforces the pinned Wasm hash, and returns the deployed contract address.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeployContractRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contract deployed. The `address` is the new C-address of the smart-account.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DeployContractResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Deployment rejected.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "503": {
+            "description": "Sponsor account not configured or unavailable.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "sponsor_not_configured": {
+                    "value": { "error": "sponsor_not_configured" }
+                  },
+                  "sponsor_unavailable": {
+                    "value": { "error": "sponsor_unavailable" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stellar/session-account/deploy": {
+      "post": {
+        "summary": "Deploy a policy session-account",
+        "operationId": "postStellarSessionAccountDeploy",
+        "tags": ["Onboarding"],
+        "description": "Sponsor-deploy a policy-scoped session-account bound to an ed25519 root key. The SDK sends the root public key (G-address); the facilitator holds the sponsor secret, enforces the pinned Wasm hash, and returns the deployed contract address. Requires `deploySessionAccount` support in the relayer.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeploySessionAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session-account deployed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DeployContractResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Deployment rejected.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "503": {
+            "description": "Sponsor account not configured or unavailable.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "sponsor_not_configured" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/social": {
+      "post": {
+        "summary": "Social identity → Stellar key",
+        "operationId": "postAuthSocial",
+        "tags": ["Auth"],
+        "description": "Signer-proxy endpoint. The BFF (`createSignerProxyRoute({ provider: 'web3auth', ... })`) forwards this request to the facilitator's `/auth/social` with the server-held API key injected. The facilitator verifies the provider identity token, derives or recovers the user's Stellar key, and returns it.\n\n**Never call the facilitator's `/auth/social` directly from the browser.** Use the BFF route: the SDK's `@buckspay/signers/social` posts to your same-origin BFF which proxies the call.\n\nThe request body is provider-specific (Web3Auth / web3auth verifier). The response `publicKey` is a Stellar G-address (ed25519 StrKey).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              },
+              "example": {
+                "idToken": "<web3auth-id-token>",
+                "verifier": "buckspay-google"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Identity verified. Returns the derived Stellar public key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthKeyResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Identity token invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "auth_invalid" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "503": {
+            "description": "Signer proxy not configured (BUCKSPAY_FACILITATOR_URL or BUCKSPAY_FACILITATOR_API_KEY missing on the BFF server).",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "signer_proxy_not_configured" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/email": {
+      "post": {
+        "summary": "Email OTP → Stellar key",
+        "operationId": "postAuthEmail",
+        "tags": ["Auth"],
+        "description": "Signer-proxy endpoint. The BFF (`createSignerProxyRoute({ provider: 'email', ... })`) forwards this request to the facilitator's `/auth/email`. The facilitator verifies the one-time code and returns the user's derived Stellar public key.\n\n**Never call the facilitator's `/auth/email` directly from the browser.** Use the BFF route: the SDK's `@buckspay/signers/email` posts to your same-origin BFF which proxies the call.\n\nThe request body is provider-specific (email address + OTP code). The response `publicKey` is a Stellar G-address (ed25519 StrKey).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              },
+              "example": {
+                "email": "user@example.com",
+                "code": "123456"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP verified. Returns the derived Stellar public key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthKeyResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "OTP invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "auth_expired" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "503": {
+            "description": "Signer proxy not configured (BUCKSPAY_FACILITATOR_URL or BUCKSPAY_FACILITATOR_API_KEY missing on the BFF server).",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "signer_proxy_not_configured" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/swap/quote": {
+      "post": {
+        "summary": "Get an EVM swap quote",
+        "operationId": "postSwapQuote",
+        "tags": ["Swap"],
+        "description": "Get a gasless EVM token swap quote. Requires the relayer to be configured with a `swapChain` (see `FacilitatorOptions`). Returns a quote ID, expected amounts, and EIP-712 typed data for the swap authorization.\n\n**This endpoint is available only when the EVM swap rail is configured.** If `swapChain` is absent, `BuckspayClient.swap()` fails with `SWAP_FAILED`.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwapQuoteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Swap quote computed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SwapQuoteResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Swap quote failed (pair not supported, slippage too high, etc.).",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "SWAP_FAILED", "message": "pair not supported on this chain" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "FacilitatorApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "Server-held API key. Injected by the BFF (`createRelayRoute` / `createSignerProxyRoute` from `@buckspay/nextjs`). This key must only appear in server-side code and must never be shipped to a browser bundle."
+      }
+    },
+    "schemas": {
+      "FacilitatorChain": {
+        "type": "string",
+        "enum": ["stellar-testnet", "stellar-pubnet"],
+        "description": "Stellar network identifier used in facilitator requests."
+      },
+      "StellarContractAddress": {
+        "type": "string",
+        "pattern": "^C[A-Z2-7]{55}$",
+        "description": "Stellar contract address (C-address, 56-character StrKey)."
+      },
+      "StellarPublicKey": {
+        "type": "string",
+        "pattern": "^G[A-Z2-7]{55}$",
+        "description": "Stellar classic public key (G-address, 56-character StrKey)."
+      },
+      "StellarAddress": {
+        "type": "string",
+        "pattern": "^[GC][A-Z2-7]{55}$",
+        "description": "Stellar address: either a classic G-address or a contract C-address."
+      },
+      "Stroops": {
+        "type": "string",
+        "pattern": "^\\d+$",
+        "description": "A non-negative integer encoded as a decimal string to preserve precision. For Stellar token amounts this is the smallest unit with the asset's implied decimals (USDC = 7, i.e. stroops); the same string encoding also carries fees, nonces, and EVM swap amounts (which use their own token's decimals)."
+      },
+      "Base64": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9+/]+=*$",
+        "minLength": 1,
+        "description": "Standard base64-encoded bytes."
+      },
+      "RelayPayload": {
+        "type": "object",
+        "required": [
+          "token",
+          "from",
+          "to",
+          "value",
+          "authorizationEntryXdr",
+          "nonce",
+          "signatureExpirationLedger"
+        ],
+        "properties": {
+          "token": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarContractAddress" }],
+            "description": "USDC SAC contract address (C-address). The asset being transferred."
+          },
+          "from": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarAddress" }],
+            "description": "Payer address — either a classic G-address or a smart-contract C-address."
+          },
+          "to": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarPublicKey" }],
+            "description": "Recipient G-address."
+          },
+          "value": {
+            "allOf": [{ "$ref": "#/components/schemas/Stroops" }],
+            "description": "Transfer amount in USDC stroops (7 decimal places)."
+          },
+          "authorizationEntryXdr": {
+            "allOf": [{ "$ref": "#/components/schemas/Base64" }],
+            "description": "Signed `SorobanAuthorizationEntry` as base64 XDR. In gas-in-token mode this is the `FeeForwarder.forward()` entry; in sponsored mode it is the USDC `transfer` entry."
+          },
+          "nonce": {
+            "allOf": [{ "$ref": "#/components/schemas/Stroops" }],
+            "description": "Authorization nonce as a decimal string. Must match the nonce used when building the unsigned entry."
+          },
+          "signatureExpirationLedger": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Ledger sequence number after which the authorization entry is invalid. Must be in the future when the facilitator processes the request."
+          },
+          "feeToken": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarContractAddress" }],
+            "description": "Optional. Present only in gas-in-token mode. Names the token used to pay the gas fee. When set, `authorizationEntryXdr` encodes the `FeeForwarder.forward()` invocation (not a bare transfer)."
+          },
+          "sessionOp": {
+            "type": "string",
+            "enum": ["install", "revoke"],
+            "description": "Optional. Marks the relay as a session management operation (`install` grants a new session key; `revoke` removes one). The facilitator relays it as a self-administered contract call on the policy account. Absent for ordinary USDC transfers."
+          }
+        },
+        "description": "Signed relay request. Mirrors the SDK `RelayPayload` type from `@buckspay/core`."
+      },
+      "Receipt": {
+        "type": "object",
+        "required": ["ok", "via", "token", "chain", "transferTx", "status"],
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "description": "Always `true` on a 200 response."
+          },
+          "via": {
+            "type": "string",
+            "description": "Relay strategy identifier (e.g. `buckspay_self`)."
+          },
+          "token": {
+            "type": "string",
+            "description": "Contract address of the transferred token."
+          },
+          "chain": {
+            "type": "string",
+            "enum": [
+              "stellar-testnet",
+              "stellar-pubnet",
+              "avalanche",
+              "celo",
+              "polygon",
+              "base",
+              "avalanche-fuji",
+              "polygon-amoy",
+              "base-sepolia",
+              "celo-sepolia"
+            ],
+            "description": "Chain on which the transaction was submitted."
+          },
+          "transferTx": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Transaction hash or identifier of the submitted transaction."
+          },
+          "ledger": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Ledger sequence number at which the transaction was included. Absent if the facilitator did not return a ledger (omitted, not null)."
+          },
+          "status": {
+            "type": "string",
+            "description": "Human-readable status string from the facilitator (e.g. `SUCCESS`)."
+          }
+        },
+        "description": "Relay receipt returned by `POST /relay`. Mirrors the SDK `Receipt` type from `@buckspay/core`. The SDK adapter maps the facilitator's `blockNumber` field to `ledger`."
+      },
+      "FeeQuoteRequest": {
+        "type": "object",
+        "required": ["chain", "from", "token", "calls"],
+        "properties": {
+          "chain": {
+            "$ref": "#/components/schemas/FacilitatorChain"
+          },
+          "from": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarAddress" }],
+            "description": "Payer address (G or C) whose account the fee will be deducted from."
+          },
+          "token": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarContractAddress" }],
+            "description": "Token contract address (USDC SAC) used to pay the gas fee."
+          },
+          "calls": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Calls to simulate for fee estimation.",
+            "items": {
+              "type": "object",
+              "required": ["contract", "fn", "args"],
+              "properties": {
+                "contract": {
+                  "allOf": [{ "$ref": "#/components/schemas/StellarContractAddress" }],
+                  "description": "Target contract address."
+                },
+                "fn": {
+                  "type": "string",
+                  "description": "Contract function name (e.g. `transfer`)."
+                },
+                "args": {
+                  "type": "array",
+                  "description": "Soroban `ScVal` arguments serialized as base64 XDR strings.",
+                  "items": {
+                    "allOf": [{ "$ref": "#/components/schemas/Base64" }],
+                    "description": "One `ScVal` argument as base64 XDR."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Request body for `POST /fee/quote`. Calls are simulated server-side to price the XLM fee as a token amount."
+      },
+      "FeeQuote": {
+        "type": "object",
+        "required": [
+          "forwarder",
+          "collector",
+          "token",
+          "estimatedXlmFee",
+          "tokenAmount",
+          "expiresAtLedger"
+        ],
+        "properties": {
+          "forwarder": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarContractAddress" }],
+            "description": "`FeeForwarder` contract address. The SDK uses this to build the `forward()` authorization entry."
+          },
+          "collector": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarAddress" }],
+            "description": "Address that collects the fee (G or C). Embedded in the `forward()` invocation."
+          },
+          "token": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarContractAddress" }],
+            "description": "Token used to pay the fee. Echoes the request `token`."
+          },
+          "estimatedXlmFee": {
+            "allOf": [{ "$ref": "#/components/schemas/Stroops" }],
+            "description": "Estimated XLM fee in stroops."
+          },
+          "tokenAmount": {
+            "allOf": [{ "$ref": "#/components/schemas/Stroops" }],
+            "description": "Fee expressed in the requested token's smallest unit (USDC stroops for USDC). The SDK passes this as the `fee_amount` argument in the `forward()` invocation."
+          },
+          "expiresAtLedger": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Ledger sequence after which this quote expires. The SDK refuses to build a relay with an expired quote."
+          }
+        },
+        "description": "Fee quote returned by `POST /fee/quote`. Mirrors the SDK `FeeQuote` type from `@buckspay/core`."
+      },
+      "AccountState": {
+        "type": "object",
+        "required": ["exists", "hasUsdcTrustline"],
+        "properties": {
+          "exists": {
+            "type": "boolean",
+            "description": "Whether the account exists on-chain."
+          },
+          "hasUsdcTrustline": {
+            "type": "boolean",
+            "description": "Whether the account has an active USDC trustline."
+          },
+          "xlmBalance": {
+            "type": "string",
+            "description": "Native XLM balance as a decimal string (e.g. `10.5000000`). Omitted if the facilitator returned `null` or the account does not exist."
+          },
+          "usdcBalance": {
+            "type": "string",
+            "description": "USDC balance as a decimal string. Omitted if the account has no trustline or the facilitator returned `null`."
+          }
+        },
+        "description": "On-chain account state returned by the `/stellar/account/:pk` and `/stellar/contract/:address` endpoints. The SDK adapter normalizes the facilitator's `nativeBalance` field to `xlmBalance` and strips null values."
+      },
+      "OnboardBuildRequest": {
+        "type": "object",
+        "required": ["publicKey", "chain"],
+        "properties": {
+          "publicKey": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarPublicKey" }],
+            "description": "G-address of the account to onboard."
+          },
+          "chain": {
+            "$ref": "#/components/schemas/FacilitatorChain"
+          }
+        }
+      },
+      "OnboardBuildResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "description": "Optional status flag."
+          },
+          "unsignedTxXdr": {
+            "type": "string",
+            "description": "Unsigned onboarding transaction as base64 XDR. Present when the account is not yet fully onboarded. Sign with the user's key and submit via `POST /stellar/onboard/submit`."
+          },
+          "nothingToDo": {
+            "type": "boolean",
+            "description": "When `true`, the account is already onboarded. No XDR needs to be signed or submitted."
+          }
+        },
+        "description": "Response from `POST /stellar/onboard/build`."
+      },
+      "OnboardSubmitRequest": {
+        "type": "object",
+        "required": ["publicKey", "chain", "signedTxXdr"],
+        "properties": {
+          "publicKey": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarPublicKey" }],
+            "description": "G-address of the account being onboarded."
+          },
+          "chain": {
+            "$ref": "#/components/schemas/FacilitatorChain"
+          },
+          "signedTxXdr": {
+            "type": "string",
+            "description": "User-signed transaction XDR from the `unsignedTxXdr` field of the build response."
+          }
+        }
+      },
+      "DeployContractRequest": {
+        "type": "object",
+        "required": ["passkeyPublicKey", "chain"],
+        "properties": {
+          "passkeyPublicKey": {
+            "type": "string",
+            "description": "65-byte uncompressed secp256r1 / WebAuthn public key, hex-encoded. Obtained from `signer.getPublicKey()` on a `@buckspay/signers/passkey` instance."
+          },
+          "chain": {
+            "$ref": "#/components/schemas/FacilitatorChain"
+          }
+        },
+        "description": "Request body for `POST /stellar/contract/deploy`."
+      },
+      "DeploySessionAccountRequest": {
+        "type": "object",
+        "required": ["rootPublicKey", "chain"],
+        "properties": {
+          "rootPublicKey": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarPublicKey" }],
+            "description": "ed25519 root public key (G-address) that will administer the session-account. The account's `add_signer` / `remove_signer` calls must be authorized by this key."
+          },
+          "chain": {
+            "$ref": "#/components/schemas/FacilitatorChain"
+          }
+        },
+        "description": "Request body for `POST /stellar/session-account/deploy`."
+      },
+      "DeployContractResponse": {
+        "type": "object",
+        "required": ["address"],
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "description": "Optional status flag."
+          },
+          "address": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarContractAddress" }],
+            "description": "C-address of the newly deployed smart-account."
+          }
+        },
+        "description": "Response shared by `POST /stellar/contract/deploy` and `POST /stellar/session-account/deploy`."
+      },
+      "AuthRequest": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Provider-specific authentication payload. The BFF (`createSignerProxyRoute`) validates only that the body is a JSON object and proxies it transparently to the facilitator. Fields are provider-specific (social: `idToken` + `verifier`; email: `email` + `code`)."
+      },
+      "AuthKeyResponse": {
+        "type": "object",
+        "required": ["publicKey", "provider"],
+        "properties": {
+          "publicKey": {
+            "allOf": [{ "$ref": "#/components/schemas/StellarPublicKey" }],
+            "description": "Derived Stellar G-address for this identity. Stable across sessions for the same provider + user."
+          },
+          "provider": {
+            "type": "string",
+            "description": "Provider identifier (e.g. `google`, `email`)."
+          },
+          "expiresAt": {
+            "type": "integer",
+            "description": "Unix timestamp (seconds) after which the derived key session should be refreshed. Omitted if the provider does not issue expiring sessions."
+          }
+        },
+        "description": "Successful auth response. Mirrors the SDK `AuthDetails` type from `@buckspay/core`. The response is a transparent proxy of the facilitator's body."
+      },
+      "SwapQuoteRequest": {
+        "type": "object",
+        "required": ["chain", "payer", "merchant", "sellToken", "buyToken", "sellAmount"],
+        "properties": {
+          "chain": {
+            "type": "string",
+            "enum": [
+              "avalanche",
+              "celo",
+              "polygon",
+              "base",
+              "avalanche-fuji",
+              "polygon-amoy",
+              "base-sepolia",
+              "celo-sepolia"
+            ],
+            "description": "EVM chain for the swap. Must match the `swapChain` configured in `buckspayFacilitator`."
+          },
+          "payer": {
+            "type": "string",
+            "description": "EVM address of the payer (0x-prefixed)."
+          },
+          "merchant": {
+            "type": "string",
+            "description": "EVM address where the buy-token is settled. For self-custody swaps this equals `payer`."
+          },
+          "sellToken": {
+            "type": "string",
+            "description": "EVM contract address of the sell token."
+          },
+          "buyToken": {
+            "type": "string",
+            "description": "EVM contract address of the buy token."
+          },
+          "sellAmount": {
+            "allOf": [{ "$ref": "#/components/schemas/Stroops" }],
+            "description": "Amount to sell in the sell token's minimal units, as a decimal string."
+          }
+        },
+        "description": "Request body for `POST /swap/quote`. Corresponds to the body built in `buckspayFacilitator.quoteSwap()`."
+      },
+      "SwapQuoteResponse": {
+        "type": "object",
+        "required": [
+          "quoteId",
+          "sellAmount",
+          "expectedBuyAmount",
+          "minBuyAmount",
+          "typedData",
+          "needsAuthorization",
+          "source",
+          "expiresAt"
+        ],
+        "properties": {
+          "quoteId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for this quote."
+          },
+          "sellAmount": {
+            "allOf": [{ "$ref": "#/components/schemas/Stroops" }],
+            "description": "Actual sell amount (may differ from requested amount after routing)."
+          },
+          "expectedBuyAmount": {
+            "allOf": [{ "$ref": "#/components/schemas/Stroops" }],
+            "description": "Expected amount of buy token received."
+          },
+          "minBuyAmount": {
+            "allOf": [{ "$ref": "#/components/schemas/Stroops" }],
+            "description": "Minimum buy amount after slippage. The client enforces this floor before submitting."
+          },
+          "typedData": {
+            "type": "string",
+            "description": "EIP-712 typed data string for the swap authorization. Required if `needsAuthorization` is `true`."
+          },
+          "needsAuthorization": {
+            "type": "boolean",
+            "description": "Whether the payer must sign the EIP-712 `typedData` before submitting the swap."
+          },
+          "source": {
+            "type": "string",
+            "description": "Liquidity source or aggregator used to build the quote."
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "ISO 8601 timestamp after which the quote is invalid."
+          }
+        },
+        "description": "Swap quote returned by `POST /swap/quote`. Mirrors the `swapQuoteResponseSchema` zod schema in `@buckspay/relayer`."
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Machine-readable error code. SDK error codes (e.g. `RELAYER_REJECTED`, `SESSION_POLICY_VIOLATION`) or raw facilitator codes (e.g. `auth_expired`, `simulation_failed`) depending on context."
+          },
+          "message": {
+            "type": "string",
+            "description": "Optional human-readable detail. Never log raw upstream messages — they may contain addresses or sensitive information."
+          },
+          "details": {
+            "type": "object",
+            "description": "Optional structured validation errors (present on BFF-level schema failures)."
+          }
+        },
+        "description": "Error body returned on non-2xx responses. The `error` field maps to a `BuckspayErrorCode` or a raw facilitator error string (see `mapFacilitatorError` in `@buckspay/relayer`)."
+      }
+    }
+  }
+}

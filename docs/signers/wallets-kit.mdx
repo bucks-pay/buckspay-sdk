@@ -1,0 +1,88 @@
+---
+title: "Wallets Kit"
+description: "Connect Freighter, xBull, or LOBSTR with a single factory — the signer plugs into the same client and payment flow as every other Buckspay signer."
+---
+
+The Wallets Kit signer wraps [Stellar Wallets Kit](https://github.com/creit-tech/StellarWalletsKit)
+and gives users their preferred browser wallet — Freighter, xBull, or LOBSTR — without any
+wallet-specific branching in your application code.
+
+## When to use
+
+Choose `walletsKit` when your users already have a Stellar wallet installed. It suits classic
+`G…` accounts backed by an existing keypair. For new users who have no wallet, consider the
+[passkey signer](/signers/passkey) instead.
+
+## Factory
+
+```ts
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+
+const signer = walletsKit({ network: "testnet" });
+//                          network: "pubnet"  — for production
+```
+
+`walletsKit(opts)` accepts a `KitOptions` object:
+
+| Option | Type | Required | Description |
+|---|---|---|---|
+| `network` | `"testnet" \| "pubnet"` | Yes | Which Stellar network to target |
+| `selectedWalletId` | `string` | No | Pre-select a wallet (default: Freighter) |
+
+The factory returns a `BuckspaySigner`. The browser wallet library is loaded lazily on first use
+so it never runs during server-side rendering.
+
+## Example
+
+The snippet below shows a complete classic gasless transfer using `walletsKit` paired with
+`classicAccount`. This is the canonical starting point for users who already have a wallet.
+
+{/* @snippet:start 01-quickstart-classic.ts */}
+```ts
+// Quickstart — classic gasless USDC transfer (browser; NO apiKey).
+import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+const USDC_SAC: string = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const MERCHANT: string = "GA6HCMBLTZS5VYYBCATRBR5VBZJEH5C2OON6XQGB3RNYDDAQ7JZ65YQH";
+
+export async function quickstart(): Promise<void> {
+  const buckspay = createBuckspayClient(
+    {
+      network: "testnet",
+      account: classicAccount(),
+      signer: walletsKit({ network: "testnet" }),
+      // url points at YOUR backend, which forwards to the facilitator with the key server-side.
+      relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+      gas: { mode: "sponsored" }
+    },
+    // prepare() simulates against the Soroban RPC.
+    createRpcSimContext("https://soroban-testnet.stellar.org")
+  );
+
+  await buckspay.connect(); // wallet + ensureReady
+  const call = buckspay.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" });
+  const receipt = await buckspay.pay([call]); // prepare → sign → send
+  console.log(receipt.transferTx); // settled on testnet
+}
+```
+{/* @snippet:end */}
+
+## How signatures work
+
+Freighter historically returned a double-encoded auth entry in some versions. The Wallets Kit
+signer applies `normalizeSignature` internally before returning, so your code always receives a
+clean 64-byte signature regardless of which wallet or version the user has installed.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Passkey" href="/signers/passkey">
+    Passwordless flow for new users — no wallet required.
+  </Card>
+  <Card title="Account models" href="/concepts/account-models">
+    Pair walletsKit with classicAccount or ozContractAccount.
+  </Card>
+</CardGroup>

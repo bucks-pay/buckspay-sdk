@@ -1,0 +1,159 @@
+---
+title: "Web — @buckspay/react"
+description: "BuckspayProvider, useWallet, and useStellarPay — React hooks for gasless USDC payments in web apps."
+---
+
+`@buckspay/react` wraps the core client in idiomatic hooks. Wrap your component tree once with
+`BuckspayProvider`; every component inside can then connect a wallet and send gasless payments
+with two hooks.
+
+<Steps>
+
+### Install
+
+```bash
+pnpm add @buckspay/react @buckspay/core @buckspay/accounts @buckspay/signers @buckspay/relayer
+```
+
+### Wrap the tree with `BuckspayProvider`
+
+Place `BuckspayProvider` at the root of the tree (or the subtree that needs payment). Pass a
+`BuckspayConfig` and a simulator context so `useStellarPay().pay()` can simulate the transaction
+before signing.
+
+```tsx
+import { BuckspayProvider } from "@buckspay/react";
+import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+const config = {
+  network: "testnet",
+  account: classicAccount(),
+  signer: walletsKit({ network: "testnet" }),
+  relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+  gas: { mode: "sponsored" as const }
+};
+
+export function App() {
+  return (
+    <BuckspayProvider config={config} sim={createRpcSimContext("https://soroban-testnet.stellar.org")}>
+      {/* your app */}
+    </BuckspayProvider>
+  );
+}
+```
+
+<Note>
+  Pass `sim` (a `createRpcSimContext(rpcUrl)`) so `pay()` can record authorization entries
+  against the Soroban RPC. Omit it only in connect-only apps that never call `pay()`.
+</Note>
+
+### Connect with `useWallet`
+
+`useWallet()` returns `{ wallet, address, connect, status, error }`. Gate the payment UI on
+`wallet !== null`:
+
+```tsx
+import { useWallet } from "@buckspay/react";
+
+function ConnectButton() {
+  const { wallet, connect, status } = useWallet();
+  if (wallet) return null;
+  return (
+    <button onClick={() => void connect()} disabled={status === "connecting"} aria-live="polite">
+      {status === "connecting" ? "Connecting…" : "Connect wallet"}
+    </button>
+  );
+}
+```
+
+### Pay with `useStellarPay`
+
+`useStellarPay()` returns `{ pay, prepare, sign, status, receipt, error, reset }`.
+
+- `pay(calls)` — one-shot: prepare → sign → send in a single call.
+- `prepare(calls)` / `sign(intent)` — split flow for apps that validate the signed intent in a
+  BFF before sending. See [Facilitator and BFF](/concepts/facilitator-and-bff).
+- `reset()` — returns the store to `idle` so the user can retry.
+
+#### Status machine
+
+`status` follows the path:
+
+```
+idle → connecting → ready → signing → relaying → success | error
+```
+
+Render `error.code` (a `BuckspayErrorCode`) for user-facing messages, and announce state
+changes with `aria-live` for accessibility.
+
+</Steps>
+
+## Full example
+
+The component below is the compiled, type-checked reference implementation.
+
+{/* @snippet:start 05-react-pay.tsx */}
+```tsx
+// React hooks — full pay component. Compiles against @types/react 19 + the real hook types.
+import { useMemo, type CSSProperties } from "react";
+import { Address, nativeToScVal } from "@stellar/stellar-sdk";
+import { useWallet, useStellarPay } from "@buckspay/react";
+import type { Call } from "@buckspay/core";
+
+const USDC_SAC = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const MERCHANT = "GA6HCMBLTZS5VYYBCATRBR5VBZJEH5C2OON6XQGB3RNYDDAQ7JZ65YQH";
+const btn: CSSProperties = { padding: "0.75rem 1.25rem", borderRadius: 8, cursor: "pointer" };
+
+export function PayButton() {
+  const { wallet, address, connect, status: wStatus, error: wErr } = useWallet();
+  const { pay, status, receipt, error } = useStellarPay();
+
+  const transferCall = useMemo<Call | null>(() => {
+    if (!address) return null;
+    return {
+      contract: USDC_SAC,
+      fn: "transfer",
+      args: [new Address(address).toScVal(), new Address(MERCHANT).toScVal(), nativeToScVal(15000000n, { type: "i128" })]
+    };
+  }, [address]);
+
+  const busy = status === "signing" || status === "relaying";
+  const shownError = error ?? wErr;
+
+  if (!wallet) {
+    return (
+      <button onClick={() => void connect()} style={btn} disabled={wStatus === "connecting"} aria-live="polite">
+        {wStatus === "connecting" ? "Connecting…" : "Connect"}
+      </button>
+    );
+  }
+  return (
+    <div>
+      <button onClick={() => transferCall && void pay([transferCall])} style={btn} disabled={busy || !transferCall}>
+        {busy ? "Paying…" : "Pay 1.50 USDC (free)"}
+      </button>
+      {receipt && <p aria-live="polite">settled: {receipt.transferTx}</p>}
+      {shownError && (
+        <p role="alert">
+          {shownError.code}: {shownError.message}
+        </p>
+      )}
+    </div>
+  );
+}
+```
+{/* @snippet:end */}
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="React Native" href="/platforms/react-native">
+    The same hooks on iOS and Android, with `nativePasskey` and secure-storage adapters.
+  </Card>
+  <Card title="Next.js BFF" href="/platforms/nextjs-bff">
+    Route factories that keep the API key server-side.
+  </Card>
+</CardGroup>

@@ -43,7 +43,7 @@ export function defaultWebAuthn(): WebAuthnLike {
         cred = (await navigator.credentials.create({
           publicKey: {
             rp: { id: rpId, name: rpName },
-            user: { id: new TextEncoder().encode(userName), name: userName, displayName: userName },
+            user: { id: new TextEncoder().encode(userName) as Uint8Array<ArrayBuffer>, name: userName, displayName: userName },
             challenge: challenge as BufferSource,
             pubKeyCredParams: [{ type: "public-key", alg: -7 }], // ES256 = secp256r1
             authenticatorSelection: { residentKey: "required", userVerification: "required" },

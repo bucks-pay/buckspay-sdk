@@ -1,0 +1,57 @@
+---
+title: "Allowlist policy"
+description: "Restrict a session key to a fixed set of contracts — enforced on-chain in __check_auth."
+---
+
+`allowlist` restricts which contracts a session key may call. Any call to a contract
+not in the list is rejected **on-chain** in `__check_auth`. A stolen session blob cannot
+be used to interact with arbitrary contracts — it is scoped to exactly the set you declare.
+
+## Usage
+
+```ts
+import { allowlist } from "@buckspay/accounts/policy";
+
+const policy = allowlist([
+  APP_CONTRACT,      // C-address of an allowed contract
+  USDC_SAC           // another allowed contract (e.g. the token itself)
+]);
+```
+
+Pass the policy in the `policies` array when calling `grantSession`:
+
+```ts
+const { session } = await client.grantSession({
+  sessionKey: { type: "ed25519", publicKey: sessionKp.publicKey() },
+  policies: [allowlist([APP_CONTRACT])],
+  expiresAt: Date.now() + 86_400_000
+});
+```
+
+## What happens when a call targets an unlisted contract
+
+The contract rejects the authorization during `__check_auth`. The facilitator maps the
+on-chain rejection to `BuckspayError("SESSION_POLICY_VIOLATION")`.
+
+<Note>
+  The allowlist check runs inside the contract — not in the SDK, not in the facilitator.
+  A session key with an allowlist of `[APP_CONTRACT]` cannot be used to call any other
+  contract, even if the session blob is extracted from memory.
+</Note>
+
+## Combining policies
+
+`allowlist` is commonly paired with `spendLimit` to scope the session both by callable
+contracts and by cumulative spend. See [Sessions overview](/features/sessions/overview) for
+the full lifecycle example, which uses both policies together.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Spend limit policy" href="/features/sessions/spend-limit">
+    Cap cumulative token spend over a rolling period.
+  </Card>
+  <Card title="Sessions overview" href="/features/sessions/overview">
+    Full lifecycle: grant, serialize, use, and revoke a session.
+  </Card>
+</CardGroup>

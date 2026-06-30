@@ -1,0 +1,35 @@
+---
+title: "Which package do I need?"
+description: "A one-line guide to every published Buckspay SDK package."
+---
+
+All packages are published under the `@buckspay` scope on npm and follow the same version
+number. Start with `@buckspay/core`; add surface packages for your target platform.
+
+<CardGroup cols={2}>
+  <Card title="@buckspay/core" href="/concepts/account-models">
+    The composable client — `createBuckspayClient`, context, and shared types. Required by
+    every integration.
+  </Card>
+  <Card title="@buckspay/accounts" href="/concepts/account-models">
+    Account adapters: `classicAccount()` for G-addresses and `ozContractAccount()` for
+    smart-contract wallets.
+  </Card>
+  <Card title="@buckspay/signers" href="/signers/overview">
+    Browser and mobile signing strategies: Wallets Kit (Freighter, xBull, LOBSTR) and
+    passkey-based signers.
+  </Card>
+  <Card title="@buckspay/relayer" href="/concepts/facilitator-and-bff">
+    Relayer adapters that forward signed transactions to a gasless facilitator — use with
+    your own BFF backend route.
+  </Card>
+  <Card title="@buckspay/react" href="/platforms/web-react">
+    React hooks (`useWallet`, `useStellarPay`) and provider components for browser apps.
+  </Card>
+  <Card title="@buckspay/nextjs" href="/platforms/nextjs-bff">
+    Next.js App Router helpers and server-side BFF route handler for the relayer.
+  </Card>
+  <Card title="@buckspay/react-native" href="/platforms/react-native">
+    React Native bindings with passkey and wallet-kit support for iOS and Android.
+  </Card>
+</CardGroup>

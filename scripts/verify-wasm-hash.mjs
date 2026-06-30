@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Verify the OZ Smart Account wasm bytes hash to the pinned constant.
 //
-// Toolchain (reproducible build — see docs/security/contract-provenance.md):
+// Toolchain (reproducible build — see docs/production/security/contract-provenance.mdx):
 //   stellar CLI 25.2.0, cargo/rustc 1.93, crate spikes/passkey-contract/contract
 //   `stellar contract build && stellar contract optimize --wasm <built>.wasm`
 // The pre-built, byte-identical artifact ships at spikes/passkey-contract/wasm/

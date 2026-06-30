@@ -1,0 +1,136 @@
+---
+title: "Networks"
+description: "Testnet vs. pubnet, the mainnet opt-in guard, USDC decimals, and the multi-network rail model."
+---
+
+## Testnet and pubnet
+
+Buckspay supports two Stellar networks:
+
+| Value | Network | Use case |
+|---|---|---|
+| `"testnet"` | Stellar testnet (Fuji) | Development and integration testing |
+| `"pubnet"` | Stellar pubnet (mainnet) | Production — real funds |
+
+Pass the `network` field in `BuckspayConfig`. The same field is forwarded to
+`buckspayFacilitator`, which sets the `FacilitatorChain` header — `"stellar-testnet"` or
+`"stellar-pubnet"` (hyphen-separated).
+
+## Mainnet opt-in guard
+
+Mainnet is **supported** and **off by default**. Without an explicit opt-in, constructing a
+client on `"pubnet"` throws `BuckspayError("INVALID_CONFIG")`. This makes it impossible for
+a misconfigured or forgotten config to move real funds.
+
+<Warning>
+  Constructing a `createBuckspayClient` with `network: "pubnet"` without opting in throws
+  `BuckspayError("INVALID_CONFIG")`. Add the opt-in deliberately, not as a drive-by change.
+</Warning>
+
+The opt-in is deliberately different in each environment so neither can accidentally inherit
+the other's setting:
+
+- **Browser:** `allowMainnet: true` in the `BuckspayConfig`.
+- **Node / server:** `BUCKSPAY_ALLOW_MAINNET=1` environment variable.
+
+## USDC and the asset-agnostic design
+
+Buckspay does not hardcode any USDC address. You pass the Stellar Asset Contract (SAC)
+address when constructing a transfer call:
+
+```ts
+client.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" })
+```
+
+This keeps the SDK asset-agnostic — the same client handles any Soroban token.
+
+**USDC = 7 decimals on Stellar.** Circle's implementation uses seven decimal places, not
+the six common on EVM chains. Amounts in the SDK are expressed as human-readable strings
+(`"1.50"`, `"0.000001"`) and converted internally — you do not deal with raw stroops.
+
+On pubnet, the USDC SAC is Circle's official contract address. On testnet, use the Circle
+testnet USDC SAC.
+
+## Dedicated Soroban RPC
+
+`createRpcSimContext(rpcUrl)` connects the SDK's simulation engine to a Soroban RPC node.
+On pubnet, use a **dedicated, consistent RPC endpoint** rather than the shared public load
+balancer, which is eventually-consistent and can cause simulation failures when ledger state
+lags across nodes.
+
+For pubnet with a contract account, `mainnetSimContext(rpcUrl, { sponsorAddress })` is the
+correct preset — it sets the funded sponsor `G…` address as the `simSource` that the
+facilitator uses when recording the transaction.
+
+## Pubnet example
+
+The example below shows a complete pubnet configuration with the `allowMainnet: true` opt-in,
+a dedicated RPC URL, and `mainnetSimContext`:
+
+{/* @snippet:start 08-mainnet.ts */}
+```ts
+// Recipe 08 — MAINNET (pubnet) gasless USDC, contract/passkey account. Browser only.
+//
+// Mainnet is gated: it runs ONLY because `allowMainnet: true` is set in config (the
+// browser opt-in, equivalent to Node `BUCKSPAY_ALLOW_MAINNET=1`). Without it,
+// constructing the client on "pubnet" throws BuckspayError("INVALID_CONFIG").
+import {
+  createBuckspayClient,
+  mainnetSimContext,
+  type BuckspayConfig
+} from "@buckspay/core";
+import { ozContractAccount } from "@buckspay/accounts/oz-contract";
+import { passkey } from "@buckspay/signers/passkey";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+// The facilitator sponsor's PUBLIC G-address (used to derive the C-address AND to frame
+// the recording sim on pubnet). PUBLIC only — the sponsor secret lives in the facilitator.
+const SPONSOR_G: string = "GDVEU3DD4KOFECV66VIHWEZOYX4ZKR3WV27L464SIIPOU2IUI3JCZA57";
+// Mainnet USDC SAC (C-address). Differs per network — the caller passes it; the SDK is asset-agnostic.
+const USDC_SAC_PUBNET: string = "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7EQI5VS577FRESC2GUDOAAEZ3";
+const MERCHANT: string = "GAMX62ZD4FWIKMWGVPEDR6WNL2TYTPQMO2ZJEAZUAON7VCZ5G2GWDF7W";
+const SOROBAN_RPC_PUBNET = "https://mainnet.sorobanrpc.com";
+
+export const mainnetConfig: BuckspayConfig = {
+  network: "pubnet",
+  // Explicit browser opt-in — without this, the client refuses to construct on pubnet.
+  allowMainnet: true,
+  account: ozContractAccount({ network: "pubnet", sponsorAddress: SPONSOR_G }),
+  signer: passkey({ rpId: window.location.hostname, rpName: "buckspay" }),
+  // url points at YOUR backend, which forwards to the facilitator with the key server-side.
+  relayer: buckspayFacilitator({ url: "/api/gasless", network: "pubnet" }),
+  gas: { mode: "sponsored" }
+};
+
+export const mainnetClient = createBuckspayClient(
+  mainnetConfig,
+  // Contract model on pubnet MUST carry the funded sponsor G as `simSource`; this preset forces it.
+  mainnetSimContext(SOROBAN_RPC_PUBNET, { sponsorAddress: SPONSOR_G })
+);
+
+export async function payOnMainnet(): Promise<void> {
+  await mainnetClient.connect(); // derive C-address + ensureReady (sponsored deploy if needed)
+  const call = mainnetClient.transfer({ token: USDC_SAC_PUBNET, to: MERCHANT, amount: "1.50" });
+  const receipt = await mainnetClient.pay([call]); // prepare → sign → send
+  console.log(receipt.transferTx); // settled on pubnet
+}
+```
+{/* @snippet:end */}
+
+## Multi-network rail model
+
+A single asset can be offered over multiple rails: the payer chooses which network to settle
+on. The `FacilitatorChain` value (`"stellar-testnet"` | `"stellar-pubnet"`) in the relay
+payload tells the facilitator which network to submit to. The SDK resolves the rail from the
+client's `network` field — no extra wiring needed.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Facilitator and BFF" href="/concepts/facilitator-and-bff">
+    How to configure the relayer and keep the API key server-side.
+  </Card>
+  <Card title="Account models" href="/concepts/account-models">
+    Classic and passkey accounts — both work on testnet and pubnet.
+  </Card>
+</CardGroup>

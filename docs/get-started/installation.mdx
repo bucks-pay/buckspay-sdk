@@ -1,0 +1,109 @@
+---
+title: "Installation"
+description: "Add Buckspay SDK packages to your project."
+---
+
+## Requirements
+
+- **Node.js ≥ 20** (LTS recommended)
+- `@stellar/stellar-sdk` is a peer dependency of `@buckspay/core` — install it alongside the SDK
+
+## Core package
+
+Every Buckspay integration starts with `@buckspay/core`. Install it with your preferred
+package manager:
+
+<CodeGroup>
+
+```bash pnpm
+pnpm add @buckspay/core @stellar/stellar-sdk
+```
+
+```bash npm
+npm install @buckspay/core @stellar/stellar-sdk
+```
+
+```bash yarn
+yarn add @buckspay/core @stellar/stellar-sdk
+```
+
+```bash bun
+bun add @buckspay/core @stellar/stellar-sdk
+```
+
+</CodeGroup>
+
+## Surface packages
+
+Add the surface packages for your target platform. You only need the ones you use.
+
+### Web (browser)
+
+<CodeGroup>
+
+```bash pnpm
+pnpm add @buckspay/react @buckspay/signers @buckspay/accounts @buckspay/relayer
+```
+
+```bash npm
+npm install @buckspay/react @buckspay/signers @buckspay/accounts @buckspay/relayer
+```
+
+```bash yarn
+yarn add @buckspay/react @buckspay/signers @buckspay/accounts @buckspay/relayer
+```
+
+```bash bun
+bun add @buckspay/react @buckspay/signers @buckspay/accounts @buckspay/relayer
+```
+
+</CodeGroup>
+
+### Mobile (React Native)
+
+<CodeGroup>
+
+```bash pnpm
+pnpm add @buckspay/react-native @buckspay/signers @buckspay/accounts @buckspay/relayer
+```
+
+```bash npm
+npm install @buckspay/react-native @buckspay/signers @buckspay/accounts @buckspay/relayer
+```
+
+```bash yarn
+yarn add @buckspay/react-native @buckspay/signers @buckspay/accounts @buckspay/relayer
+```
+
+```bash bun
+bun add @buckspay/react-native @buckspay/signers @buckspay/accounts @buckspay/relayer
+```
+
+</CodeGroup>
+
+### Next.js BFF (server-side route)
+
+<CodeGroup>
+
+```bash pnpm
+pnpm add @buckspay/nextjs @buckspay/relayer
+```
+
+```bash npm
+npm install @buckspay/nextjs @buckspay/relayer
+```
+
+```bash yarn
+yarn add @buckspay/nextjs @buckspay/relayer
+```
+
+```bash bun
+bun add @buckspay/nextjs @buckspay/relayer
+```
+
+</CodeGroup>
+
+## Package overview
+
+Not sure which packages you need? See [Which package do I need?](/get-started/which-package)
+for a one-line summary of each.

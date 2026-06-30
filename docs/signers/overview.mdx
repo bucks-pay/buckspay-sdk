@@ -1,0 +1,69 @@
+---
+title: "Signers"
+description: "Every signer factory returns a BuckspaySigner that plugs into the same client and the same prepare → sign → send flow. Only how you obtain the signer differs."
+---
+
+The central idea behind Buckspay signers: **the payment flow never changes**. Whether the user
+authenticates with a browser wallet, a device passkey, a social login, or a mobile secure enclave,
+every signer factory returns a `BuckspaySigner` value that drops into the same
+`createBuckspayClient` call and the same `prepare → sign → send` pipeline.
+
+```ts
+// The ONLY line that changes across all signer types:
+const signer = walletsKit({ network: "testnet" });
+//             passkey({ rpId: "app.example.com" })
+//             socialSigner({ provider: "web3auth", clientId, network, proxyUrl })
+//             emailSigner({ proxyUrl, network })
+//             nativePasskey({ rpId: "app.example.com" })   // @buckspay/react-native
+
+// Everything below is identical regardless of which signer you chose:
+const client = createBuckspayClient({ network, account, signer, relayer, gas });
+await client.connect();
+const receipt = await client.pay([client.transfer({ token, to, amount })]);
+```
+
+## How it works
+
+A signer factory is a function that returns a `BuckspaySigner` object. The object implements two
+methods the engine calls internally:
+
+- **`getPublicKey()`** — resolves the Stellar account address backing this signer.
+- **`signAuthEntry(payload)`** — signs a Soroban authorization entry for the current payment.
+
+The engine calls these during `sign()` (the second phase of `prepare → sign → send`). All user
+interaction — wallet pop-ups, WebAuthn prompts, OAuth redirects, OTP verification — happens inside
+this one call. The rest of the pipeline is silent.
+
+Some signers also expose an optional **`authenticate?()`** step for social and email flows, which
+runs the identity-resolution phase before the payment itself.
+
+## Choosing a signer
+
+| Signer | Package | Best for |
+|---|---|---|
+| Wallets Kit | `@buckspay/signers/wallets-kit` | Users with Freighter, xBull, or LOBSTR |
+| Passkey | `@buckspay/signers/passkey` | Passwordless new-user flows (browser) |
+| Social login | `@buckspay/signers/social` | Sign in with Google/Apple/Discord via web3auth |
+| Email OTP | `@buckspay/signers/email` | Email-code verification without a wallet |
+| Native passkey | `@buckspay/react-native` | iOS and Android (secure enclave) |
+
+<CardGroup cols={2}>
+  <Card title="Wallets Kit" href="/signers/wallets-kit">
+    Browser injected wallets — Freighter, xBull, LOBSTR.
+  </Card>
+  <Card title="Passkey" href="/signers/passkey">
+    WebAuthn / secp256r1 on a smart contract account.
+  </Card>
+  <Card title="Social login" href="/signers/social-login">
+    Google, Apple, Discord via web3auth — secrets stay server-side.
+  </Card>
+  <Card title="Email OTP" href="/signers/email-otp">
+    One-time code over email — no wallet, no seed phrase.
+  </Card>
+  <Card title="Native passkey" href="/signers/native-passkey">
+    iOS/Android secure enclave via `@buckspay/react-native`.
+  </Card>
+  <Card title="Prepare → Sign → Send" href="/concepts/prepare-sign-send">
+    The shared flow every signer feeds into.
+  </Card>
+</CardGroup>

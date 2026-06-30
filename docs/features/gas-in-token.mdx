@@ -1,0 +1,107 @@
+---
+title: "Gas in token"
+description: "Let users pay Soroban transaction fees in USDC instead of XLM via the FeeForwarder contract."
+---
+
+`gas: { mode: "token", token }` lets the payer settle the Soroban fee in USDC rather than
+holding XLM. The facilitator still fronts the actual XLM gas; the `FeeForwarder` contract
+reimburses it from the payer's stablecoin balance atomically.
+
+Choose this mode when **you want the user, not your sponsor, to cover the fee** in the asset
+they already hold. For the sponsor-pays default, see [Gasless modes](/features/gasless-modes).
+
+## Configuration
+
+```ts
+import type { BuckspayConfig } from "@buckspay/core";
+
+const config: BuckspayConfig = {
+  network: "testnet",
+  // ...account, signer, relayer...
+  gas: {
+    mode: "token",
+    token: USDC_SAC,      // C-address of the fee token
+    maxFee: "2000000"     // optional ceiling in stroops (here: 0.2 USDC)
+  }
+};
+```
+
+## How it settles — one signature
+
+`prepare()` calls `POST /fee/quote`, which returns a `FeeQuote`:
+
+| Field | Type | Description |
+|---|---|---|
+| `forwarder` | `string` | `FeeForwarder` contract address that pulls the fee |
+| `collector` | `string` | Destination for the relayer's reimbursement |
+| `token` | `string` | The fee token (echoes your config) |
+| `estimatedXlmFee` | `string` | XLM the relayer fronts for the transaction fee |
+| `tokenAmount` | `string` | Amount owed by the payer in `token` |
+| `expiresAtLedger` | `number` | Ledger number after which the quote is invalid |
+
+The engine builds a **single** `FeeForwarder.forward(payer, token, merchant, payment, collector, fee)`
+invocation — one authorization entry that pays the merchant **and** reimburses the relayer's
+XLM gas at the same time. The payer signs once; there is no second entry to approve.
+
+## The `maxFee` ceiling
+
+`maxFee` (optional, in stroops) is a hard cap on the quoted fee. If `tokenAmount` from the
+quote exceeds `maxFee`, `prepare()` throws `BuckspayError("TOKEN_GAS_REJECTED")` **before**
+anything is signed. A fee surge can never surprise the user at signing time. Omit `maxFee`
+to accept the facilitator's quote as-is.
+
+## Full example
+
+{/* @snippet:start 09-gas-in-token.ts */}
+```ts
+// Recipe 09 — GAS IN TOKEN. The payer pays Soroban gas in USDC instead of XLM. The SDK does NOT relay
+// the direct transfer — it relays a SINGLE FeeForwarder `forward(payer, token, merchant, payment,
+// collector, fee)` invocation that pays the merchant AND the relayer's gas in one auth entry, so the
+// user signs ONCE. Sponsored mode (recipe 03) needs none of this; this is the opt-in for "the user holds
+// USDC but no XLM".
+import { createBuckspayClient, createRpcSimContext, type BuckspayConfig } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+// Testnet USDC SAC (C-address). The caller passes it; the SDK is asset-agnostic. The fee token here is the
+// SAME USDC the user transfers — they pay both the value and the gas in it.
+const USDC_SAC_TESTNET: string = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const MERCHANT: string = "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN";
+
+export const tokenGasConfig: BuckspayConfig = {
+  network: "testnet",
+  account: classicAccount(),
+  signer: walletsKit({ network: "testnet" }),
+  // url points at YOUR backend, which forwards to the facilitator with the key server-side.
+  relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+  // Pay gas in USDC. prepare() quotes the fee + forwarder + collector, builds ONE forward() entry, and
+  // refuses a quote above `maxFee` (stroops) with BuckspayError("TOKEN_GAS_REJECTED").
+  gas: { mode: "token", token: USDC_SAC_TESTNET, maxFee: "2000000" } // 0.2 USDC ceiling
+};
+
+export const tokenGasClient = createBuckspayClient(
+  tokenGasConfig,
+  createRpcSimContext("https://soroban-testnet.stellar.org")
+);
+
+export async function payGasInUsdc(): Promise<void> {
+  await tokenGasClient.connect();
+  const call = tokenGasClient.transfer({ token: USDC_SAC_TESTNET, to: MERCHANT, amount: "1.50" });
+  // prepare → feeQuote → build the single forward() entry → sign once → relay. Settles on testnet.
+  const receipt = await tokenGasClient.pay([call]);
+  console.log(receipt.transferTx);
+}
+```
+{/* @snippet:end */}
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Gasless modes" href="/features/gasless-modes">
+    Overview of the GasConfig union and when to use each mode.
+  </Card>
+  <Card title="Atomic batch" href="/features/atomic-batch">
+    Settle multiple transfers in one all-or-nothing transaction.
+  </Card>
+</CardGroup>

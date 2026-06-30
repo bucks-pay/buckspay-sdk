@@ -1,0 +1,165 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Buckspay SDK",
+  "description": "Gasless smart-wallet SDK for Stellar (Soroban) USDC payments — web and mobile.",
+  "colors": { "primary": "#1884FF", "light": "#21CBF3", "dark": "#1884FF" },
+  "appearance": { "default": "dark" },
+  "background": { "color": { "dark": "#0A0D10" } },
+  "logo": { "dark": "/logo/dark.svg", "light": "/logo/light.svg" },
+  "favicon": "/images/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "index",
+              "get-started/quickstart",
+              "get-started/installation",
+              "get-started/which-package"
+            ]
+          },
+          {
+            "group": "Concepts",
+            "pages": [
+              "concepts/gasless-on-stellar",
+              "concepts/account-models",
+              "concepts/prepare-sign-send",
+              "concepts/facilitator-and-bff",
+              "concepts/networks"
+            ]
+          },
+          {
+            "group": "Signers",
+            "pages": [
+              "signers/overview",
+              "signers/wallets-kit",
+              "signers/passkey",
+              "signers/social-login",
+              "signers/email-otp",
+              "signers/native-passkey"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "features/index",
+              "features/gasless-modes",
+              "features/gas-in-token",
+              "features/atomic-batch",
+              {
+                "group": "Sessions",
+                "pages": [
+                  "features/sessions/overview",
+                  "features/sessions/spend-limit",
+                  "features/sessions/allowlist"
+                ]
+              },
+              "features/onboarding",
+              "features/swaps"
+            ]
+          },
+          {
+            "group": "Platforms",
+            "pages": [
+              "platforms/index",
+              "platforms/web-react",
+              "platforms/react-native",
+              "platforms/node-core",
+              "platforms/nextjs-bff"
+            ]
+          },
+          {
+            "group": "Production",
+            "pages": [
+              "production/mainnet-cutover",
+              {
+                "group": "Security",
+                "pages": [
+                  "production/security/threat-model",
+                  "production/security/audit-prep",
+                  "production/security/secret-rotation",
+                  "production/security/contract-provenance",
+                  "production/security/key-handling"
+                ]
+              },
+              "production/versioning-and-migration"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "SDK Reference",
+        "groups": [
+          {
+            "group": "@buckspay/core",
+            "pages": [
+              "sdk-reference/core/src/README"
+            ]
+          },
+          {
+            "group": "@buckspay/accounts",
+            "pages": [
+              "sdk-reference/accounts/src/classic/README",
+              "sdk-reference/accounts/src/oz-contract/README",
+              "sdk-reference/accounts/src/policy/README",
+              "sdk-reference/accounts/src/policy-account/README"
+            ]
+          },
+          {
+            "group": "@buckspay/signers",
+            "pages": [
+              "sdk-reference/signers/src/wallets-kit/README",
+              "sdk-reference/signers/src/passkey/README",
+              "sdk-reference/signers/src/social/README",
+              "sdk-reference/signers/src/email/README"
+            ]
+          },
+          {
+            "group": "@buckspay/relayer",
+            "pages": [
+              "sdk-reference/relayer/src/buckspay-facilitator/README"
+            ]
+          },
+          {
+            "group": "@buckspay/react",
+            "pages": [
+              "sdk-reference/react/src/README"
+            ]
+          },
+          {
+            "group": "@buckspay/nextjs",
+            "pages": [
+              "sdk-reference/nextjs/src/README"
+            ]
+          },
+          {
+            "group": "@buckspay/react-native",
+            "pages": [
+              "sdk-reference/react-native/src/README"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "openapi": "api-reference/openapi.json",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/index"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "navbar": { "links": [{ "label": "GitHub", "href": "https://github.com/bucks-pay/buckspay-sdk" }] },
+  "search": { "prompt": "Search or ask the Buckspay SDK docs" },
+  "contextual": { "options": ["copy", "view", "chatgpt", "claude", "cursor", "vscode"] },
+  "footer": { "socials": { "github": "https://github.com/bucks-pay/buckspay-sdk" } }
+}

@@ -1,0 +1,128 @@
+---
+title: "Sessions"
+description: "Scoped, expiring session keys that let users pay within fixed on-chain policies without a root prompt per action."
+---
+
+A **session** is a scoped, expiring key the app mints so the user can pay within fixed limits
+**without a root prompt per action**. The session key is never the account's root key — it
+carries on-chain policies (a spend limit, an allowlist) and is revocable at any time.
+
+<Warning>
+  Sessions are a **contract (`C…`) account** feature only. On the classic model,
+  `grantSession` throws `BuckspayError("INVALID_CONFIG")` — a classic `G…` key has no
+  on-chain policy surface to scope.
+</Warning>
+
+## Lifecycle
+
+```ts
+import { serializeSession, deserializeSession } from "@buckspay/core";
+import { spendLimit, allowlist } from "@buckspay/accounts/policy";
+
+// 1. Grant — root-signed; installs the session key + policies on-chain.
+const { session, receipt } = await client.grantSession({
+  sessionKey: { type: "ed25519", publicKey: sessionKp.publicKey() },
+  policies: [
+    spendLimit({ token: USDC_SAC, max: "100", period: "day" }),
+    allowlist([APP_CONTRACT])
+  ],
+  expiresAt: Date.now() + 86_400_000  // 24 h
+});
+
+// 2. Serialize to secure storage; rehydrate with deserializeSession.
+const blob = serializeSession(session);
+
+// 3. The session key pays within its policies — no per-action root prompts.
+
+// 4. Revoke when done — root-signed; the key authorizes nothing afterward.
+await client.revokeSession(session);
+```
+
+## Full example
+
+{/* @snippet:start 11-sessions.ts */}
+```ts
+// Recipe 11 — SESSIONS (contract/passkey accounts only). Grant a scoped session key with on-chain
+// policies (spend limit + allowlist), serialize it for later, then revoke it. Sessions are refused on
+// the classic model: grantSession throws BuckspayError("INVALID_CONFIG").
+import { Keypair } from "@stellar/stellar-sdk";
+import { createBuckspayClient, createRpcSimContext, serializeSession, type BuckspayConfig } from "@buckspay/core";
+import { ozContractAccount } from "@buckspay/accounts/oz-contract";
+import { spendLimit, allowlist } from "@buckspay/accounts/policy";
+import { passkey } from "@buckspay/signers/passkey";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+const SPONSOR_G = "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN";
+const USDC_SAC = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const APP_CONTRACT = "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75";
+
+const config: BuckspayConfig = {
+  network: "testnet",
+  account: ozContractAccount({ network: "testnet", sponsorAddress: SPONSOR_G }),
+  signer: passkey({ rpId: "localhost", rpName: "buckspay" }), // the ROOT signer authorizes the install
+  relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+  gas: { mode: "sponsored" }
+};
+
+const client = createBuckspayClient(
+  config,
+  createRpcSimContext("https://soroban-testnet.stellar.org", { simSource: SPONSOR_G })
+);
+
+export async function runSession(): Promise<void> {
+  await client.connect();
+
+  // The session key is the ONE key the app deliberately mints — scoped + revocable, never the root
+  // account key. Store its secret in secure storage; the SDK only ever needs its public key.
+  const sessionKp = Keypair.random();
+
+  const { session, receipt } = await client.grantSession({
+    sessionKey: { type: "ed25519", publicKey: sessionKp.publicKey() },
+    policies: [spendLimit({ token: USDC_SAC, max: "100", period: "day" }), allowlist([APP_CONTRACT])],
+    expiresAt: Date.now() + 86_400_000 // 24h
+  });
+  console.log("granted", session.id, receipt.transferTx);
+
+  // Persist the session (e.g. to secure storage) and rehydrate it later with deserializeSession.
+  const blob = serializeSession(session);
+  console.log("serialized session blob length", blob.length);
+
+  // …the session key now pays within its policies, with no per-action root prompts…
+
+  // Revoke when done (root-signed); the session key no longer authorizes anything.
+  const revokeReceipt = await client.revokeSession(session);
+  console.log("revoked", revokeReceipt.transferTx);
+}
+```
+{/* @snippet:end */}
+
+## The native mechanism
+
+The policies compile to **policy signers evaluated on-chain in `__check_auth`**. The
+contract — not the SDK — enforces them, so a stolen session blob still cannot exceed its
+limits or call outside its allowlist.
+
+## Error codes
+
+| Code | Meaning |
+|---|---|
+| `SESSION_EXPIRED` | The session is past `expiresAt`. The SDK rejects it before the relay; the contract would reject it too. |
+| `SESSION_POLICY_VIOLATION` | A payment breaches a policy — over the spend limit, or a contract outside the allowlist. The facilitator maps the on-chain rejection to this code. |
+| `INVALID_CONFIG` | `grantSession` was called on a classic (`G…`) account. |
+
+## Install and revoke use the gated relay
+
+`grantSession` and `revokeSession` are ordinary root-signed operations over the same gated
+`/relay` path as any payment. They inherit its nonce and expiration replay protection. There
+is no separate, weaker channel for session management.
+
+## Policies
+
+<CardGroup cols={2}>
+  <Card title="Spend limit" href="/features/sessions/spend-limit">
+    Cap cumulative spend of a token over a rolling period (day, week, month, or total).
+  </Card>
+  <Card title="Allowlist" href="/features/sessions/allowlist">
+    Restrict which contracts the session key may call.
+  </Card>
+</CardGroup>

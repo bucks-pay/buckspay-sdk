@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-F="docs/security/threat-model.md"
+F="docs/production/security/threat-model.mdx"
 missing=0
 for h in "Signer custody" "Relayer trust" "Sponsor-key exposure" "Replay" "rpId" "Tenant isolation"; do
   grep -q "$h" "$F" || { echo "MISSING heading: $h"; missing=1; }

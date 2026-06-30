@@ -1,0 +1,83 @@
+---
+title: "Onboarding"
+description: "Sponsored account creation and trustline setup — the payer needs zero XLM, not even to exist on-chain."
+---
+
+`connect()` calls `account.ensureReady(...)` to materialize a payment-ready account —
+sponsored end-to-end, so the payer needs no XLM. This covers both the classic `G…` account
+(funded reserves + USDC trustline) and the contract `C…` account (smart-account deployment).
+
+## Read state first
+
+Check what the account still needs before calling `connect()`:
+
+```ts
+import type { AccountState } from "@buckspay/core";
+
+const state: AccountState = await client.getAccountState(address);
+// { exists, hasUsdcTrustline, xlmBalance?, usdcBalance? }
+if (!state.exists || !state.hasUsdcTrustline) {
+  await client.connect(); // materializes the account, sponsored
+}
+```
+
+## Full example
+
+{/* @snippet:start 04-onboarding-state.ts */}
+```ts
+// Onboarding — read account state first, then connect() materializes it (sponsored).
+import type { AccountState } from "@buckspay/core";
+import { classicClient } from "./02a-classic-account.js";
+
+export async function ensureOnboarded(address: string): Promise<void> {
+  const state: AccountState = await classicClient.getAccountState(address);
+  // For classic: missing account or no USDC trustline → connect() runs the sponsored
+  // sandwich (createAccount + changeTrust), the sponsor covers the XLM reserves (CAP-0033).
+  if (!state.exists || !state.hasUsdcTrustline) {
+    await classicClient.connect();
+  }
+  // For the contract model, connect() deploys the OZ Smart Account sponsored instead.
+}
+
+export function describeState(state: AccountState): string {
+  const xlm = state.xlmBalance ?? "0";
+  const usdc = state.usdcBalance ?? "0";
+  return `exists=${String(state.exists)} trustline=${String(state.hasUsdcTrustline)} xlm=${xlm} usdc=${usdc}`;
+}
+```
+{/* @snippet:end */}
+
+## Classic onboarding (`G…`)
+
+If the `G…` account does not exist or has no USDC trustline, the SDK:
+
+1. Fetches an unsigned sponsor-sandwich transaction from the facilitator (`relayer.buildOnboard`).
+2. The wallet signs it.
+3. `relayer.submitOnboard` co-signs and submits.
+
+The sponsor covers the XLM reserves using Stellar's sponsored-reserves mechanism (CAP-0033).
+**The payer contributes zero XLM** — not for reserves, not for the fee.
+
+## Contract deploy (`C…`)
+
+`ensureReady` deploys the OpenZeppelin Smart Account contract via
+`relayer.deployContract({ passkeyPublicKey })`, sponsored by the facilitator. The contract
+address (`C…`) is returned and stored in the account adapter.
+
+`connect()` is **idempotent** — calling it again on a fully onboarded account is a no-op.
+
+<Note>
+  The payer needs zero XLM — not to transact, and not even to appear on-chain for the first
+  time. The facilitator acts as sponsor for both the fee and the on-chain reserves.
+</Note>
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Gasless modes" href="/features/gasless-modes">
+    How sponsored and token-fee gas modes work after onboarding.
+  </Card>
+  <Card title="Account models" href="/concepts/account-models">
+    Classic G-addresses vs. passkey smart-contract accounts.
+  </Card>
+</CardGroup>

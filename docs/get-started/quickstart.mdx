@@ -1,0 +1,103 @@
+---
+title: "Quickstart"
+description: "Send a gasless USDC transfer on Stellar in under five minutes."
+---
+
+Buckspay makes a gasless Stellar USDC payment a three-call affair. The user signs with a
+wallet they already have (Freighter, xBull, LOBSTR); Buckspay's facilitator pays the XLM
+fee. **No private keys ever touch your app.**
+
+<Steps>
+
+### Install the packages
+
+Add the core client plus the account, signer, and relayer packages you need for a classic
+Stellar address flow.
+
+```bash
+pnpm add @buckspay/core @buckspay/accounts @buckspay/signers @buckspay/relayer
+```
+
+### Run the full example
+
+The snippet below is the complete, runnable file — compiled and type-checked in CI. It:
+
+1. **Creates a client** with a classic G-address account, a Wallets Kit browser signer, and
+   your backend BFF route as the relayer. `createRpcSimContext` gives `prepare()` a
+   recording simulator over the Soroban RPC.
+2. **Connects** the user's wallet and ensures the account is ready on-chain.
+3. **Calls `transfer`** to build the payment intent.
+4. **Calls `pay`** — which runs prepare → sign → send in one call.
+5. **Logs the settled receipt** (`receipt.transferTx`).
+
+{/* @snippet:start 01-quickstart-classic.ts */}
+```ts
+// Quickstart — classic gasless USDC transfer (browser; NO apiKey).
+import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { walletsKit } from "@buckspay/signers/wallets-kit";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+const USDC_SAC: string = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const MERCHANT: string = "GA6HCMBLTZS5VYYBCATRBR5VBZJEH5C2OON6XQGB3RNYDDAQ7JZ65YQH";
+
+export async function quickstart(): Promise<void> {
+  const buckspay = createBuckspayClient(
+    {
+      network: "testnet",
+      account: classicAccount(),
+      signer: walletsKit({ network: "testnet" }),
+      // url points at YOUR backend, which forwards to the facilitator with the key server-side.
+      relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+      gas: { mode: "sponsored" }
+    },
+    // prepare() simulates against the Soroban RPC.
+    createRpcSimContext("https://soroban-testnet.stellar.org")
+  );
+
+  await buckspay.connect(); // wallet + ensureReady
+  const call = buckspay.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" });
+  const receipt = await buckspay.pay([call]); // prepare → sign → send
+  console.log(receipt.transferTx); // settled on testnet
+}
+```
+{/* @snippet:end */}
+
+> **No API key in the browser.** `url: "/api/gasless"` points at *your* backend route, which
+> forwards the request to the facilitator with the secret key server-side.
+> See [BFF / backend integration](/concepts/facilitator-and-bff) for the route implementation.
+
+### Confirm on-chain
+
+`receipt` is the facilitator's settlement response:
+
+```ts
+{
+  ok: true,
+  via: "buckspay_self",
+  token: "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+  chain: "stellar-testnet",
+  transferTx: "a1b2c3…",   // transaction hash — verify on Stellar Expert
+  ledger: 54321,
+  status: "SUCCESS"
+}
+```
+
+Paste `transferTx` into [Stellar Expert (testnet)](https://testnet.stellar.expert) to confirm
+the payment landed.
+
+</Steps>
+
+## Next steps
+
+<CardGroup cols={3}>
+  <Card title="Account models" href="/concepts/account-models">
+    Classic G-addresses vs. smart-contract accounts (passkey and multi-sig).
+  </Card>
+  <Card title="Gasless modes" href="/features/gasless-modes">
+    Sponsored, fee-forwarding, and session-based gas strategies.
+  </Card>
+  <Card title="React hooks" href="/platforms/web-react">
+    Drop-in hooks for React apps — `useWallet`, `useStellarPay`, and `BuckspayProvider`.
+  </Card>
+</CardGroup>

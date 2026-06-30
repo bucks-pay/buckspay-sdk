@@ -1,0 +1,138 @@
+---
+title: "Native passkey"
+description: "iOS and Android WebAuthn via the device secure enclave — the same secp256r1 crypto as the web passkey signer, only the authenticator transport differs."
+---
+
+`nativePasskey` from `@buckspay/react-native` brings passkey signing to iOS and Android. It
+delegates to the exact same crypto pipeline as the web `passkey` signer — the secp256r1
+signatures, the COSE key extraction, and the OZ `__check_auth` payload are byte-for-byte
+identical. The only difference is the authenticator transport: `react-native-passkey` drives
+the platform's secure enclave instead of `navigator.credentials`.
+
+## When to use
+
+Choose `nativePasskey` for mobile React Native apps where you want the same passwordless,
+seed-phrase-free experience as the web passkey flow. The private key never leaves the device
+secure enclave. Like its web counterpart, it must be paired with `ozContractAccount`.
+
+## Factory
+
+```ts
+import { nativePasskey } from "@buckspay/react-native";
+
+const signer = nativePasskey({ rpId: "app.example.com", rpName: "My App" });
+```
+
+`nativePasskey(opts)` accepts a `NativePasskeyOptions` object:
+
+| Option | Type | Required | Description |
+|---|---|---|---|
+| `rpId` | `string` | Yes | Relying party domain (same rules as the web passkey — bound at registration) |
+| `rpName` | `string` | No | Human-readable name shown in the authenticator prompt |
+
+## The same hooks, same flow
+
+`@buckspay/react-native` re-exports `BuckspayProvider`, `useWallet`, and `useStellarPay` by
+reference from `@buckspay/react`. The store and status machine are identical — your screen logic
+is the same as a web component. Only the host primitives (`<View>` / `<Text>`) and the signer
+differ.
+
+## Secure storage
+
+Session blobs and credential IDs are persisted via a `SecureStore` port. Three adapters are
+available:
+
+| Adapter | Use |
+|---|---|
+| `memorySecureStore()` | Tests and ephemeral sessions |
+| `expoSecureStore()` | Expo managed workflow (uses `expo-secure-store`) |
+| `keychainSecureStore()` | Bare React Native (uses `react-native-keychain`) |
+
+Each adapter lazily imports its optional native peer, so apps that do not use a given adapter
+never pull its native module into the bundle.
+
+## Peer dependencies
+
+Install these in your React Native app (not in the SDK):
+
+- `react-native` — the React Native runtime
+- `react-native-passkey` — the native WebAuthn module
+- `react-native-get-random-values` — Hermes crypto polyfill
+
+## Example
+
+{/* @snippet:start 13-react-native.tsx */}
+```tsx
+// Recipe 13 — REACT NATIVE. The mobile binding re-exports the SAME @buckspay/react hooks and only
+// swaps the signer (native passkey / secure enclave), storage, and Hermes polyfills. The screen
+// logic is identical to web (recipe 05); only the host components (<View>/<Text>) and the signer
+// differ. This example pins the @buckspay/react-native surface; the View/Text layer is the app's,
+// so it is omitted here (it would pull react-native intrinsics) — fragments stand in for it.
+import {
+  BuckspayProvider,
+  useWallet,
+  useStellarPay,
+  nativePasskey,
+  memorySecureStore,
+  type SecureStore
+} from "@buckspay/react-native";
+import { ozContractAccount } from "@buckspay/accounts/oz-contract";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+import { createRpcSimContext, type BuckspayConfig, type Call } from "@buckspay/core";
+
+const SPONSOR_G = "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN";
+const USDC_SAC = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const MERCHANT = "GA6HCMBLTZS5VYYBCATRBR5VBZJEH5C2OON6XQGB3RNYDDAQ7JZ65YQH";
+
+// Same config shape as web — the ONLY mobile-specific line is the native passkey signer.
+export const mobileConfig: BuckspayConfig = {
+  network: "testnet",
+  account: ozContractAccount({ network: "testnet", sponsorAddress: SPONSOR_G }),
+  signer: nativePasskey({ rpId: "app.buckspay.dev", rpName: "buckspay" }),
+  relayer: buckspayFacilitator({ url: "/api/gasless", network: "testnet" }),
+  gas: { mode: "sponsored" }
+};
+
+// Session blobs / credential ids persist via a SecureStore port (keychain/expo on device).
+export const store: SecureStore = memorySecureStore();
+
+// The hooks are byte-identical to @buckspay/react — no fork (recipe 05).
+export function PayScreen() {
+  const { wallet, address, connect } = useWallet();
+  const { pay, status, receipt } = useStellarPay();
+
+  if (!wallet) {
+    // On device this is a <Pressable onPress={connect}> inside a <View>.
+    return <>{"Connect"}</>;
+  }
+  const call: Call = {
+    contract: USDC_SAC,
+    fn: "transfer",
+    args: [] // built from address → MERCHANT in the real screen; see recipe 05
+  };
+  void address;
+  void (() => pay([call]));
+  return <>{status === "success" && receipt ? `settled: ${receipt.transferTx}` : "Pay 1.50 USDC (free)"}</>;
+}
+
+// Wrap the tree once, exactly like web — pass `sim` so useStellarPay().pay() can simulate.
+export function App() {
+  return (
+    <BuckspayProvider config={mobileConfig} sim={createRpcSimContext("https://soroban-testnet.stellar.org")}>
+      <PayScreen />
+    </BuckspayProvider>
+  );
+}
+```
+{/* @snippet:end */}
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Passkey (web)" href="/signers/passkey">
+    The web counterpart — identical crypto, browser authenticator transport.
+  </Card>
+  <Card title="Signers overview" href="/signers/overview">
+    How every signer feeds into the same client and payment flow.
+  </Card>
+</CardGroup>

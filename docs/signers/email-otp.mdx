@@ -1,0 +1,135 @@
+---
+title: "Email OTP"
+description: "Authenticate users with a one-time code sent to their inbox — no wallet, no seed phrase, no OAuth account required."
+---
+
+The email signer authenticates users with a one-time password (OTP) sent to their email address.
+The OTP backend and the derived Stellar ed25519 key are custodied server-side by the facilitator;
+the browser only ever sees the public key and 64-byte signatures, delivered through your
+same-origin signer-proxy.
+
+## When to use
+
+Choose `emailSigner` when you want the lowest-friction onboarding: the user enters their email,
+receives a code, and pays — no wallet install, no seed phrase, no OAuth account. The resulting key
+backs a classic `G…` account.
+
+<Warning>
+  The OTP backend secret and the custodied private key are **never** in the browser bundle.
+  Configure a same-origin `proxyUrl` pointing at your backend signer-proxy, created with
+  `createSignerProxyRoute` from `@buckspay/nextjs`. The private key never reaches client-side code.
+</Warning>
+
+## Factory
+
+```ts
+import { emailSigner } from "@buckspay/signers/email";
+
+const signer = emailSigner({
+  proxyUrl: "/api/buckspay/auth/email",
+  network:  "testnet"
+});
+```
+
+`emailSigner(opts)` accepts an `EmailSignerOptions` object:
+
+| Option | Type | Required | Description |
+|---|---|---|---|
+| `proxyUrl` | `string` | Yes | Same-origin route to the `@buckspay/nextjs` signer-proxy |
+| `network` | `"testnet" \| "pubnet"` | Yes | Stellar network to target |
+
+## Two-step authentication
+
+The email signer uses a two-step flow before the payment:
+
+**Step 1 — Request the OTP**
+
+```ts
+await signer.requestOtp(email);
+// Sends the one-time code to the user's inbox.
+```
+
+**Step 2 — Verify and authenticate**
+
+```ts
+const details = await signer.authenticate?.({ email, otp: codeFromInbox });
+// details: AuthDetails { publicKey: "G…", provider: "email" }
+```
+
+After `authenticate()` resolves, the signer's `getPublicKey()` and `signAuthEntry()` are ready
+and the payment can proceed with the normal `prepare → sign → send` flow.
+
+## Server-side proxy
+
+Mount the signer-proxy in your backend:
+
+```ts
+// app/api/buckspay/auth/email/route.ts
+import { createSignerProxyRoute } from "@buckspay/nextjs";
+export const POST = createSignerProxyRoute({ provider: "email", network: "testnet" });
+```
+
+The proxy forwards the `issue` and `verify` actions to the facilitator with the backend secret.
+
+## Example
+
+{/* @snippet:start 16-email-login.ts */}
+```ts
+// Recipe 16 — EMAIL / OTP LOGIN → gasless USDC. Browser app.
+//
+// The user enters their email, receives a one-time code, and verifies it. The OTP backend
+// and the derived ed25519 key are custodied by the facilitator; the browser only ever sees
+// the public key + signatures, reached through YOUR signer-proxy. No secret ships client-side.
+import { createBuckspayClient, createRpcSimContext, type BuckspayConfig } from "@buckspay/core";
+import { classicAccount } from "@buckspay/accounts/classic";
+import { emailSigner } from "@buckspay/signers/email";
+import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
+
+const USDC_SAC_TESTNET = "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
+const MERCHANT = "GA6HCMBLTZS5VYYBCATRBR5VBZJEH5C2OON6XQGB3RNYDDAQ7JZ65YQH";
+
+const signer = emailSigner({
+  // YOUR same-origin signer-proxy route; forwards to the facilitator with creds server-side.
+  proxyUrl: "/api/buckspay/auth/email",
+  network: "testnet"
+});
+
+export const emailConfig: BuckspayConfig = {
+  network: "testnet",
+  account: classicAccount(),
+  signer,
+  relayer: buckspayFacilitator({ url: "/api/buckspay/relay", network: "testnet" }),
+  gas: { mode: "sponsored" }
+};
+
+export const emailClient = createBuckspayClient(
+  emailConfig,
+  createRpcSimContext("https://soroban-testnet.stellar.org")
+);
+
+export async function payWithEmailLogin(email: string, otpFromInbox: string): Promise<void> {
+  // 1. Issue the code (UI then collects it from the user's inbox).
+  await signer.requestOtp(email);
+  // 2. Verify the code → resolves the custodied Stellar ed25519 key.
+  const details = await signer.authenticate?.({ email, otp: otpFromInbox });
+  console.log("signed in as", details?.publicKey, "via", details?.provider);
+
+  // 3. Ordinary gasless payment — accounts/relayer/engine are untouched.
+  await emailClient.connect();
+  const call = emailClient.transfer({ token: USDC_SAC_TESTNET, to: MERCHANT, amount: "2.00" });
+  const receipt = await emailClient.pay([call]);
+  console.log(receipt.transferTx);
+}
+```
+{/* @snippet:end */}
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Social login" href="/signers/social-login">
+    Use an OAuth provider (Google, Apple, Discord) instead of an email code.
+  </Card>
+  <Card title="Facilitator and BFF" href="/concepts/facilitator-and-bff">
+    How the signer-proxy and API key work together server-side.
+  </Card>
+</CardGroup>

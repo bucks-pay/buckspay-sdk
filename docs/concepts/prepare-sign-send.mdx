@@ -1,0 +1,73 @@
+---
+title: "Prepare → Sign → Send"
+description: "The three-phase mental model every Buckspay payment follows — and where to insert backend validation."
+---
+
+Every Buckspay payment — regardless of account model, gas mode, or network — follows the same
+three-phase flow. Understanding this model makes the rest of the API predictable.
+
+<Steps>
+
+### Prepare
+
+`prepare(calls)` simulates the Soroban transaction against the network's RPC and records the
+authorization entries the signer must approve. It returns a `PreparedIntent` — a typed
+value that carries the simulation result, the ledger footprint, and the entries awaiting
+signature. No network write happens at this step.
+
+`createRpcSimContext` (or `mainnetSimContext` for pubnet) provides the Soroban RPC simulator
+that `prepare` uses. Pass it once when constructing the client.
+
+### Sign
+
+`sign(prepared)` passes the authorization entries to the configured `BuckspaySigner`. For a
+classic wallet the signer invokes the wallet extension; for a passkey account it triggers a
+WebAuthn assertion in the device authenticator. The result is a `SignedIntent` — the same
+entries, now carrying the cryptographic authorization.
+
+**This is the only user-interaction point.** The user sees a single signing prompt, regardless
+of how many calls are batched.
+
+### Send
+
+`send(signed)` serializes the `SignedIntent` into a `RelayPayload` and posts it to the
+configured `Relayer`. For browser apps the relayer URL points at your own backend route (the
+BFF), which validates the intent and forwards it to the Buckspay facilitator with the API key
+server-side. The facilitator wraps the transaction in a fee-bump and submits it to Stellar.
+
+`send` resolves with a `Receipt` once the transaction is finalized on-chain.
+
+</Steps>
+
+## The `pay` shortcut
+
+`client.pay(calls)` chains all three phases in a single call. It is equivalent to:
+
+```ts
+const prepared = await client.prepare(calls);
+const signed = await client.sign(prepared);
+const receipt = await client.send(signed);
+```
+
+Use the three-step form when you need to insert backend validation between `sign` and `send` —
+for example, to check that the intent has not expired or that the amount is within a
+pre-approved tolerance.
+
+## Where the BFF fits
+
+The `SignedIntent` that comes out of `sign()` is safe to POST to your backend: it carries no
+private key material. Your server validates business rules, then calls `server.send(signed)` —
+using a server-side `createBuckspayClient` configured with the `buckspayFacilitator` API key.
+The API key never leaves the server. See [Facilitator and BFF](/concepts/facilitator-and-bff)
+for the full pattern.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Facilitator and BFF" href="/concepts/facilitator-and-bff">
+    How the relayer works and why the API key must stay server-side.
+  </Card>
+  <Card title="Account models" href="/concepts/account-models">
+    Which account type to use and how they affect the sign step.
+  </Card>
+</CardGroup>

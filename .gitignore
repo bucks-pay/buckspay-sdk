@@ -13,3 +13,6 @@ plans/
 docs/specs/
 VERSIONING.md
 spikes/
+
+# subagent-driven-development scratch (local only)
+.superpowers/

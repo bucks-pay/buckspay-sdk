@@ -1,0 +1,33 @@
+---
+title: "Platforms"
+description: "The Buckspay SDK core is platform-agnostic. Each platform binding swaps only the host layer and the signer — the account model, gas engine, and payment flow are identical everywhere."
+---
+
+The core (`@buckspay/core`) owns the prepare → sign → send pipeline, the gas-abstraction engine,
+and the Soroban wire format. Platform packages layer on top: they swap the signer transport
+(browser WebAuthn, native enclave, injected wallet) and the React host (web DOM vs. React Native
+primitives), while re-exporting the same hooks and status machine without forking them.
+
+Choose your platform:
+
+<CardGroup cols={2}>
+  <Card title="Web — @buckspay/react" href="/platforms/web-react" icon="browser">
+    `BuckspayProvider`, `useWallet`, and `useStellarPay` for React web apps.
+    Works with any browser signer (Wallets Kit, passkey).
+  </Card>
+  <Card title="React Native — @buckspay/react-native" href="/platforms/react-native" icon="mobile">
+    The same hooks, re-exported unchanged, plus `nativePasskey` (iOS / Android secure enclave)
+    and secure-storage adapters.
+  </Card>
+  <Card title="Node / Core — @buckspay/core" href="/platforms/node-core" icon="terminal">
+    Use the SDK directly — no React. Ideal for server scripts, CLI tools, and backend workers
+    that build and relay intents programmatically.
+  </Card>
+  <Card title="Next.js BFF — @buckspay/nextjs" href="/platforms/nextjs-bff" icon="server">
+    App Router route factories: `createRelayRoute` and `createSignerProxyRoute`. The API key
+    and provider secrets stay server-side behind a same-origin BFF.
+  </Card>
+  <Card title="Other runtimes" icon="clock" disabled>
+    Game engines, embedded, and additional server runtimes — coming soon.
+  </Card>
+</CardGroup>

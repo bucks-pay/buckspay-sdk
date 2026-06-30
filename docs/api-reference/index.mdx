@@ -1,0 +1,49 @@
+---
+title: "API Reference"
+description: "HTTP wire contract for the Buckspay facilitator and BFF relay route."
+---
+
+## Overview
+
+The Buckspay facilitator is the off-chain relay service that accepts signed Stellar authorization
+entries and submits them gaslessly to the network. The endpoints documented here are the HTTP
+wire contract that the SDK speaks internally.
+
+<Note>
+  **The SDK calls these endpoints for you.** You do not call the facilitator directly from
+  application code. This reference is for teams building their own BFF relay route or integrating
+  the facilitator from a custom server-side context. See [Facilitator and BFF](/concepts/facilitator-and-bff)
+  and [Next.js BFF](/platforms/nextjs-bff) for the standard integration pattern.
+</Note>
+
+## Security model
+
+All facilitator endpoints require the `x-api-key` header. **The API key is a server-side secret
+and must never appear in a browser bundle.** The standard pattern is a same-origin BFF route on
+your server: the browser POSTs the signed payload to your BFF, which validates business rules and
+then calls the facilitator with the key injected server-side.
+
+The `@buckspay/nextjs` package provides `createRelayRoute` and `createSignerProxyRoute` to build
+compliant BFF handlers without handling the key injection yourself.
+
+## Endpoint groups
+
+| Group | Paths | Purpose |
+|-------|-------|---------|
+| **Relay** | `POST /relay` | Submit a signed `RelayPayload` → `Receipt` |
+| **Fee** | `POST /fee/quote` | Quote gas-in-token fee before building the `forward()` entry |
+| **Account State** | `GET /stellar/account/{pk}` · `GET /stellar/contract/{addr}` | Read on-chain balances and trustline status |
+| **Onboarding** | `POST /stellar/onboard/build` · `/submit` · `/contract/deploy` · `/session-account/deploy` | Sponsor-funded account setup and smart-contract deploy |
+| **Auth** | `POST /auth/social` · `POST /auth/email` | Signer-proxy: verify provider identity → Stellar key |
+| **Swap** | `POST /swap/quote` | EVM gasless swap quote (requires `swapChain` config) |
+
+## Schema sources
+
+All request and response schemas are derived directly from the SDK's own zod validators:
+
+- **`RelayPayload` / `Receipt`** — `packages/core/src/types.ts` + `packages/relayer/src/buckspay-facilitator/internals.ts` (`receiptSchema`)
+- **`FeeQuote`** — `packages/relayer/src/buckspay-facilitator/internals.ts` (`feeQuoteSchema`)
+- **`AccountState`** — `packages/relayer/src/buckspay-facilitator/internals.ts` (`accountStateSchema`)
+- **`AuthKeyResponse`** — `packages/core/src/types.ts` (`AuthDetails`)
+- **`SwapQuoteResponse`** — `packages/relayer/src/buckspay-facilitator/internals.ts` (`swapQuoteResponseSchema`)
+- **BFF relay / auth request validation** — `packages/nextjs/src/routes.ts` (`relayPayloadSchema`, `bodyObjectSchema`)
