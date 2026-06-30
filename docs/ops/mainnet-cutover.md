@@ -26,6 +26,22 @@ before the GO/NO-GO gate.**
 | Spend caps + kill-switch armed | ops | Per-tx + rolling spend caps configured; the kill-switch is reachable and tested in staging |
 | Guarded mainnet smoke green | eng | `BUCKSPAY_E2E_MAINNET=1 BUCKSPAY_E2E=1 pnpm e2e` runs **both** pubnet smokes green with tiny funds (0.0001 USDC) |
 
+### Extended surface (gas-in-token / batch / sessions / login / parallel)
+
+Every row inherits the controls in the base checklist above (spend caps, kill-switch, token
+allow-list, redacted observability) — these rows add only what the extended surface introduces.
+
+| Item | Owner | Verify |
+|---|---|---|
+| Multicall router pinned on pubnet + parity | eng | Pubnet-installed router address == the SDK pin; `pnpm --filter @buckspay/accounts exec vitest run batch-entry` + `bash scripts/check-pin-parity.sh` pass |
+| Session policy-account Wasm pinned | eng | `pnpm --filter @buckspay/accounts exec vitest run policy-account` passes (the on-chain spend-limit + allowlist authorizer hash is pinned) |
+| Contract decision gates GO | eng | `bash scripts/check-contract-decisions.sh` exits 0 (the gas-forwarder / batch-router / policy-signer decisions are GO + fixtures pinned) |
+| Fee token on the relay allow-list | eng | Only Circle's pubnet USDC SAC is accepted as the gas fee token, so `gas: { mode: "token" }` cannot forward an arbitrary token |
+| Signer-proxy secrets server-side | security | web3auth client secret + the OTP backend secret are in the server vault, NOT in any bundle; `POST /auth/social` + `POST /auth/email` are reachable **only** through the app BFF (`@buckspay/nextjs`) |
+| Channel-account pool funded + boot-validated | ops | The parallel channel accounts exist on pubnet, are funded above the floor, and are validated at facilitator boot; per-channel low-balance alerts armed |
+| Cross-feature smoke green | eng | `BUCKSPAY_E2E_MAINNET=1 BUCKSPAY_E2E=1 pnpm e2e` runs the session + batch + gas-in-token smoke green with tiny funds |
+| Feature docs + examples present | eng | `bash scripts/check-feature-docs.sh` exits 0 (every feature guide page + compiled example present, coverage table complete) |
+
 ## GO / NO-GO gate
 
 The single decision point.
@@ -112,12 +128,35 @@ The human/machine boundary is explicit: **Claude prepares + stages; the maintain
 1. **Claude** — ensure a changeset exists for every change since the last release
  (`.changeset/mainnet-ga.md` + any others) and stage it.
 2. **Claude / CI** — run the go/no-go gate: `bash scripts/release-gate.sh` **must exit 0** (all
- hard guards PASS); `bash scripts/check-cutover-runbook.sh` → exit 0; the guarded mainnet smoke
- green (`BUCKSPAY_E2E_MAINNET=1 BUCKSPAY_E2E=1 pnpm e2e`). Security sign-off finalized.
- This is the GO/NO-GO gate above.
+ hard guards PASS); `bash scripts/check-cutover-runbook.sh` → exit 0; `bash scripts/check-feature-docs.sh`
+ → exit 0; the guarded mainnet smoke green (`BUCKSPAY_E2E_MAINNET=1 BUCKSPAY_E2E=1 pnpm e2e`).
+ Security sign-off finalized. This is the GO/NO-GO gate above.
 3. **MAINTAINER (user)** — run `pnpm changeset version` (computes the lockstep bump + CHANGELOGs —
  never hand-edit a `version`), then `pnpm -r build` + `pnpm -r publish --dry-run` (confirm each
  tarball is `dist/`-only), then `pnpm changeset publish` + `git push --follow-tags`. **Claude
  never runs version/publish** — it is outward, irreversible, and needs npm auth (`VERSIONING.md` §9).
 4. **Flip pubnet on** per the pre-flight + GO gate; watch the sponsor balance + spend caps
  for the first window; keep the kill-switch one command away.
+
+## Extended surface go-live
+
+Bringing up gas-in-token, atomic batch, sessions, social/email login, and the parallel
+channel pool is **additive** to the base cutover — the GO/NO-GO gate, kill-switch, and rollback
+above are unchanged and now cover the new flows. Sequence the additions; do not weaken the gate.
+
+1. **New endpoints** (`POST /fee/quote`, `POST /auth/social`, `POST /auth/email`) — enable per the
+ extended pre-flight. Each inherits the base controls (spend caps, kill-switch, token allow-list,
+ redacted observability); it does not get a parallel control plane. The `/auth/*` routes are
+ reachable **only** through the app BFF (`@buckspay/nextjs`) — provider secrets stay server-side,
+ never in a browser or mobile bundle.
+2. **Pinned contracts** — confirm the pubnet-installed **Multicall** router address and the
+ **policy-account** (session authorizer) Wasm hash match the SDK pins, with the same pin-parity
+ discipline as the passkey smart-account hash. A mismatch is a **NO-GO** trigger. The FeeForwarder
+ is facilitator-side (returned by `/fee/quote`); its fee token must be on the relay allow-list.
+3. **Channel-account pool** — bring the pool up funded and boot-validated; it is transparent to the
+ SDK (parallel throughput, no API surface). Watch the per-channel balances alongside the sponsor
+ for the first window.
+4. **Rollback addendum** — disabling the extended surface = unset the FeeForwarder / Multicall /
+ channel config + the `/auth/*` routes (the relay then refuses token-gas / batched / auth payloads);
+ the sponsored single-call path keeps working. The kill-switch still stops **all** pubnet relays in
+ seconds.

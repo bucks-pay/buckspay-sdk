@@ -1,7 +1,7 @@
 # Gasless modes
 
-The `GasConfig` is `{ mode: "sponsored" }` in v1. The `GasAbstractionEngine` turns a
-`SignedIntent` into the exact `RelayPayload` the facilitator expects.
+The `GasConfig` is `{ mode: "sponsored" }` or `{ mode: "token", token }`. The
+`GasAbstractionEngine` turns a `SignedIntent` into the exact `RelayPayload` the facilitator expects.
 
 ## What "sponsored" means
 
@@ -18,11 +18,13 @@ Compiled example: `docs/examples/03-gasless-sponsored.ts`.
 
 Onboarding is also sponsored — see [Onboarding](./04-onboarding.md).
 
-## Roadmap (not in v1)
+## Paying the fee in a stablecoin
 
-> `token` (pay gas in USDC via the FeeForwarder) and `self` (payer pays their own fee)
-> modes are **not available in v1**. The `GasConfig` type only admits
-> `{ mode: "sponsored" }`, so an unimplemented mode fails to type-check — you can't
-> accidentally configure something unsupported.
+> **`token` (pay gas in USDC via the FeeForwarder) is supported** — see
+> [Gas in stablecoin](./08-gas-in-token.md). Use it when you want the user, not your sponsor, to
+> cover the fee, paid in the asset they already hold.
+
+The `GasConfig` type admits **only** `{ mode: "sponsored" }` and `{ mode: "token", token }`, so any
+other mode fails to type-check — you can't accidentally configure something unsupported.
 
 Prev: [Account models](./02-account-models.md) · Next: [Onboarding](./04-onboarding.md)

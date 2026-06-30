@@ -17,6 +17,16 @@ Every code snippet in this guide is compiled in CI against the real `@buckspay/*
 5. [React hooks](./05-react.md) — `BuckspayProvider`, `useWallet`, `useStellarPay`.
 6. [API reference](./06-api-reference.md) — typedoc-generated, from the contract.
 7. [Migrating from direct facilitator calls](./07-migrating-from-facilitator.md) — before/after + the BFF boundary.
+8. [Gas in stablecoin](./08-gas-in-token.md) — `{ mode: "token", token }`; pay the fee in USDC via the FeeForwarder.
+9. [Atomic batch](./09-atomic-batch.md) — `sendCalls([...])` / `batch()`; N transfers, all-or-nothing, one signature.
+10. [Sessions](./10-sessions.md) — `grantSession` / `revokeSession` with on-chain spend-limit + allowlist policies.
+11. [Social & email login](./11-social-email-login.md) — `socialSigner` / `emailSigner` behind a server-side proxy.
+12. [React Native](./12-react-native.md) — `@buckspay/react-native`: native passkey + secure storage, same hooks.
+13. [Feature coverage](./13-feature-coverage.md) — the index: each feature → native Stellar mechanism → surface → example.
+
+> **Features** (gas-in-token, atomic batch, sessions, social/email login, React Native, server
+> bindings) are catalogued in [Feature coverage](./13-feature-coverage.md) — start there to map a
+> capability to its native Stellar mechanism and its runnable example.
 
 ## Run the hero demo
 

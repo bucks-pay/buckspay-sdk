@@ -89,7 +89,7 @@
 
 ### Patch Changes
 
-- Passkey / contract-account model (M2), fully backward-compatible:
+- Passkey / contract-account model, fully backward-compatible:
 
   - **`@buckspay/signers/passkey`** — new WebAuthn secp256r1 `BuckspaySigner`. Derives the
     passkey public key (COSE EC2 parse) and produces the OZ `__check_auth` `WebAuthnSigData`

@@ -30,6 +30,7 @@ item "no unexpected copyleft in prod tree"   hard pnpm --filter @buckspay/signer
 item "wasm-hash pin reproducible"            hard node scripts/verify-wasm-hash.mjs
 item "cross-repo wasm-pin parity"            hard bash scripts/check-pin-parity.sh
 item "cutover runbook present"               hard bash scripts/check-cutover-runbook.sh
+item "feature docs + examples present"       hard bash scripts/check-feature-docs.sh
 
 # --- onboarding/sessions/swap contract blockers ---
 # The contract decision gates (fee-forwarder / multicall / policy-signer) gate gas-in-token /

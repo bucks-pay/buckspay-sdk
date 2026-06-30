@@ -9,8 +9,9 @@ for h in \
   "Rollback" \
   "Sponsor-refill procedure" \
   "Emergency pause (kill-switch)" \
-  "Incident response"; do
+  "Incident response" \
+  "Extended surface go-live"; do
   grep -qF "$h" "$F" || { echo "MISSING section: $h"; missing=1; }
 done
 if [ "$missing" -ne 0 ]; then echo "cutover-runbook: incomplete"; exit 1; fi
-echo "cutover-runbook: all 7 sections present"
+echo "cutover-runbook: all 8 sections present"

@@ -36,4 +36,4 @@ Compiled example: `docs/examples/07-bff-relay.ts` (the only example that passes 
 - Keep the rail schema and the BFF route (`/api/gasless/relay`).
 - Run the payload parity + e2e regression.
 
-Prev: [API reference](./06-api-reference.md) · Back to [index](./README.md)
+Prev: [API reference](./06-api-reference.md) · Next: [Gas in stablecoin](./08-gas-in-token.md)

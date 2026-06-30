@@ -68,6 +68,9 @@ importers:
       '@buckspay/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@buckspay/react-native':
+        specifier: workspace:*
+        version: link:../../packages/react-native
       '@buckspay/relayer':
         specifier: workspace:*
         version: link:../../packages/relayer
