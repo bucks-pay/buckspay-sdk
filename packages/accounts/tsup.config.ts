@@ -7,7 +7,8 @@ export default defineConfig({
     index: "src/index.ts",
     "classic/index": "src/classic/index.ts",
     "oz-contract/index": "src/oz-contract/index.ts",
-    "policy/index": "src/policy/index.ts"
+    "policy/index": "src/policy/index.ts",
+    "policy-account/index": "src/policy-account/index.ts"
   },
   format: ["esm", "cjs"],
   dts: true,

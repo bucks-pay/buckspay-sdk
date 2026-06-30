@@ -174,6 +174,10 @@ export interface Relayer {
   buildOnboard(input: { publicKey: string }): Promise<{ xdr: string }>; // POST /stellar/onboard/build
   submitOnboard(input: { publicKey: string; signedTxXdr: string }): Promise<{ ok: boolean }>; // POST /stellar/onboard/submit
   deployContract(input: { passkeyPublicKey: string }): Promise<{ address: string }>; // POST /stellar/contract/deploy (contract account model)
+  /** Deploy a policy-scoped session account bound to an ed25519 root key. OPTIONAL: a relayer that
+   *  does not support session accounts omits it; the policy-account adapter then refuses to deploy
+   *  with INVALID_CONFIG. POST /stellar/session-account/deploy */
+  deploySessionAccount?(input: { rootPublicKey: string }): Promise<{ address: string }>;
 }
 
 // ── §4.4 Engine, intents, client, config, state ────────────────────────────

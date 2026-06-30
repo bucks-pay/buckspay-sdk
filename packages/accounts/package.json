@@ -50,6 +50,11 @@
       "types": "./dist/policy/index.d.ts",
       "import": "./dist/policy/index.js",
       "require": "./dist/policy/index.cjs"
+    },
+    "./policy-account": {
+      "types": "./dist/policy-account/index.d.ts",
+      "import": "./dist/policy-account/index.js",
+      "require": "./dist/policy-account/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
