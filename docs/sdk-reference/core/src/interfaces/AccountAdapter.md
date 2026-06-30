@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / AccountAdapter
+---
+title: "Interface: AccountAdapter"
+---
 
 # Interface: AccountAdapter
 
@@ -12,7 +10,7 @@ Defined in: [packages/core/src/types.ts:110](https://github.com/bucks-pay/bucksp
 
 ### model
 
-> `readonly` **model**: [`AccountModel`](../type-aliases/AccountModel.md)
+> `readonly` **model**: [`AccountModel`](/sdk-reference/core/src/type-aliases/AccountModel)
 
 Defined in: [packages/core/src/types.ts:111](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L111)
 
@@ -30,7 +28,7 @@ returns the SIGNED auth entry as base64 XDR.
 
 ##### input
 
-[`AssembleInput`](AssembleInput.md)
+[`AssembleInput`](/sdk-reference/core/src/interfaces/AssembleInput)
 
 #### Returns
 
@@ -52,7 +50,7 @@ Contract account model only: the UNSIGNED entry that installs a policy-scoped se
 
 ##### input
 
-[`SessionInstallInput`](SessionInstallInput.md)
+[`SessionInstallInput`](/sdk-reference/core/src/interfaces/SessionInstallInput)
 
 #### Returns
 
@@ -72,7 +70,7 @@ Contract account model only: the UNSIGNED entry that revokes a session signer.
 
 ##### input
 
-[`SessionRevokeInput`](SessionRevokeInput.md)
+[`SessionRevokeInput`](/sdk-reference/core/src/interfaces/SessionRevokeInput)
 
 #### Returns
 
@@ -96,7 +94,7 @@ Build ONE unsigned auth entry covering an atomic batch of calls. For N>1 it is t
 
 ##### input
 
-[`BuildBatchEntryInput`](BuildBatchEntryInput.md)
+[`BuildBatchEntryInput`](/sdk-reference/core/src/interfaces/BuildBatchEntryInput)
 
 #### Returns
 
@@ -114,7 +112,7 @@ Defined in: [packages/core/src/types.ts:114](https://github.com/bucks-pay/bucksp
 
 ##### input
 
-[`BuildEntryInput`](BuildEntryInput.md)
+[`BuildEntryInput`](/sdk-reference/core/src/interfaces/BuildEntryInput)
 
 #### Returns
 
@@ -132,7 +130,7 @@ Defined in: [packages/core/src/types.ts:113](https://github.com/bucks-pay/bucksp
 
 ##### input
 
-[`EnsureReadyInput`](EnsureReadyInput.md)
+[`EnsureReadyInput`](/sdk-reference/core/src/interfaces/EnsureReadyInput)
 
 #### Returns
 
@@ -150,7 +148,7 @@ Defined in: [packages/core/src/types.ts:112](https://github.com/bucks-pay/bucksp
 
 ##### signer
 
-[`BuckspaySigner`](BuckspaySigner.md)
+[`BuckspaySigner`](/sdk-reference/core/src/interfaces/BuckspaySigner)
 
 #### Returns
 

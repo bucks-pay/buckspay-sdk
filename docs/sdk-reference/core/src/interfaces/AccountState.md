@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / AccountState
+---
+title: "Interface: AccountState"
+---
 
 # Interface: AccountState
 

@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/passkey](../README.md) / CheckAuthParts
+---
+title: "Interface: CheckAuthParts"
+---
 
 # Interface: CheckAuthParts
 

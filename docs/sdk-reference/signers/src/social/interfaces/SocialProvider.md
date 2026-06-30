@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/social](../README.md) / SocialProvider
+---
+title: "Interface: SocialProvider"
+---
 
 # Interface: SocialProvider
 
@@ -80,7 +78,7 @@ sponsor-sandwich tx, not an auth entry). Returns the signed envelope as base64 X
 
 ###### network
 
-[`Network`](../../../../nextjs/src/type-aliases/Network.md)
+[`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 #### Returns
 

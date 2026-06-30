@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / BuckspaySigner
+---
+title: "Interface: BuckspaySigner"
+---
 
 # Interface: BuckspaySigner
 
@@ -12,7 +10,7 @@ Defined in: [packages/core/src/types.ts:35](https://github.com/bucks-pay/buckspa
 
 ### type
 
-> `readonly` **type**: [`SignerType`](../type-aliases/SignerType.md)
+> `readonly` **type**: [`SignerType`](/sdk-reference/core/src/type-aliases/SignerType)
 
 Defined in: [packages/core/src/types.ts:36](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L36)
 
@@ -20,7 +18,7 @@ Defined in: [packages/core/src/types.ts:36](https://github.com/bucks-pay/buckspa
 
 ### authenticate()?
 
-> `optional` **authenticate**(`params?`): `Promise`\<[`AuthDetails`](AuthDetails.md)\>
+> `optional` **authenticate**(`params?`): `Promise`\<[`AuthDetails`](/sdk-reference/core/src/interfaces/AuthDetails)\>
 
 Defined in: [packages/core/src/types.ts:52](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L52)
 
@@ -36,25 +34,25 @@ resolves, getPublicKey()/signAuthEntry() operate on the provider-issued key.
 
 #### Returns
 
-`Promise`\<[`AuthDetails`](AuthDetails.md)\>
+`Promise`\<[`AuthDetails`](/sdk-reference/core/src/interfaces/AuthDetails)\>
 
 ***
 
 ### getPublicKey()
 
-> **getPublicKey**(): `Promise`\<[`SignerKey`](SignerKey.md)\>
+> **getPublicKey**(): `Promise`\<[`SignerKey`](/sdk-reference/core/src/interfaces/SignerKey)\>
 
 Defined in: [packages/core/src/types.ts:37](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L37)
 
 #### Returns
 
-`Promise`\<[`SignerKey`](SignerKey.md)\>
+`Promise`\<[`SignerKey`](/sdk-reference/core/src/interfaces/SignerKey)\>
 
 ***
 
 ### signAuthEntry()
 
-> **signAuthEntry**(`payload`): `Promise`\<[`Signature`](Signature.md)\>
+> **signAuthEntry**(`payload`): `Promise`\<[`Signature`](/sdk-reference/core/src/interfaces/Signature)\>
 
 Defined in: [packages/core/src/types.ts:38](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L38)
 
@@ -62,11 +60,11 @@ Defined in: [packages/core/src/types.ts:38](https://github.com/bucks-pay/buckspa
 
 ##### payload
 
-[`AuthEntryPayload`](AuthEntryPayload.md)
+[`AuthEntryPayload`](/sdk-reference/core/src/interfaces/AuthEntryPayload)
 
 #### Returns
 
-`Promise`\<[`Signature`](Signature.md)\>
+`Promise`\<[`Signature`](/sdk-reference/core/src/interfaces/Signature)\>
 
 ***
 
@@ -96,7 +94,7 @@ structurally and raises ACCOUNT_NOT_READY if a signer can't sign txs.
 
 ###### network
 
-[`Network`](../type-aliases/Network.md)
+[`Network`](/sdk-reference/core/src/type-aliases/Network)
 
 #### Returns
 

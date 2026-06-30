@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/wallets-kit](../README.md) / WalletsKitLike
+---
+title: "Interface: WalletsKitLike"
+---
 
 # Interface: WalletsKitLike
 

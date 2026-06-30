@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / SwapQuote
+---
+title: "Interface: SwapQuote"
+---
 
 # Interface: SwapQuote
 

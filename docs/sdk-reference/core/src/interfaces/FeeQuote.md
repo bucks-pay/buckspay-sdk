@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / FeeQuote
+---
+title: "Interface: FeeQuote"
+---
 
 # Interface: FeeQuote
 

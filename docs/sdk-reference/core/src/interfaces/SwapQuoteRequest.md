@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / SwapQuoteRequest
+---
+title: "Interface: SwapQuoteRequest"
+---
 
 # Interface: SwapQuoteRequest
 
@@ -12,7 +10,7 @@ Normalized swap request the client hands the relayer adapter (the connected wall
 
 ## Extended by
 
-- [`SwapRequest`](SwapRequest.md)
+- [`SwapRequest`](/sdk-reference/core/src/interfaces/SwapRequest)
 
 ## Properties
 

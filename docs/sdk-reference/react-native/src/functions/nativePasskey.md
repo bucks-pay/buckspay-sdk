@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [react-native/src](../README.md) / nativePasskey
+---
+title: "Function: nativePasskey()"
+---
 
 # Function: nativePasskey()
 
-> **nativePasskey**(`opts`): [`BuckspaySigner`](../../../signers/src/social/interfaces/BuckspaySigner.md)
+> **nativePasskey**(`opts`): [`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner)
 
 Defined in: [packages/react-native/src/native-passkey.ts:83](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react-native/src/native-passkey.ts#L83)
 
@@ -14,8 +12,8 @@ Defined in: [packages/react-native/src/native-passkey.ts:83](https://github.com/
 
 ### opts
 
-[`NativePasskeyOptions`](../interfaces/NativePasskeyOptions.md)
+[`NativePasskeyOptions`](/sdk-reference/react-native/src/interfaces/NativePasskeyOptions)
 
 ## Returns
 
-[`BuckspaySigner`](../../../signers/src/social/interfaces/BuckspaySigner.md)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner)

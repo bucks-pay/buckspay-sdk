@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / BuckspayConfig
+---
+title: "Interface: BuckspayConfig"
+---
 
 # Interface: BuckspayConfig
 
@@ -12,7 +10,7 @@ Defined in: [packages/core/src/types.ts:308](https://github.com/bucks-pay/bucksp
 
 ### account
 
-> **account**: [`AccountAdapter`](AccountAdapter.md)
+> **account**: [`AccountAdapter`](/sdk-reference/core/src/interfaces/AccountAdapter)
 
 Defined in: [packages/core/src/types.ts:310](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L310)
 
@@ -33,7 +31,7 @@ refused unless at least one signal is present; testnet ignores this flag.
 
 ### gas
 
-> **gas**: [`GasConfig`](../type-aliases/GasConfig.md)
+> **gas**: [`GasConfig`](/sdk-reference/core/src/type-aliases/GasConfig)
 
 Defined in: [packages/core/src/types.ts:313](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L313)
 
@@ -41,7 +39,7 @@ Defined in: [packages/core/src/types.ts:313](https://github.com/bucks-pay/bucksp
 
 ### network
 
-> **network**: [`Network`](../type-aliases/Network.md)
+> **network**: [`Network`](/sdk-reference/core/src/type-aliases/Network)
 
 Defined in: [packages/core/src/types.ts:309](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L309)
 
@@ -49,7 +47,7 @@ Defined in: [packages/core/src/types.ts:309](https://github.com/bucks-pay/bucksp
 
 ### relayer
 
-> **relayer**: [`Relayer`](Relayer.md)
+> **relayer**: [`Relayer`](/sdk-reference/core/src/interfaces/Relayer)
 
 Defined in: [packages/core/src/types.ts:312](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L312)
 
@@ -57,6 +55,6 @@ Defined in: [packages/core/src/types.ts:312](https://github.com/bucks-pay/bucksp
 
 ### signer
 
-> **signer**: [`BuckspaySigner`](BuckspaySigner.md)
+> **signer**: [`BuckspaySigner`](/sdk-reference/core/src/interfaces/BuckspaySigner)
 
 Defined in: [packages/core/src/types.ts:311](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L311)

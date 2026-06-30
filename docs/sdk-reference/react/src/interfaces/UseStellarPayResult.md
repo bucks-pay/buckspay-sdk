@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [react/src](../README.md) / UseStellarPayResult
+---
+title: "Interface: UseStellarPayResult"
+---
 
 # Interface: UseStellarPayResult
 

@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / Relayer
+---
+title: "Interface: Relayer"
+---
 
 # Interface: Relayer
 
@@ -76,7 +74,7 @@ Deploy a policy-scoped session account bound to an ed25519 root key. OPTIONAL: a
 
 ### feeQuote()?
 
-> `optional` **feeQuote**(`input`): `Promise`\<[`FeeQuote`](FeeQuote.md)\>
+> `optional` **feeQuote**(`input`): `Promise`\<[`FeeQuote`](/sdk-reference/core/src/interfaces/FeeQuote)\>
 
 Defined in: [packages/core/src/types.ts:176](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L176)
 
@@ -90,7 +88,7 @@ Quote the fee-token amount + forwarder/collector for paying Soroban gas in `toke
 
 ###### calls
 
-[`Call`](Call.md)[]
+[`Call`](/sdk-reference/core/src/interfaces/Call)[]
 
 ###### from
 
@@ -102,13 +100,13 @@ Quote the fee-token amount + forwarder/collector for paying Soroban gas in `toke
 
 #### Returns
 
-`Promise`\<[`FeeQuote`](FeeQuote.md)\>
+`Promise`\<[`FeeQuote`](/sdk-reference/core/src/interfaces/FeeQuote)\>
 
 ***
 
 ### getAccountState()
 
-> **getAccountState**(`address`): `Promise`\<[`AccountState`](AccountState.md)\>
+> **getAccountState**(`address`): `Promise`\<[`AccountState`](/sdk-reference/core/src/interfaces/AccountState)\>
 
 Defined in: [packages/core/src/types.ts:177](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L177)
 
@@ -120,13 +118,13 @@ Defined in: [packages/core/src/types.ts:177](https://github.com/bucks-pay/bucksp
 
 #### Returns
 
-`Promise`\<[`AccountState`](AccountState.md)\>
+`Promise`\<[`AccountState`](/sdk-reference/core/src/interfaces/AccountState)\>
 
 ***
 
 ### quoteSwap()?
 
-> `optional` **quoteSwap**(`req`): `Promise`\<[`SwapQuote`](SwapQuote.md)\>
+> `optional` **quoteSwap**(`req`): `Promise`\<[`SwapQuote`](/sdk-reference/core/src/interfaces/SwapQuote)\>
 
 Defined in: [packages/core/src/types.ts:188](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L188)
 
@@ -138,17 +136,17 @@ STRETCH: gasless swap via the facilitator's EXISTING /swap/* rail. OPTIONAL - a 
 
 ##### req
 
-[`SwapQuoteRequest`](SwapQuoteRequest.md)
+[`SwapQuoteRequest`](/sdk-reference/core/src/interfaces/SwapQuoteRequest)
 
 #### Returns
 
-`Promise`\<[`SwapQuote`](SwapQuote.md)\>
+`Promise`\<[`SwapQuote`](/sdk-reference/core/src/interfaces/SwapQuote)\>
 
 ***
 
 ### relay()
 
-> **relay**(`payload`): `Promise`\<[`Receipt`](Receipt.md)\>
+> **relay**(`payload`): `Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 Defined in: [packages/core/src/types.ts:172](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L172)
 
@@ -156,11 +154,11 @@ Defined in: [packages/core/src/types.ts:172](https://github.com/bucks-pay/bucksp
 
 ##### payload
 
-[`RelayPayload`](RelayPayload.md)
+[`RelayPayload`](/sdk-reference/core/src/interfaces/RelayPayload)
 
 #### Returns
 
-`Promise`\<[`Receipt`](Receipt.md)\>
+`Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 ***
 
@@ -190,7 +188,7 @@ Defined in: [packages/core/src/types.ts:179](https://github.com/bucks-pay/bucksp
 
 ### swap()?
 
-> `optional` **swap**(`req`): `Promise`\<[`Receipt`](Receipt.md)\>
+> `optional` **swap**(`req`): `Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 Defined in: [packages/core/src/types.ts:189](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L189)
 
@@ -198,8 +196,8 @@ Defined in: [packages/core/src/types.ts:189](https://github.com/bucks-pay/bucksp
 
 ##### req
 
-[`SwapRequest`](SwapRequest.md)
+[`SwapRequest`](/sdk-reference/core/src/interfaces/SwapRequest)
 
 #### Returns
 
-`Promise`\<[`Receipt`](Receipt.md)\>
+`Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>

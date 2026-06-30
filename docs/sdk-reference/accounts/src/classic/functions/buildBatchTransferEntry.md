@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/classic](../README.md) / buildBatchTransferEntry
+---
+title: "Function: buildBatchTransferEntry()"
+---
 
 # Function: buildBatchTransferEntry()
 

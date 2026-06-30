@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy](../README.md) / spendLimit
+---
+title: "Function: spendLimit()"
+---
 
 # Function: spendLimit()
 
-> **spendLimit**(`opts`): [`SessionPolicy`](../type-aliases/SessionPolicy.md)
+> **spendLimit**(`opts`): [`SessionPolicy`](/sdk-reference/accounts/src/policy/type-aliases/SessionPolicy)
 
 Defined in: [packages/accounts/src/policy/compile.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/accounts/src/policy/compile.ts#L12)
 
@@ -32,4 +30,4 @@ one the on-chain policy account enforces in `__check_auth`.
 
 ## Returns
 
-[`SessionPolicy`](../type-aliases/SessionPolicy.md)
+[`SessionPolicy`](/sdk-reference/accounts/src/policy/type-aliases/SessionPolicy)

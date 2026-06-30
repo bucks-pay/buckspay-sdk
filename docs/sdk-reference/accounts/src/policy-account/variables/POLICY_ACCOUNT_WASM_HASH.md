@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy-account](../README.md) / POLICY\_ACCOUNT\_WASM\_HASH
+---
+title: "Variable: POLICY_ACCOUNT_WASM_HASH"
+---
 
 # Variable: POLICY\_ACCOUNT\_WASM\_HASH
 

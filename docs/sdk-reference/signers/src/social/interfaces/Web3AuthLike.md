@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/social](../README.md) / Web3AuthLike
+---
+title: "Interface: Web3AuthLike"
+---
 
 # Interface: Web3AuthLike
 
@@ -37,7 +35,7 @@ Run OAuth (the popup) and resolve the OIDC idToken + the derived ed25519 public 
 
 ###### network
 
-[`Network`](../../../../nextjs/src/type-aliases/Network.md)
+[`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 #### Returns
 

@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [nextjs/src](../README.md) / CreateRelayRouteDeps
+---
+title: "Interface: CreateRelayRouteDeps"
+---
 
 # Interface: CreateRelayRouteDeps
 

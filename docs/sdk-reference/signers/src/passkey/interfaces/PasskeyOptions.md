@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/passkey](../README.md) / PasskeyOptions
+---
+title: "Interface: PasskeyOptions"
+---
 
 # Interface: PasskeyOptions
 
@@ -28,7 +26,7 @@ Defined in: [packages/signers/src/passkey/index.ts:25](https://github.com/bucks-
 
 ### webauthn?
 
-> `optional` **webauthn?**: [`WebAuthnLike`](WebAuthnLike.md)
+> `optional` **webauthn?**: [`WebAuthnLike`](/sdk-reference/signers/src/passkey/interfaces/WebAuthnLike)
 
 Defined in: [packages/signers/src/passkey/index.ts:27](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/index.ts#L27)
 

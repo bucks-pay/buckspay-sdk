@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/passkey](../README.md) / CreateOutput
+---
+title: "Interface: CreateOutput"
+---
 
 # Interface: CreateOutput
 

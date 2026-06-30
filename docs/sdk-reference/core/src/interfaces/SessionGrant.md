@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / SessionGrant
+---
+title: "Interface: SessionGrant"
+---
 
 # Interface: SessionGrant
 
@@ -20,7 +18,7 @@ Defined in: [packages/core/src/types.ts:226](https://github.com/bucks-pay/bucksp
 
 ### policies
 
-> **policies**: [`SessionPolicy`](../type-aliases/SessionPolicy.md)[]
+> **policies**: [`SessionPolicy`](/sdk-reference/core/src/type-aliases/SessionPolicy)[]
 
 Defined in: [packages/core/src/types.ts:225](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L225)
 
@@ -28,6 +26,6 @@ Defined in: [packages/core/src/types.ts:225](https://github.com/bucks-pay/bucksp
 
 ### sessionKey
 
-> **sessionKey**: [`SignerKey`](SignerKey.md)
+> **sessionKey**: [`SignerKey`](/sdk-reference/core/src/interfaces/SignerKey)
 
 Defined in: [packages/core/src/types.ts:224](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L224)

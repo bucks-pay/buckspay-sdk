@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / SwapRequest
+---
+title: "Interface: SwapRequest"
+---
 
 # Interface: SwapRequest
 
@@ -12,7 +10,7 @@ Normalized swap request the client hands the relayer adapter (the connected wall
 
 ## Extends
 
-- [`SwapQuoteRequest`](SwapQuoteRequest.md)
+- [`SwapQuoteRequest`](/sdk-reference/core/src/interfaces/SwapQuoteRequest)
 
 ## Properties
 
@@ -24,7 +22,7 @@ Defined in: [packages/core/src/types.ts:262](https://github.com/bucks-pay/bucksp
 
 #### Inherited from
 
-[`SwapQuoteRequest`](SwapQuoteRequest.md).[`amount`](SwapQuoteRequest.md#amount)
+[`SwapQuoteRequest`](/sdk-reference/core/src/interfaces/SwapQuoteRequest).[`amount`](/sdk-reference/core/src/interfaces/SwapQuoteRequest#amount)
 
 ***
 
@@ -44,7 +42,7 @@ Defined in: [packages/core/src/types.ts:259](https://github.com/bucks-pay/bucksp
 
 #### Inherited from
 
-[`SwapQuoteRequest`](SwapQuoteRequest.md).[`payer`](SwapQuoteRequest.md#payer)
+[`SwapQuoteRequest`](/sdk-reference/core/src/interfaces/SwapQuoteRequest).[`payer`](/sdk-reference/core/src/interfaces/SwapQuoteRequest#payer)
 
 ***
 
@@ -56,7 +54,7 @@ Defined in: [packages/core/src/types.ts:260](https://github.com/bucks-pay/bucksp
 
 #### Inherited from
 
-[`SwapQuoteRequest`](SwapQuoteRequest.md).[`tokenIn`](SwapQuoteRequest.md#tokenin)
+[`SwapQuoteRequest`](/sdk-reference/core/src/interfaces/SwapQuoteRequest).[`tokenIn`](/sdk-reference/core/src/interfaces/SwapQuoteRequest#tokenin)
 
 ***
 
@@ -68,4 +66,4 @@ Defined in: [packages/core/src/types.ts:261](https://github.com/bucks-pay/bucksp
 
 #### Inherited from
 
-[`SwapQuoteRequest`](SwapQuoteRequest.md).[`tokenOut`](SwapQuoteRequest.md#tokenout)
+[`SwapQuoteRequest`](/sdk-reference/core/src/interfaces/SwapQuoteRequest).[`tokenOut`](/sdk-reference/core/src/interfaces/SwapQuoteRequest#tokenout)

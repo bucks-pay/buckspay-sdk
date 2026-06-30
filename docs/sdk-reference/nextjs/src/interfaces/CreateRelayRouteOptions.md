@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [nextjs/src](../README.md) / CreateRelayRouteOptions
+---
+title: "Interface: CreateRelayRouteOptions"
+---
 
 # Interface: CreateRelayRouteOptions
 
@@ -30,6 +28,6 @@ Defined in: [packages/nextjs/src/routes.ts:34](https://github.com/bucks-pay/buck
 
 ### network
 
-> **network**: [`Network`](../type-aliases/Network.md)
+> **network**: [`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 Defined in: [packages/nextjs/src/routes.ts:37](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L37)

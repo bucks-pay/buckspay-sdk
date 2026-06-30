@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/classic](../README.md) / resolveMulticallContract
+---
+title: "Function: resolveMulticallContract()"
+---
 
 # Function: resolveMulticallContract()
 
@@ -14,7 +12,7 @@ Defined in: [packages/accounts/src/batch/multicall-pin.ts:21](https://github.com
 
 ### network
 
-[`Network`](../../../../nextjs/src/type-aliases/Network.md)
+[`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 ### override?
 

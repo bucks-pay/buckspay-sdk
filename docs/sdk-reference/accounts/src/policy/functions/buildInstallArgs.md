@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy](../README.md) / buildInstallArgs
+---
+title: "Function: buildInstallArgs()"
+---
 
 # Function: buildInstallArgs()
 
@@ -25,7 +23,7 @@ unbounded session (no spend limit / empty allowlist) via `compilePolicies`.
 
 #### policies
 
-[`SessionPolicy`](../type-aliases/SessionPolicy.md)[]
+[`SessionPolicy`](/sdk-reference/accounts/src/policy/type-aliases/SessionPolicy)[]
 
 #### sessionKey
 

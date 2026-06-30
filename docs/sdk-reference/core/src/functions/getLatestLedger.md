@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / getLatestLedger
+---
+title: "Function: getLatestLedger()"
+---
 
 # Function: getLatestLedger()
 
@@ -22,7 +20,7 @@ BuckspayError codes (never thrown raw). `fetchImpl` is injectable for tests.
 
 ### fetchImpl?
 
-[`RpcFetch`](../type-aliases/RpcFetch.md) = `fetch`
+[`RpcFetch`](/sdk-reference/core/src/type-aliases/RpcFetch) = `fetch`
 
 ## Returns
 

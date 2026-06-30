@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / AuthEntryPayload
+---
+title: "Interface: AuthEntryPayload"
+---
 
 # Interface: AuthEntryPayload
 
@@ -12,7 +10,7 @@ Defined in: [packages/core/src/types.ts:21](https://github.com/bucks-pay/buckspa
 
 ### network
 
-> **network**: [`Network`](../type-aliases/Network.md)
+> **network**: [`Network`](/sdk-reference/core/src/type-aliases/Network)
 
 Defined in: [packages/core/src/types.ts:24](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L24)
 

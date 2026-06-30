@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy-account](../README.md) / resolvePolicyAccountAddress
+---
+title: "Function: resolvePolicyAccountAddress()"
+---
 
 # Function: resolvePolicyAccountAddress()
 
@@ -18,11 +16,11 @@ this reuses the same derivation as the contract/passkey model, keyed by the root
 
 ### signer
 
-[`BuckspaySigner`](../../../../signers/src/social/interfaces/BuckspaySigner.md)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner)
 
 ### opts
 
-[`PolicyAccountOptions`](../interfaces/PolicyAccountOptions.md)
+[`PolicyAccountOptions`](/sdk-reference/accounts/src/policy-account/interfaces/PolicyAccountOptions)
 
 ## Returns
 

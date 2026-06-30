@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / GasAbstractionEngine
+---
+title: "Class: GasAbstractionEngine"
+---
 
 # Class: GasAbstractionEngine
 
@@ -28,7 +26,7 @@ Defined in: [packages/core/src/gas-abstraction-engine.ts:14](https://github.com/
 
 ##### gas
 
-[`GasConfig`](../type-aliases/GasConfig.md)
+[`GasConfig`](/sdk-reference/core/src/type-aliases/GasConfig)
 
 #### Returns
 
@@ -38,7 +36,7 @@ Defined in: [packages/core/src/gas-abstraction-engine.ts:14](https://github.com/
 
 ### toRelayPayload()
 
-> **toRelayPayload**(`signed`): [`RelayPayload`](../interfaces/RelayPayload.md)
+> **toRelayPayload**(`signed`): [`RelayPayload`](/sdk-reference/core/src/interfaces/RelayPayload)
 
 Defined in: [packages/core/src/gas-abstraction-engine.ts:38](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/gas-abstraction-engine.ts#L38)
 
@@ -52,8 +50,8 @@ already network-bound). Output is byte-identical to the dashboard's
 
 ##### signed
 
-[`SignedIntent`](../interfaces/SignedIntent.md)
+[`SignedIntent`](/sdk-reference/core/src/interfaces/SignedIntent)
 
 #### Returns
 
-[`RelayPayload`](../interfaces/RelayPayload.md)
+[`RelayPayload`](/sdk-reference/core/src/interfaces/RelayPayload)

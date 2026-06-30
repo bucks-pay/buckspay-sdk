@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / batch
+---
+title: "Function: batch()"
+---
 
 # Function: batch()
 
-> **batch**(...`calls`): [`BatchBuilder`](../interfaces/BatchBuilder.md)
+> **batch**(...`calls`): [`BatchBuilder`](/sdk-reference/core/src/interfaces/BatchBuilder)
 
 Defined in: [packages/core/src/batch.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/batch.ts#L20)
 
@@ -17,8 +15,8 @@ into one atomic entry (classic multi-op / contract Multicall).
 
 ### calls
 
-...[`Call`](../interfaces/Call.md)[]
+...[`Call`](/sdk-reference/core/src/interfaces/Call)[]
 
 ## Returns
 
-[`BatchBuilder`](../interfaces/BatchBuilder.md)
+[`BatchBuilder`](/sdk-reference/core/src/interfaces/BatchBuilder)

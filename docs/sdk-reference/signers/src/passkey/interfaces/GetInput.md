@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/passkey](../README.md) / GetInput
+---
+title: "Interface: GetInput"
+---
 
 # Interface: GetInput
 

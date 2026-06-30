@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / createRpcSimContext
+---
+title: "Function: createRpcSimContext()"
+---
 
 # Function: createRpcSimContext()
 
-> **createRpcSimContext**(`rpcUrl`, `deps?`): [`AccountSimContext`](../interfaces/AccountSimContext.md)
+> **createRpcSimContext**(`rpcUrl`, `deps?`): [`AccountSimContext`](/sdk-reference/core/src/interfaces/AccountSimContext)
 
 Defined in: [packages/core/src/soroban-rpc.ts:129](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/soroban-rpc.ts#L129)
 
@@ -31,7 +29,7 @@ model needs no `simSource` (its `from` is already a real G-address).
 
 #### fetchImpl?
 
-[`RpcFetch`](../type-aliases/RpcFetch.md)
+[`RpcFetch`](/sdk-reference/core/src/type-aliases/RpcFetch)
 
 #### randomNonce?
 
@@ -43,4 +41,4 @@ model needs no `simSource` (its `from` is already a real G-address).
 
 ## Returns
 
-[`AccountSimContext`](../interfaces/AccountSimContext.md)
+[`AccountSimContext`](/sdk-reference/core/src/interfaces/AccountSimContext)

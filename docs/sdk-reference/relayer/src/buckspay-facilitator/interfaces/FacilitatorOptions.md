@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [relayer/src/buckspay-facilitator](../README.md) / FacilitatorOptions
+---
+title: "Interface: FacilitatorOptions"
+---
 
 # Interface: FacilitatorOptions
 
@@ -20,7 +18,7 @@ Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:31](https:
 
 ### network
 
-> **network**: [`Network`](../../../../nextjs/src/type-aliases/Network.md)
+> **network**: [`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:32](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/relayer/src/buckspay-facilitator/facilitator.ts#L32)
 

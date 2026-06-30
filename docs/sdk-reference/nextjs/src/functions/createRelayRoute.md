@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [nextjs/src](../README.md) / createRelayRoute
+---
+title: "Function: createRelayRoute()"
+---
 
 # Function: createRelayRoute()
 
@@ -17,11 +15,11 @@ App Router route handler that relays a signed intent to the facilitator with the
 
 ### opts
 
-[`CreateRelayRouteOptions`](../interfaces/CreateRelayRouteOptions.md)
+[`CreateRelayRouteOptions`](/sdk-reference/nextjs/src/interfaces/CreateRelayRouteOptions)
 
 ### deps?
 
-[`CreateRelayRouteDeps`](../interfaces/CreateRelayRouteDeps.md) = `{}`
+[`CreateRelayRouteDeps`](/sdk-reference/nextjs/src/interfaces/CreateRelayRouteDeps) = `{}`
 
 ## Returns
 

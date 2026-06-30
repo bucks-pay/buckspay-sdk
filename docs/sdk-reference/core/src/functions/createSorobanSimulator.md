@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / createSorobanSimulator
+---
+title: "Function: createSorobanSimulator()"
+---
 
 # Function: createSorobanSimulator()
 
-> **createSorobanSimulator**(`rpcUrl`, `fetchImpl?`, `simSource?`): [`SorobanSimulator`](../interfaces/SorobanSimulator.md)
+> **createSorobanSimulator**(`rpcUrl`, `fetchImpl?`, `simSource?`): [`SorobanSimulator`](/sdk-reference/core/src/interfaces/SorobanSimulator)
 
 Defined in: [packages/core/src/soroban-rpc.ts:45](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/soroban-rpc.ts#L45)
 
@@ -26,7 +24,7 @@ A reverting simulation maps to `SIMULATION_FAILED`; transport failure to
 
 ### fetchImpl?
 
-[`RpcFetch`](../type-aliases/RpcFetch.md) = `fetch`
+[`RpcFetch`](/sdk-reference/core/src/type-aliases/RpcFetch) = `fetch`
 
 ### simSource?
 
@@ -34,4 +32,4 @@ A reverting simulation maps to `SIMULATION_FAILED`; transport failure to
 
 ## Returns
 
-[`SorobanSimulator`](../interfaces/SorobanSimulator.md)
+[`SorobanSimulator`](/sdk-reference/core/src/interfaces/SorobanSimulator)

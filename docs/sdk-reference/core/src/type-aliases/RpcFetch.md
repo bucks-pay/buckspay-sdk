@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / RpcFetch
+---
+title: "Type Alias: RpcFetch"
+---
 
 # Type Alias: RpcFetch
 

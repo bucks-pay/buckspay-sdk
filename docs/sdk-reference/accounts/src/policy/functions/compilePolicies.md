@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy](../README.md) / compilePolicies
+---
+title: "Function: compilePolicies()"
+---
 
 # Function: compilePolicies()
 
@@ -24,7 +22,7 @@ the SDK's only job is to encode these rules exactly - pinned byte-for-byte by a 
 
 ### policies
 
-[`SessionPolicy`](../type-aliases/SessionPolicy.md)[]
+[`SessionPolicy`](/sdk-reference/accounts/src/policy/type-aliases/SessionPolicy)[]
 
 ### expiresAt
 

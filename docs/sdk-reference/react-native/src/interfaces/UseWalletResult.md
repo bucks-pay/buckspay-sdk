@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [react-native/src](../README.md) / UseWalletResult
+---
+title: "Interface: UseWalletResult"
+---
 
 # Interface: UseWalletResult
 

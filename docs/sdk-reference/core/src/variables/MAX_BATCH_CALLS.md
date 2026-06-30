@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / MAX\_BATCH\_CALLS
+---
+title: "Variable: MAX_BATCH_CALLS"
+---
 
 # Variable: MAX\_BATCH\_CALLS
 

@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / createBuckspayConfig
+---
+title: "Function: createBuckspayConfig()"
+---
 
 # Function: createBuckspayConfig()
 
@@ -17,11 +15,11 @@ wrapper re-throws after recording the error, so callers still `try/catch`.
 
 ### config
 
-[`BuckspayConfig`](../interfaces/BuckspayConfig.md)
+[`BuckspayConfig`](/sdk-reference/core/src/interfaces/BuckspayConfig)
 
 ### sim?
 
-[`AccountSimContext`](../interfaces/AccountSimContext.md)
+[`AccountSimContext`](/sdk-reference/core/src/interfaces/AccountSimContext)
 
 ## Returns
 
@@ -29,8 +27,8 @@ wrapper re-throws after recording the error, so callers still `try/catch`.
 
 ### client
 
-> **client**: [`BuckspayClient`](../classes/BuckspayClient.md)
+> **client**: [`BuckspayClient`](/sdk-reference/core/src/classes/BuckspayClient)
 
 ### store
 
-> **store**: `StoreApi`\<[`BuckspayState`](../interfaces/BuckspayState.md)\>
+> **store**: `StoreApi`\<[`BuckspayState`](/sdk-reference/core/src/interfaces/BuckspayState)\>

@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / createBuckspayClient
+---
+title: "Function: createBuckspayClient()"
+---
 
 # Function: createBuckspayClient()
 
-> **createBuckspayClient**(`config`, `sim?`, `opts?`): [`BuckspayClient`](../classes/BuckspayClient.md)
+> **createBuckspayClient**(`config`, `sim?`, `opts?`): [`BuckspayClient`](/sdk-reference/core/src/classes/BuckspayClient)
 
 Defined in: [packages/core/src/config.ts:14](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/config.ts#L14)
 
@@ -14,11 +12,11 @@ Defined in: [packages/core/src/config.ts:14](https://github.com/bucks-pay/bucksp
 
 ### config
 
-[`BuckspayConfig`](../interfaces/BuckspayConfig.md)
+[`BuckspayConfig`](/sdk-reference/core/src/interfaces/BuckspayConfig)
 
 ### sim?
 
-[`AccountSimContext`](../interfaces/AccountSimContext.md)
+[`AccountSimContext`](/sdk-reference/core/src/interfaces/AccountSimContext)
 
 ### opts?
 
@@ -28,4 +26,4 @@ Defined in: [packages/core/src/config.ts:14](https://github.com/bucks-pay/bucksp
 
 ## Returns
 
-[`BuckspayClient`](../classes/BuckspayClient.md)
+[`BuckspayClient`](/sdk-reference/core/src/classes/BuckspayClient)

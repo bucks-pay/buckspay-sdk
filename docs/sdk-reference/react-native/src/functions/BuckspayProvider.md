@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [react-native/src](../README.md) / BuckspayProvider
+---
+title: "Function: BuckspayProvider()"
+---
 
 # Function: BuckspayProvider()
 
@@ -18,7 +16,7 @@ React 19: plain function component, children via props, no forwardRef.
 
 ### \_\_namedParameters
 
-[`BuckspayProviderProps`](../interfaces/BuckspayProviderProps.md)
+[`BuckspayProviderProps`](/sdk-reference/react-native/src/interfaces/BuckspayProviderProps)
 
 ## Returns
 

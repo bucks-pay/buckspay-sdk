@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / BuckspayError
+---
+title: "Class: BuckspayError"
+---
 
 # Class: BuckspayError
 
@@ -28,7 +26,7 @@ Defined in: [packages/core/src/errors.ts:33](https://github.com/bucks-pay/bucksp
 
 ##### code
 
-[`BuckspayErrorCode`](../type-aliases/BuckspayErrorCode.md)
+[`BuckspayErrorCode`](/sdk-reference/core/src/type-aliases/BuckspayErrorCode)
 
 ##### message
 
@@ -64,7 +62,7 @@ Defined in: node\_modules/.pnpm/typescript@5.9.3/node\_modules/typescript/lib/li
 
 ### code
 
-> `readonly` **code**: [`BuckspayErrorCode`](../type-aliases/BuckspayErrorCode.md)
+> `readonly` **code**: [`BuckspayErrorCode`](/sdk-reference/core/src/type-aliases/BuckspayErrorCode)
 
 Defined in: [packages/core/src/errors.ts:31](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/errors.ts#L31)
 

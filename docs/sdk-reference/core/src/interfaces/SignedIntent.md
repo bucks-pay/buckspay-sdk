@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / SignedIntent
+---
+title: "Interface: SignedIntent"
+---
 
 # Interface: SignedIntent
 
@@ -36,7 +34,7 @@ Defined in: [packages/core/src/types.ts:284](https://github.com/bucks-pay/bucksp
 
 ### network
 
-> **network**: [`Network`](../type-aliases/Network.md)
+> **network**: [`Network`](/sdk-reference/core/src/type-aliases/Network)
 
 Defined in: [packages/core/src/types.ts:290](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L290)
 

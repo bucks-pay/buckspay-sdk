@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / buildUnsignedCallEntry
+---
+title: "Function: buildUnsignedCallEntry()"
+---
 
 # Function: buildUnsignedCallEntry()
 
@@ -42,7 +40,7 @@ behalf - the entry tree must include them, verified on-chain). Credentials bind 
 
 #### subInvocations?
 
-[`SubInvocation`](../interfaces/SubInvocation.md)[]
+[`SubInvocation`](/sdk-reference/core/src/interfaces/SubInvocation)[]
 
 ## Returns
 

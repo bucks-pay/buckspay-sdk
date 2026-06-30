@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/passkey](../README.md) / coseToUncompressed
+---
+title: "Function: coseToUncompressed()"
+---
 
 # Function: coseToUncompressed()
 

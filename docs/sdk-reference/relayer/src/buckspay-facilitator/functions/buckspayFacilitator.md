@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [relayer/src/buckspay-facilitator](../README.md) / buckspayFacilitator
+---
+title: "Function: buckspayFacilitator()"
+---
 
 # Function: buckspayFacilitator()
 
@@ -18,7 +16,7 @@ shapes before return, and HTTP/facilitator errors map to typed `BuckspayError`s.
 
 ### opts
 
-[`FacilitatorOptions`](../interfaces/FacilitatorOptions.md)
+[`FacilitatorOptions`](/sdk-reference/relayer/src/buckspay-facilitator/interfaces/FacilitatorOptions)
 
 ### deps?
 

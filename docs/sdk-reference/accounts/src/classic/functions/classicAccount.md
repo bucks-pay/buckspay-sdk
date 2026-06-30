@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/classic](../README.md) / classicAccount
+---
+title: "Function: classicAccount()"
+---
 
 # Function: classicAccount()
 
@@ -19,7 +17,7 @@ inside the wallet via the injected `BuckspaySigner`.
 
 ### opts?
 
-[`ClassicAccountOptions`](../interfaces/ClassicAccountOptions.md) = `{}`
+[`ClassicAccountOptions`](/sdk-reference/accounts/src/classic/interfaces/ClassicAccountOptions) = `{}`
 
 ## Returns
 

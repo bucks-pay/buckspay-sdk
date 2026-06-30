@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/email](../README.md) / EmailSigner
+---
+title: "Interface: EmailSigner"
+---
 
 # Interface: EmailSigner
 
@@ -10,7 +8,7 @@ Defined in: [packages/signers/src/email/index.ts:28](https://github.com/bucks-pa
 
 ## Extends
 
-- [`BuckspaySigner`](../../social/interfaces/BuckspaySigner.md)
+- [`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner)
 
 ## Properties
 
@@ -22,13 +20,13 @@ Defined in: packages/core/dist/index.d.ts:44
 
 #### Inherited from
 
-[`BuckspaySigner`](../../social/interfaces/BuckspaySigner.md).[`type`](../../social/interfaces/BuckspaySigner.md#type)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner).[`type`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner#type)
 
 ## Methods
 
 ### authenticate()?
 
-> `optional` **authenticate**(`params?`): `Promise`\<[`AuthDetails`](../../social/interfaces/AuthDetails.md)\>
+> `optional` **authenticate**(`params?`): `Promise`\<[`AuthDetails`](/sdk-reference/signers/src/social/interfaces/AuthDetails)\>
 
 Defined in: packages/core/dist/index.d.ts:63
 
@@ -44,11 +42,11 @@ resolves, getPublicKey()/signAuthEntry() operate on the provider-issued key.
 
 #### Returns
 
-`Promise`\<[`AuthDetails`](../../social/interfaces/AuthDetails.md)\>
+`Promise`\<[`AuthDetails`](/sdk-reference/signers/src/social/interfaces/AuthDetails)\>
 
 #### Inherited from
 
-[`BuckspaySigner`](../../social/interfaces/BuckspaySigner.md).[`authenticate`](../../social/interfaces/BuckspaySigner.md#authenticate)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner).[`authenticate`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner#authenticate)
 
 ***
 
@@ -64,7 +62,7 @@ Defined in: packages/core/dist/index.d.ts:45
 
 #### Inherited from
 
-[`BuckspaySigner`](../../social/interfaces/BuckspaySigner.md).[`getPublicKey`](../../social/interfaces/BuckspaySigner.md#getpublickey)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner).[`getPublicKey`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner#getpublickey)
 
 ***
 
@@ -106,7 +104,7 @@ Defined in: packages/core/dist/index.d.ts:46
 
 #### Inherited from
 
-[`BuckspaySigner`](../../social/interfaces/BuckspaySigner.md).[`signAuthEntry`](../../social/interfaces/BuckspaySigner.md#signauthentry)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner).[`signAuthEntry`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner#signauthentry)
 
 ***
 
@@ -136,7 +134,7 @@ structurally and raises ACCOUNT_NOT_READY if a signer can't sign txs.
 
 ###### network
 
-[`Network`](../../../../nextjs/src/type-aliases/Network.md)
+[`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 #### Returns
 
@@ -144,4 +142,4 @@ structurally and raises ACCOUNT_NOT_READY if a signer can't sign txs.
 
 #### Inherited from
 
-[`BuckspaySigner`](../../social/interfaces/BuckspaySigner.md).[`signTransaction`](../../social/interfaces/BuckspaySigner.md#signtransaction)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner).[`signTransaction`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner#signtransaction)

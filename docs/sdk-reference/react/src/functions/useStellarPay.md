@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [react/src](../README.md) / useStellarPay
+---
+title: "Function: useStellarPay()"
+---
 
 # Function: useStellarPay()
 
-> **useStellarPay**(): [`UseStellarPayResult`](../interfaces/UseStellarPayResult.md)
+> **useStellarPay**(): [`UseStellarPayResult`](/sdk-reference/react/src/interfaces/UseStellarPayResult)
 
 Defined in: [packages/react/src/use-stellar-pay.ts:31](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L31)
 
@@ -17,4 +15,4 @@ returns the store to `idle`.
 
 ## Returns
 
-[`UseStellarPayResult`](../interfaces/UseStellarPayResult.md)
+[`UseStellarPayResult`](/sdk-reference/react/src/interfaces/UseStellarPayResult)

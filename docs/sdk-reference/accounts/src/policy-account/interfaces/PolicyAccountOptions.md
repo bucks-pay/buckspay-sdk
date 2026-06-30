@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy-account](../README.md) / PolicyAccountOptions
+---
+title: "Interface: PolicyAccountOptions"
+---
 
 # Interface: PolicyAccountOptions
 
@@ -22,7 +20,7 @@ Multicall router C-address for atomic batches; defaults to the network's pinned 
 
 ### network?
 
-> `optional` **network?**: [`Network`](../../../../nextjs/src/type-aliases/Network.md)
+> `optional` **network?**: [`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 Defined in: [packages/accounts/src/policy-account/resolveAddress.ts:11](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/accounts/src/policy-account/resolveAddress.ts#L11)
 

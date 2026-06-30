@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [nextjs/src](../README.md) / createSignerProxyRoute
+---
+title: "Function: createSignerProxyRoute()"
+---
 
 # Function: createSignerProxyRoute()
 
@@ -17,11 +15,11 @@ App Router route handler that forwards a social/email body to the facilitator `/
 
 ### opts
 
-[`CreateSignerProxyRouteOptions`](../interfaces/CreateSignerProxyRouteOptions.md)
+[`CreateSignerProxyRouteOptions`](/sdk-reference/nextjs/src/interfaces/CreateSignerProxyRouteOptions)
 
 ### deps?
 
-[`CreateSignerProxyRouteDeps`](../interfaces/CreateSignerProxyRouteDeps.md) = `{}`
+[`CreateSignerProxyRouteDeps`](/sdk-reference/nextjs/src/interfaces/CreateSignerProxyRouteDeps) = `{}`
 
 ## Returns
 

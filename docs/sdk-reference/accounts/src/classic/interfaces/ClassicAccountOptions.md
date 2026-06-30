@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/classic](../README.md) / ClassicAccountOptions
+---
+title: "Interface: ClassicAccountOptions"
+---
 
 # Interface: ClassicAccountOptions
 

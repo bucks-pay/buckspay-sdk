@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/email](../README.md) / EmailSignerDeps
+---
+title: "Interface: EmailSignerDeps"
+---
 
 # Interface: EmailSignerDeps
 

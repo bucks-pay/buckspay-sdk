@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / SessionManagerDeps
+---
+title: "Interface: SessionManagerDeps"
+---
 
 # Interface: SessionManagerDeps
 
@@ -12,7 +10,7 @@ Defined in: [packages/core/src/session-manager.ts:21](https://github.com/bucks-p
 
 ### account
 
-> **account**: [`AccountAdapter`](AccountAdapter.md)
+> **account**: [`AccountAdapter`](/sdk-reference/core/src/interfaces/AccountAdapter)
 
 Defined in: [packages/core/src/session-manager.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L22)
 
@@ -28,7 +26,7 @@ Defined in: [packages/core/src/session-manager.ts:27](https://github.com/bucks-p
 
 ### network
 
-> **network**: [`Network`](../type-aliases/Network.md)
+> **network**: [`Network`](/sdk-reference/core/src/type-aliases/Network)
 
 Defined in: [packages/core/src/session-manager.ts:25](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L25)
 
@@ -60,7 +58,7 @@ Defined in: [packages/core/src/session-manager.ts:29](https://github.com/bucks-p
 
 ### relayer
 
-> **relayer**: [`Relayer`](Relayer.md)
+> **relayer**: [`Relayer`](/sdk-reference/core/src/interfaces/Relayer)
 
 Defined in: [packages/core/src/session-manager.ts:24](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L24)
 
@@ -68,7 +66,7 @@ Defined in: [packages/core/src/session-manager.ts:24](https://github.com/bucks-p
 
 ### signer
 
-> **signer**: [`BuckspaySigner`](BuckspaySigner.md)
+> **signer**: [`BuckspaySigner`](/sdk-reference/core/src/interfaces/BuckspaySigner)
 
 Defined in: [packages/core/src/session-manager.ts:23](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L23)
 
@@ -76,6 +74,6 @@ Defined in: [packages/core/src/session-manager.ts:23](https://github.com/bucks-p
 
 ### sim
 
-> **sim**: [`AccountSimContext`](AccountSimContext.md)
+> **sim**: [`AccountSimContext`](/sdk-reference/core/src/interfaces/AccountSimContext)
 
 Defined in: [packages/core/src/session-manager.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L26)

@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / SessionInstallInput
+---
+title: "Interface: SessionInstallInput"
+---
 
 # Interface: SessionInstallInput
 
@@ -23,7 +21,7 @@ Defined in: [packages/core/src/types.ts:98](https://github.com/bucks-pay/buckspa
 
 ### grant
 
-> **grant**: [`SessionGrant`](SessionGrant.md)
+> **grant**: [`SessionGrant`](/sdk-reference/core/src/interfaces/SessionGrant)
 
 Defined in: [packages/core/src/types.ts:99](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L99)
 

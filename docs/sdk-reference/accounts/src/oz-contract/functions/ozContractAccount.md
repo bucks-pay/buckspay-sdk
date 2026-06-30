@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/oz-contract](../README.md) / ozContractAccount
+---
+title: "Function: ozContractAccount()"
+---
 
 # Function: ozContractAccount()
 
@@ -14,7 +12,7 @@ Defined in: [packages/accounts/src/oz-contract/index.ts:37](https://github.com/b
 
 ### opts?
 
-[`OzContractOptions`](../interfaces/OzContractOptions.md) = `{}`
+[`OzContractOptions`](/sdk-reference/accounts/src/oz-contract/interfaces/OzContractOptions) = `{}`
 
 ## Returns
 

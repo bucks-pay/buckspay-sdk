@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/oz-contract](../README.md) / OZ\_SMART\_ACCOUNT\_WASM\_HASH
+---
+title: "Variable: OZ_SMART_ACCOUNT_WASM_HASH"
+---
 
 # Variable: OZ\_SMART\_ACCOUNT\_WASM\_HASH
 

@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy-account](../README.md) / policyAccount
+---
+title: "Function: policyAccount()"
+---
 
 # Function: policyAccount()
 
@@ -14,7 +12,7 @@ Defined in: [packages/accounts/src/policy-account/index.ts:27](https://github.co
 
 ### opts?
 
-[`PolicyAccountOptions`](../interfaces/PolicyAccountOptions.md) = `{}`
+[`PolicyAccountOptions`](/sdk-reference/accounts/src/policy-account/interfaces/PolicyAccountOptions) = `{}`
 
 ## Returns
 

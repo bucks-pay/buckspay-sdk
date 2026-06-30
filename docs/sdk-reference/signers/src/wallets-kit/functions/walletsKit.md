@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/wallets-kit](../README.md) / walletsKit
+---
+title: "Function: walletsKit()"
+---
 
 # Function: walletsKit()
 
-> **walletsKit**(`opts`, `injected?`): [`BuckspaySigner`](../../social/interfaces/BuckspaySigner.md)
+> **walletsKit**(`opts`, `injected?`): [`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner)
 
 Defined in: [packages/signers/src/wallets-kit/signer.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/wallets-kit/signer.ts#L26)
 
@@ -22,12 +20,12 @@ browser-only library is lazily imported on first use.
 
 ### opts
 
-[`KitOptions`](../interfaces/KitOptions.md)
+[`KitOptions`](/sdk-reference/signers/src/wallets-kit/interfaces/KitOptions)
 
 ### injected?
 
-[`WalletsKitLike`](../interfaces/WalletsKitLike.md)
+[`WalletsKitLike`](/sdk-reference/signers/src/wallets-kit/interfaces/WalletsKitLike)
 
 ## Returns
 
-[`BuckspaySigner`](../../social/interfaces/BuckspaySigner.md)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner)

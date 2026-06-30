@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/classic](../README.md) / MULTICALL\_CONTRACT\_ID
+---
+title: "Variable: MULTICALL_CONTRACT_ID"
+---
 
 # Variable: MULTICALL\_CONTRACT\_ID
 
-> `const` **MULTICALL\_CONTRACT\_ID**: `Record`\<[`Network`](../../../../nextjs/src/type-aliases/Network.md), `string`\>
+> `const` **MULTICALL\_CONTRACT\_ID**: `Record`\<[`Network`](/sdk-reference/nextjs/src/type-aliases/Network), `string`\>
 
 Defined in: [packages/accounts/src/batch/multicall-pin.ts:16](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/accounts/src/batch/multicall-pin.ts#L16)
 

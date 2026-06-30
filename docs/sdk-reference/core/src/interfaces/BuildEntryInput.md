@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / BuildEntryInput
+---
+title: "Interface: BuildEntryInput"
+---
 
 # Interface: BuildEntryInput
 
@@ -12,7 +10,7 @@ Defined in: [packages/core/src/types.ts:73](https://github.com/bucks-pay/buckspa
 
 ### call
 
-> **call**: [`Call`](Call.md)
+> **call**: [`Call`](/sdk-reference/core/src/interfaces/Call)
 
 Defined in: [packages/core/src/types.ts:75](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L75)
 

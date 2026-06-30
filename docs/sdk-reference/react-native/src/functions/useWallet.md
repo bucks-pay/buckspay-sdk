@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [react-native/src](../README.md) / useWallet
+---
+title: "Function: useWallet()"
+---
 
 # Function: useWallet()
 
-> **useWallet**(): [`UseWalletResult`](../interfaces/UseWalletResult.md)
+> **useWallet**(): [`UseWalletResult`](/sdk-reference/react-native/src/interfaces/UseWalletResult)
 
 Defined in: packages/react/dist/index.d.ts:35
 
@@ -17,4 +15,4 @@ live client (model is `classic`; `getState` proxies the client).
 
 ## Returns
 
-[`UseWalletResult`](../interfaces/UseWalletResult.md)
+[`UseWalletResult`](/sdk-reference/react-native/src/interfaces/UseWalletResult)

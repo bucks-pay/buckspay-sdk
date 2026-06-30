@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / USDC\_DECIMALS
+---
+title: "Variable: USDC_DECIMALS"
+---
 
 # Variable: USDC\_DECIMALS
 

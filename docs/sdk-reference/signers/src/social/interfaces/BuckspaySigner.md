@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/social](../README.md) / BuckspaySigner
+---
+title: "Interface: BuckspaySigner"
+---
 
 # Interface: BuckspaySigner
 
@@ -10,7 +8,7 @@ Defined in: packages/core/dist/index.d.ts:43
 
 ## Extended by
 
-- [`EmailSigner`](../../email/interfaces/EmailSigner.md)
+- [`EmailSigner`](/sdk-reference/signers/src/email/interfaces/EmailSigner)
 
 ## Properties
 
@@ -24,7 +22,7 @@ Defined in: packages/core/dist/index.d.ts:44
 
 ### authenticate()?
 
-> `optional` **authenticate**(`params?`): `Promise`\<[`AuthDetails`](AuthDetails.md)\>
+> `optional` **authenticate**(`params?`): `Promise`\<[`AuthDetails`](/sdk-reference/signers/src/social/interfaces/AuthDetails)\>
 
 Defined in: packages/core/dist/index.d.ts:63
 
@@ -40,7 +38,7 @@ resolves, getPublicKey()/signAuthEntry() operate on the provider-issued key.
 
 #### Returns
 
-`Promise`\<[`AuthDetails`](AuthDetails.md)\>
+`Promise`\<[`AuthDetails`](/sdk-reference/signers/src/social/interfaces/AuthDetails)\>
 
 ***
 
@@ -100,7 +98,7 @@ structurally and raises ACCOUNT_NOT_READY if a signer can't sign txs.
 
 ###### network
 
-[`Network`](../../../../nextjs/src/type-aliases/Network.md)
+[`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 #### Returns
 

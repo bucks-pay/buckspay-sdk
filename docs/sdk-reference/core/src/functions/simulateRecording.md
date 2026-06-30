@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / simulateRecording
+---
+title: "Function: simulateRecording()"
+---
 
 # Function: simulateRecording()
 
-> **simulateRecording**(`input`): `Promise`\<[`RecordingResult`](../interfaces/RecordingResult.md)\>
+> **simulateRecording**(`input`): `Promise`\<[`RecordingResult`](/sdk-reference/core/src/interfaces/RecordingResult)\>
 
 Defined in: [packages/core/src/auth-entry-builder.ts:195](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/auth-entry-builder.ts#L195)
 
@@ -21,7 +19,7 @@ typed XDR for the caller; never trust unparsed RPC output downstream.
 
 #### call
 
-[`Call`](../interfaces/Call.md)
+[`Call`](/sdk-reference/core/src/interfaces/Call)
 
 #### from
 
@@ -29,12 +27,12 @@ typed XDR for the caller; never trust unparsed RPC output downstream.
 
 #### network
 
-[`Network`](../type-aliases/Network.md)
+[`Network`](/sdk-reference/core/src/type-aliases/Network)
 
 #### simulator
 
-[`SorobanSimulator`](../interfaces/SorobanSimulator.md)
+[`SorobanSimulator`](/sdk-reference/core/src/interfaces/SorobanSimulator)
 
 ## Returns
 
-`Promise`\<[`RecordingResult`](../interfaces/RecordingResult.md)\>
+`Promise`\<[`RecordingResult`](/sdk-reference/core/src/interfaces/RecordingResult)\>

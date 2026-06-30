@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/passkey](../README.md) / formatCheckAuthSignature
+---
+title: "Function: formatCheckAuthSignature()"
+---
 
 # Function: formatCheckAuthSignature()
 
@@ -22,7 +20,7 @@ LOCK-STEP: these field names are the single value to keep in sync with the OZ
 
 ### parts
 
-[`CheckAuthParts`](../interfaces/CheckAuthParts.md)
+[`CheckAuthParts`](/sdk-reference/signers/src/passkey/interfaces/CheckAuthParts)
 
 ## Returns
 

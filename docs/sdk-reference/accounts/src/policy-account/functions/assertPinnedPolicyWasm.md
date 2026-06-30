@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy-account](../README.md) / assertPinnedPolicyWasm
+---
+title: "Function: assertPinnedPolicyWasm()"
+---
 
 # Function: assertPinnedPolicyWasm()
 

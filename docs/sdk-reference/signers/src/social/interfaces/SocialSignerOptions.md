@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/social](../README.md) / SocialSignerOptions
+---
+title: "Interface: SocialSignerOptions"
+---
 
 # Interface: SocialSignerOptions
 
@@ -20,7 +18,7 @@ Defined in: [packages/signers/src/social/index.ts:25](https://github.com/bucks-p
 
 ### network
 
-> **network**: [`Network`](../../../../nextjs/src/type-aliases/Network.md)
+> **network**: [`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 Defined in: [packages/signers/src/social/index.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L26)
 
@@ -36,7 +34,7 @@ Defined in: [packages/signers/src/social/index.ts:24](https://github.com/bucks-p
 
 ### providerImpl?
 
-> `optional` **providerImpl?**: [`SocialProvider`](SocialProvider.md)
+> `optional` **providerImpl?**: [`SocialProvider`](/sdk-reference/signers/src/social/interfaces/SocialProvider)
 
 Defined in: [packages/signers/src/social/index.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L30)
 

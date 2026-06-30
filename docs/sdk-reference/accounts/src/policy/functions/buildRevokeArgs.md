@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/policy](../README.md) / buildRevokeArgs
+---
+title: "Function: buildRevokeArgs()"
+---
 
 # Function: buildRevokeArgs()
 

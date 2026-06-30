@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / AccountSimContext
+---
+title: "Interface: AccountSimContext"
+---
 
 # Interface: AccountSimContext
 
@@ -40,6 +38,6 @@ Defined in: [packages/core/src/client.ts:39](https://github.com/bucks-pay/bucksp
 
 ### simulator
 
-> **simulator**: [`SorobanSimulator`](SorobanSimulator.md)
+> **simulator**: [`SorobanSimulator`](/sdk-reference/core/src/interfaces/SorobanSimulator)
 
 Defined in: [packages/core/src/client.ts:37](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L37)

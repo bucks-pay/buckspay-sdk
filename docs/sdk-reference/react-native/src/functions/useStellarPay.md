@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [react-native/src](../README.md) / useStellarPay
+---
+title: "Function: useStellarPay()"
+---
 
 # Function: useStellarPay()
 
-> **useStellarPay**(): [`UseStellarPayResult`](../interfaces/UseStellarPayResult.md)
+> **useStellarPay**(): [`UseStellarPayResult`](/sdk-reference/react-native/src/interfaces/UseStellarPayResult)
 
 Defined in: packages/react/dist/index.d.ts:52
 
@@ -17,4 +15,4 @@ returns the store to `idle`.
 
 ## Returns
 
-[`UseStellarPayResult`](../interfaces/UseStellarPayResult.md)
+[`UseStellarPayResult`](/sdk-reference/react-native/src/interfaces/UseStellarPayResult)

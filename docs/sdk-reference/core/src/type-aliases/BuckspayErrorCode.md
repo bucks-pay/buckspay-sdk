@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / BuckspayErrorCode
+---
+title: "Type Alias: BuckspayErrorCode"
+---
 
 # Type Alias: BuckspayErrorCode
 

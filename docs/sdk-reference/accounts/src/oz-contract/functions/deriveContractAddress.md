@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/oz-contract](../README.md) / deriveContractAddress
+---
+title: "Function: deriveContractAddress()"
+---
 
 # Function: deriveContractAddress()
 

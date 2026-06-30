@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / serializeSession
+---
+title: "Function: serializeSession()"
+---
 
 # Function: serializeSession()
 
@@ -16,7 +14,7 @@ Serialize a session to a base64url-encoded JSON blob (e.g. for secure storage). 
 
 ### s
 
-[`Session`](../interfaces/Session.md)
+[`Session`](/sdk-reference/core/src/interfaces/Session)
 
 ## Returns
 

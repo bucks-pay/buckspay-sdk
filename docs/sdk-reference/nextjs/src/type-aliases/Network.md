@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [nextjs/src](../README.md) / Network
+---
+title: "Type Alias: Network"
+---
 
 # Type Alias: Network
 

@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/email](../README.md) / emailSigner
+---
+title: "Function: emailSigner()"
+---
 
 # Function: emailSigner()
 
-> **emailSigner**(`opts`, `deps?`): [`EmailSigner`](../interfaces/EmailSigner.md)
+> **emailSigner**(`opts`, `deps?`): [`EmailSigner`](/sdk-reference/signers/src/email/interfaces/EmailSigner)
 
 Defined in: [packages/signers/src/email/index.ts:47](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/email/index.ts#L47)
 
@@ -14,12 +12,12 @@ Defined in: [packages/signers/src/email/index.ts:47](https://github.com/bucks-pa
 
 ### opts
 
-[`EmailSignerOptions`](../interfaces/EmailSignerOptions.md)
+[`EmailSignerOptions`](/sdk-reference/signers/src/email/interfaces/EmailSignerOptions)
 
 ### deps?
 
-[`EmailSignerDeps`](../interfaces/EmailSignerDeps.md) = `{}`
+[`EmailSignerDeps`](/sdk-reference/signers/src/email/interfaces/EmailSignerDeps) = `{}`
 
 ## Returns
 
-[`EmailSigner`](../interfaces/EmailSigner.md)
+[`EmailSigner`](/sdk-reference/signers/src/email/interfaces/EmailSigner)

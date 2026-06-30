@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / RecordingResult
+---
+title: "Interface: RecordingResult"
+---
 
 # Interface: RecordingResult
 

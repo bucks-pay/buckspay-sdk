@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / GasConfig
+---
+title: "Type Alias: GasConfig"
+---
 
 # Type Alias: GasConfig
 

@@ -6,7 +6,8 @@
   "colors": { "primary": "#1884FF", "light": "#21CBF3", "dark": "#1884FF" },
   "appearance": { "default": "dark" },
   "background": { "color": { "dark": "#0A0D10" } },
-  "logo": { "dark": "/logo/dark.svg", "light": "/logo/light.svg" },
+  "styling": { "codeblocks": "dark" },
+  "logo": { "dark": "/logo/buckspay.png", "light": "/logo/buckspay-light.png" },
   "favicon": "/images/favicon.svg",
   "navigation": {
     "tabs": [
@@ -97,49 +98,49 @@
           {
             "group": "@buckspay/core",
             "pages": [
-              "sdk-reference/core/src/README"
+              "sdk-reference/core/src/index"
             ]
           },
           {
             "group": "@buckspay/accounts",
             "pages": [
-              "sdk-reference/accounts/src/classic/README",
-              "sdk-reference/accounts/src/oz-contract/README",
-              "sdk-reference/accounts/src/policy/README",
-              "sdk-reference/accounts/src/policy-account/README"
+              "sdk-reference/accounts/src/classic/index",
+              "sdk-reference/accounts/src/oz-contract/index",
+              "sdk-reference/accounts/src/policy/index",
+              "sdk-reference/accounts/src/policy-account/index"
             ]
           },
           {
             "group": "@buckspay/signers",
             "pages": [
-              "sdk-reference/signers/src/wallets-kit/README",
-              "sdk-reference/signers/src/passkey/README",
-              "sdk-reference/signers/src/social/README",
-              "sdk-reference/signers/src/email/README"
+              "sdk-reference/signers/src/wallets-kit/index",
+              "sdk-reference/signers/src/passkey/index",
+              "sdk-reference/signers/src/social/index",
+              "sdk-reference/signers/src/email/index"
             ]
           },
           {
             "group": "@buckspay/relayer",
             "pages": [
-              "sdk-reference/relayer/src/buckspay-facilitator/README"
+              "sdk-reference/relayer/src/buckspay-facilitator/index"
             ]
           },
           {
             "group": "@buckspay/react",
             "pages": [
-              "sdk-reference/react/src/README"
+              "sdk-reference/react/src/index"
             ]
           },
           {
             "group": "@buckspay/nextjs",
             "pages": [
-              "sdk-reference/nextjs/src/README"
+              "sdk-reference/nextjs/src/index"
             ]
           },
           {
             "group": "@buckspay/react-native",
             "pages": [
-              "sdk-reference/react-native/src/README"
+              "sdk-reference/react-native/src/index"
             ]
           }
         ]

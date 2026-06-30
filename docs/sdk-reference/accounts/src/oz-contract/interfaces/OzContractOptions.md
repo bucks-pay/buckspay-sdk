@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [accounts/src/oz-contract](../README.md) / OzContractOptions
+---
+title: "Interface: OzContractOptions"
+---
 
 # Interface: OzContractOptions
 
@@ -23,7 +21,7 @@ Multicall router C-address for atomic contract batches. Defaults to the network'
 
 ### network?
 
-> `optional` **network?**: [`Network`](../../../../nextjs/src/type-aliases/Network.md)
+> `optional` **network?**: [`Network`](/sdk-reference/nextjs/src/type-aliases/Network)
 
 Defined in: [packages/accounts/src/oz-contract/resolveAddress.ts:15](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/accounts/src/oz-contract/resolveAddress.ts#L15)
 

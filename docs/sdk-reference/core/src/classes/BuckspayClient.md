@@ -1,8 +1,6 @@
-[**buckspay-sdk**](../../../README.md)
-
-***
-
-[buckspay-sdk](../../../README.md) / [core/src](../README.md) / BuckspayClient
+---
+title: "Class: BuckspayClient"
+---
 
 # Class: BuckspayClient
 
@@ -20,11 +18,11 @@ Defined in: [packages/core/src/client.ts:58](https://github.com/bucks-pay/bucksp
 
 ##### config
 
-[`BuckspayConfig`](../interfaces/BuckspayConfig.md)
+[`BuckspayConfig`](/sdk-reference/core/src/interfaces/BuckspayConfig)
 
 ##### sim?
 
-[`AccountSimContext`](../interfaces/AccountSimContext.md)
+[`AccountSimContext`](/sdk-reference/core/src/interfaces/AccountSimContext)
 
 ##### opts?
 
@@ -40,19 +38,19 @@ Defined in: [packages/core/src/client.ts:58](https://github.com/bucks-pay/bucksp
 
 ### connect()
 
-> **connect**(): `Promise`\<[`BuckspayWallet`](../interfaces/BuckspayWallet.md)\>
+> **connect**(): `Promise`\<[`BuckspayWallet`](/sdk-reference/core/src/interfaces/BuckspayWallet)\>
 
 Defined in: [packages/core/src/client.ts:73](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L73)
 
 #### Returns
 
-`Promise`\<[`BuckspayWallet`](../interfaces/BuckspayWallet.md)\>
+`Promise`\<[`BuckspayWallet`](/sdk-reference/core/src/interfaces/BuckspayWallet)\>
 
 ***
 
 ### getAccountState()
 
-> **getAccountState**(`address?`): `Promise`\<[`AccountState`](../interfaces/AccountState.md)\>
+> **getAccountState**(`address?`): `Promise`\<[`AccountState`](/sdk-reference/core/src/interfaces/AccountState)\>
 
 Defined in: [packages/core/src/client.ts:85](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L85)
 
@@ -64,13 +62,13 @@ Defined in: [packages/core/src/client.ts:85](https://github.com/bucks-pay/bucksp
 
 #### Returns
 
-`Promise`\<[`AccountState`](../interfaces/AccountState.md)\>
+`Promise`\<[`AccountState`](/sdk-reference/core/src/interfaces/AccountState)\>
 
 ***
 
 ### grantSession()
 
-> **grantSession**(`grant`): `Promise`\<\{ `receipt`: [`Receipt`](../interfaces/Receipt.md); `session`: [`Session`](../interfaces/Session.md); \}\>
+> **grantSession**(`grant`): `Promise`\<\{ `receipt`: [`Receipt`](/sdk-reference/core/src/interfaces/Receipt); `session`: [`Session`](/sdk-reference/core/src/interfaces/Session); \}\>
 
 Defined in: [packages/core/src/client.ts:341](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L341)
 
@@ -82,17 +80,17 @@ Grant a policy-scoped session key (contract account model only; throws INVALID_C
 
 ##### grant
 
-[`SessionGrant`](../interfaces/SessionGrant.md)
+[`SessionGrant`](/sdk-reference/core/src/interfaces/SessionGrant)
 
 #### Returns
 
-`Promise`\<\{ `receipt`: [`Receipt`](../interfaces/Receipt.md); `session`: [`Session`](../interfaces/Session.md); \}\>
+`Promise`\<\{ `receipt`: [`Receipt`](/sdk-reference/core/src/interfaces/Receipt); `session`: [`Session`](/sdk-reference/core/src/interfaces/Session); \}\>
 
 ***
 
 ### pay()
 
-> **pay**(`calls`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+> **pay**(`calls`): `Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 Defined in: [packages/core/src/client.ts:262](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L262)
 
@@ -100,17 +98,17 @@ Defined in: [packages/core/src/client.ts:262](https://github.com/bucks-pay/bucks
 
 ##### calls
 
-[`Call`](../interfaces/Call.md)[]
+[`Call`](/sdk-reference/core/src/interfaces/Call)[]
 
 #### Returns
 
-`Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+`Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 ***
 
 ### prepare()
 
-> **prepare**(`calls`): `Promise`\<[`PreparedIntent`](../interfaces/PreparedIntent.md)\>
+> **prepare**(`calls`): `Promise`\<[`PreparedIntent`](/sdk-reference/core/src/interfaces/PreparedIntent)\>
 
 Defined in: [packages/core/src/client.ts:109](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L109)
 
@@ -118,17 +116,17 @@ Defined in: [packages/core/src/client.ts:109](https://github.com/bucks-pay/bucks
 
 ##### calls
 
-[`Call`](../interfaces/Call.md)[]
+[`Call`](/sdk-reference/core/src/interfaces/Call)[]
 
 #### Returns
 
-`Promise`\<[`PreparedIntent`](../interfaces/PreparedIntent.md)\>
+`Promise`\<[`PreparedIntent`](/sdk-reference/core/src/interfaces/PreparedIntent)\>
 
 ***
 
 ### quoteSwap()
 
-> **quoteSwap**(`opts`): `Promise`\<[`SwapQuote`](../interfaces/SwapQuote.md)\>
+> **quoteSwap**(`opts`): `Promise`\<[`SwapQuote`](/sdk-reference/core/src/interfaces/SwapQuote)\>
 
 Defined in: [packages/core/src/client.ts:269](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L269)
 
@@ -152,13 +150,13 @@ STRETCH: quote a gasless swap via the relayer's /swap/* rail. README §4.9.
 
 #### Returns
 
-`Promise`\<[`SwapQuote`](../interfaces/SwapQuote.md)\>
+`Promise`\<[`SwapQuote`](/sdk-reference/core/src/interfaces/SwapQuote)\>
 
 ***
 
 ### revokeSession()
 
-> **revokeSession**(`session`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+> **revokeSession**(`session`): `Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 Defined in: [packages/core/src/client.ts:347](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L347)
 
@@ -169,17 +167,17 @@ Revoke a granted session by its object or id (contract account model only). Take
 
 ##### session
 
-`string` \| [`Session`](../interfaces/Session.md)
+`string` \| [`Session`](/sdk-reference/core/src/interfaces/Session)
 
 #### Returns
 
-`Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+`Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 ***
 
 ### send()
 
-> **send**(`signed`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+> **send**(`signed`): `Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 Defined in: [packages/core/src/client.ts:251](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L251)
 
@@ -187,17 +185,17 @@ Defined in: [packages/core/src/client.ts:251](https://github.com/bucks-pay/bucks
 
 ##### signed
 
-[`SignedIntent`](../interfaces/SignedIntent.md)
+[`SignedIntent`](/sdk-reference/core/src/interfaces/SignedIntent)
 
 #### Returns
 
-`Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+`Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 ***
 
 ### sendCalls()
 
-> **sendCalls**(`calls`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+> **sendCalls**(`calls`): `Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 Defined in: [packages/core/src/client.ts:354](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L354)
 
@@ -209,17 +207,17 @@ EIP-5792-style alias of pay(calls): submit an atomic, all-or-nothing batch. Enfo
 
 ##### calls
 
-[`Call`](../interfaces/Call.md)[]
+[`Call`](/sdk-reference/core/src/interfaces/Call)[]
 
 #### Returns
 
-`Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+`Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 ***
 
 ### sign()
 
-> **sign**(`intent`): `Promise`\<[`SignedIntent`](../interfaces/SignedIntent.md)\>
+> **sign**(`intent`): `Promise`\<[`SignedIntent`](/sdk-reference/core/src/interfaces/SignedIntent)\>
 
 Defined in: [packages/core/src/client.ts:217](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L217)
 
@@ -227,17 +225,17 @@ Defined in: [packages/core/src/client.ts:217](https://github.com/bucks-pay/bucks
 
 ##### intent
 
-[`PreparedIntent`](../interfaces/PreparedIntent.md)
+[`PreparedIntent`](/sdk-reference/core/src/interfaces/PreparedIntent)
 
 #### Returns
 
-`Promise`\<[`SignedIntent`](../interfaces/SignedIntent.md)\>
+`Promise`\<[`SignedIntent`](/sdk-reference/core/src/interfaces/SignedIntent)\>
 
 ***
 
 ### swap()
 
-> **swap**(`opts`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+> **swap**(`opts`): `Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 Defined in: [packages/core/src/client.ts:287](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L287)
 
@@ -265,13 +263,13 @@ STRETCH: execute a gasless swap. Enforces the minOut floor BEFORE submit. README
 
 #### Returns
 
-`Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
+`Promise`\<[`Receipt`](/sdk-reference/core/src/interfaces/Receipt)\>
 
 ***
 
 ### transfer()
 
-> **transfer**(`opts`): [`Call`](../interfaces/Call.md)
+> **transfer**(`opts`): [`Call`](/sdk-reference/core/src/interfaces/Call)
 
 Defined in: [packages/core/src/client.ts:93](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L93)
 
@@ -293,4 +291,4 @@ Defined in: [packages/core/src/client.ts:93](https://github.com/bucks-pay/bucksp
 
 #### Returns
 
-[`Call`](../interfaces/Call.md)
+[`Call`](/sdk-reference/core/src/interfaces/Call)

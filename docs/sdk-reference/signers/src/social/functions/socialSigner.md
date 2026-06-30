@@ -1,12 +1,10 @@
-[**buckspay-sdk**](../../../../README.md)
-
-***
-
-[buckspay-sdk](../../../../README.md) / [signers/src/social](../README.md) / socialSigner
+---
+title: "Function: socialSigner()"
+---
 
 # Function: socialSigner()
 
-> **socialSigner**(`opts`): [`BuckspaySigner`](../interfaces/BuckspaySigner.md)
+> **socialSigner**(`opts`): [`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner)
 
 Defined in: [packages/signers/src/social/index.ts:39](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L39)
 
@@ -19,8 +17,8 @@ failures map to `AUTH_PROVIDER_ERROR`; using the signer before `authenticate()` 
 
 ### opts
 
-[`SocialSignerOptions`](../interfaces/SocialSignerOptions.md)
+[`SocialSignerOptions`](/sdk-reference/signers/src/social/interfaces/SocialSignerOptions)
 
 ## Returns
 
-[`BuckspaySigner`](../interfaces/BuckspaySigner.md)
+[`BuckspaySigner`](/sdk-reference/signers/src/social/interfaces/BuckspaySigner)
