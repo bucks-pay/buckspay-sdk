@@ -20,8 +20,8 @@ describe("§4.1 identity/signing/call types", () => {
     expectTypeOf<FacilitatorChain>().toEqualTypeOf<"stellar-testnet" | "stellar-pubnet">();
   });
 
-  it("SignerType is wallets-kit|passkey", () => {
-    expectTypeOf<SignerType>().toEqualTypeOf<"wallets-kit" | "passkey">();
+  it("SignerType is wallets-kit|passkey|social|email", () => {
+    expectTypeOf<SignerType>().toEqualTypeOf<"wallets-kit" | "passkey" | "social" | "email">();
   });
 
   it("SignerKey carries a crypto type and a publicKey string", () => {

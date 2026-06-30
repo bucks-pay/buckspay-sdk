@@ -2,12 +2,13 @@ import { describe, expect, it } from "vitest";
 import * as social from "../src/social/index";
 import * as email from "../src/email/index";
 
-describe("SP-2 signer subpath scaffolds", () => {
-  it("social subpath module loads (factory arrives in sprint-4)", () => {
+describe("onboarding signer subpath scaffolds", () => {
+  it("social subpath ships the socialSigner factory", () => {
     expect(social).toBeDefined();
-    expect("socialSigner" in social).toBe(false); // not implemented yet — sprint-4
+    expect("socialSigner" in social).toBe(true);
+    expect(typeof (social as { socialSigner: unknown }).socialSigner).toBe("function");
   });
-  it("email subpath module loads (factory arrives in sprint-4)", () => {
+  it("email subpath module loads (factory arrives later)", () => {
     expect(email).toBeDefined();
     expect("emailSigner" in email).toBe(false);
   });

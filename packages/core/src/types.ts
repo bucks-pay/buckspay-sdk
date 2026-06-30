@@ -8,7 +8,9 @@ export type Network = "testnet" | "pubnet";
 /** Chain string the facilitator expects. */
 export type FacilitatorChain = "stellar-testnet" | "stellar-pubnet";
 
-export type SignerType = "wallets-kit" | "passkey";
+// "social"/"email" are the onboarding signers (`@buckspay/signers/{social,email}`). They produce a
+// Stellar ed25519 key from an external provider; additive union members.
+export type SignerType = "wallets-kit" | "passkey" | "social" | "email";
 
 export interface SignerKey {
   type: "ed25519" | "secp256r1";

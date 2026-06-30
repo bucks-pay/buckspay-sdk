@@ -342,6 +342,9 @@ importers:
       '@stellar/stellar-sdk':
         specifier: ^14.6.1
         version: 14.6.1
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
     devDependencies:
       tsup:
         specifier: ^8.3.5
