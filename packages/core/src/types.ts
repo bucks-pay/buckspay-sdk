@@ -127,8 +127,10 @@ export interface Receipt {
 
 export interface Relayer {
   relay(payload: RelayPayload): Promise<Receipt>; // POST /relay
-  /** Quote the fee-token amount + forwarder/collector for paying Soroban gas in `token` (gas mode "token"). POST /fee/quote */
-  feeQuote(input: { from: string; token: string; calls: Call[] }): Promise<FeeQuote>;
+  /** Quote the fee-token amount + forwarder/collector for paying Soroban gas in `token` (gas mode "token").
+   *  OPTIONAL: a relayer that does not support gas-in-token omits it; `prepare()` then refuses token mode
+   *  with INVALID_CONFIG. Keeping it optional makes adding token gas additive (non-breaking). POST /fee/quote */
+  feeQuote?(input: { from: string; token: string; calls: Call[] }): Promise<FeeQuote>;
   getAccountState(address: string): Promise<AccountState>; // GET /stellar/account/:pk (or /contract/:addr)
   buildOnboard(input: { publicKey: string }): Promise<{ xdr: string }>; // POST /stellar/onboard/build
   submitOnboard(input: { publicKey: string; signedTxXdr: string }): Promise<{ ok: boolean }>; // POST /stellar/onboard/submit

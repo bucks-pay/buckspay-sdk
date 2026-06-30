@@ -138,7 +138,14 @@ export class BuckspayClient {
       // does NOT relay the direct transfer — it relays a SINGLE FeeForwarder `forward(...)` invocation
       // that pays the merchant AND the relayer's gas in one auth entry. The facilitator quotes the fee +
       // forwarder + collector; the user signs ONE entry whose tree is forward() + the two sub-transfers.
-      const quote = await this.config.relayer.feeQuote({ from, token: gas.token, calls });
+      const relayer = this.config.relayer;
+      if (!relayer.feeQuote) {
+        throw new BuckspayError(
+          "INVALID_CONFIG",
+          "gas mode 'token' requires a relayer that implements feeQuote (POST /fee/quote)"
+        );
+      }
+      const quote = await relayer.feeQuote({ from, token: gas.token, calls });
 
       // Refuse a quote above the ceiling BEFORE building/signing — the relayer can never charge more.
       if (gas.maxFee !== undefined && BigInt(quote.tokenAmount) > BigInt(gas.maxFee)) {

@@ -37,7 +37,7 @@ describe("buckspayFacilitator.feeQuote (POST /fee/quote)", () => {
     );
     const relayer = buckspayFacilitator({ url: "https://fac.example", network: "testnet" }, { fetch: fetchDouble });
 
-    const quote = await relayer.feeQuote({ from: FROM, token: USDC, calls: [transferCall] });
+    const quote = await relayer.feeQuote!({ from: FROM, token: USDC, calls: [transferCall] });
     expect(quote).toEqual({
       forwarder: FORWARDER,
       collector: COLLECTOR,
@@ -78,7 +78,7 @@ describe("buckspayFacilitator.feeQuote (POST /fee/quote)", () => {
         }) as Response
     );
     const relayer = buckspayFacilitator({ url: "https://fac.example", network: "testnet" }, { fetch: fetchDouble });
-    await expect(relayer.feeQuote({ from: FROM, token: USDC, calls: [transferCall] })).rejects.toMatchObject({
+    await expect(relayer.feeQuote!({ from: FROM, token: USDC, calls: [transferCall] })).rejects.toMatchObject({
       code: "RELAYER_REJECTED"
     });
   });

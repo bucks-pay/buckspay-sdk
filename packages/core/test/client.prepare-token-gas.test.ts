@@ -69,6 +69,16 @@ describe("BuckspayClient.prepare — gas mode token (single forward() entry)", (
     expect("feeToken" in intent).toBe(false);
   });
 
+  it("refuses token mode if the relayer has no feeQuote (INVALID_CONFIG)", async () => {
+    const { config } = makeMockConfig();
+    const relayer = { ...config.relayer };
+    delete (relayer as { feeQuote?: unknown }).feeQuote; // a relayer that does not support gas-in-token
+    const client = new BuckspayClient({ ...config, relayer, gas: { mode: "token", token: MOCK_SAC } }, fakeSim());
+    await client.connect();
+    const call = client.transfer({ token: MOCK_SAC, to: MOCK_TO, amount: "0.01" });
+    await expect(client.prepare([call])).rejects.toMatchObject({ code: "INVALID_CONFIG" });
+  });
+
   it("throws TOKEN_GAS_REJECTED when the quote exceeds gas.maxFee", async () => {
     const { config, relayer } = makeMockConfig();
     relayer.nextFeeQuote = tokenQuote(); // tokenAmount 132000
