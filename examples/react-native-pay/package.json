@@ -1,0 +1,30 @@
+{
+  "name": "@buckspay/example-react-native-pay",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "expo start",
+    "ios": "expo run:ios",
+    "android": "expo run:android",
+    "typecheck": "tsc --noEmit",
+    "bundle:check": "expo export --platform ios --output-dir /tmp/buckspay-rn-bundle"
+  },
+  "dependencies": {
+    "@buckspay/core": "workspace:*",
+    "@buckspay/accounts": "workspace:*",
+    "@buckspay/signers": "workspace:*",
+    "@buckspay/relayer": "workspace:*",
+    "@buckspay/react": "workspace:*",
+    "@buckspay/react-native": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.6.3",
+    "@stellar/stellar-sdk": "^14.6.1",
+    "react": "^19.0.0",
+    "react-native": "^0.76.0",
+    "react-native-passkey": "^3.1.0",
+    "react-native-get-random-values": "^1.11.0"
+  }
+}

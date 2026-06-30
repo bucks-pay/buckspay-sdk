@@ -54,7 +54,15 @@ const schema = z.object({
   E2E_MERCHANT_G_PUBNET: z
     .string()
     .regex(/^G[A-Z2-7]{55}$/)
-    .optional()
+    .optional(),
+
+  // ── React Native simulator smoke — third-tier gate, distinct from BUCKSPAY_E2E ──
+  // Never runs in a default `pnpm test`; requires a built app + a running simulator/device.
+  BUCKSPAY_E2E_RN: z.literal("1").optional(),
+  // "ios" | "android" — which simulator the Detox/Maestro driver targets.
+  RN_E2E_PLATFORM: z.enum(["ios", "android"]).optional(),
+  // Path to the prebuilt app binary (.app / .apk) the driver installs.
+  RN_E2E_APP_BINARY: z.string().optional()
 });
 
 export const e2eEnv = schema.parse(process.env);
@@ -73,3 +81,11 @@ export const MAINNET_ENABLED =
   !!e2eEnv.E2E_SPONSOR_G_PUBNET &&
   !!e2eEnv.E2E_PAYER_SECRET_PUBNET &&
   !!e2eEnv.E2E_MERCHANT_G_PUBNET;
+
+/**
+ * React Native simulator smoke is enabled only when the dedicated flag is set AND a target
+ * platform + a prebuilt app binary are present. Distinct from BUCKSPAY_E2E / BUCKSPAY_E2E_MAINNET
+ * so neither a unit run nor a testnet run can spin up a simulator by accident.
+ */
+export const RN_E2E_ENABLED =
+  e2eEnv.BUCKSPAY_E2E_RN === "1" && !!e2eEnv.RN_E2E_PLATFORM && !!e2eEnv.RN_E2E_APP_BINARY;
