@@ -61,5 +61,8 @@ export type {
   SessionManager,
   SessionPolicy,
   SessionRevokeInput,
-  SwapQuote
+  SwapChain,
+  SwapQuote,
+  SwapQuoteRequest,
+  SwapRequest
 } from "./types";

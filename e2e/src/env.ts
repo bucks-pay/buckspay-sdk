@@ -62,7 +62,29 @@ const schema = z.object({
   // "ios" | "android" — which simulator the Detox/Maestro driver targets.
   RN_E2E_PLATFORM: z.enum(["ios", "android"]).optional(),
   // Path to the prebuilt app binary (.app / .apk) the driver installs.
-  RN_E2E_APP_BINARY: z.string().optional()
+  RN_E2E_APP_BINARY: z.string().optional(),
+
+  // ── SWAP (stretch) smoke — third-tier gate, independent of testnet/mainnet ────────
+  BUCKSPAY_E2E_SWAP: z.literal("1").optional(),
+  SWAP_CHAIN: z
+    .enum(["avalanche", "celo", "polygon", "base", "avalanche-fuji", "polygon-amoy", "base-sepolia", "celo-sepolia"])
+    .optional(),
+  SWAP_PAYER_EVM: z
+    .string()
+    .regex(/^0x[0-9a-fA-F]{40}$/)
+    .optional(),
+  SWAP_SELL_TOKEN: z
+    .string()
+    .regex(/^0x[0-9a-fA-F]{40}$/)
+    .optional(),
+  SWAP_BUY_TOKEN: z
+    .string()
+    .regex(/^0x[0-9a-fA-F]{40}$/)
+    .optional(),
+  SWAP_SELL_AMOUNT: z
+    .string()
+    .regex(/^\d+$/)
+    .optional()
 });
 
 export const e2eEnv = schema.parse(process.env);
@@ -89,3 +111,13 @@ export const MAINNET_ENABLED =
  */
 export const RN_E2E_ENABLED =
   e2eEnv.BUCKSPAY_E2E_RN === "1" && !!e2eEnv.RN_E2E_PLATFORM && !!e2eEnv.RN_E2E_APP_BINARY;
+
+/** Swap smoke runs only with the flag AND every swap input present (quote-only; no funds move). */
+export const SWAP_ENABLED =
+  e2eEnv.BUCKSPAY_E2E_SWAP === "1" &&
+  !!e2eEnv.FACILITATOR_API_KEY &&
+  !!e2eEnv.SWAP_CHAIN &&
+  !!e2eEnv.SWAP_PAYER_EVM &&
+  !!e2eEnv.SWAP_SELL_TOKEN &&
+  !!e2eEnv.SWAP_BUY_TOKEN &&
+  !!e2eEnv.SWAP_SELL_AMOUNT;

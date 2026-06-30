@@ -1,5 +1,5 @@
 import { describe, expectTypeOf, it } from "vitest";
-import type { AccountState, FacilitatorChain, Receipt, RelayPayload, Relayer } from "../src/types";
+import type { AccountState, FacilitatorChain, Receipt, RelayPayload, Relayer, SwapChain } from "../src/types";
 
 describe("§4.3 relayer types", () => {
   it("AccountState carries existence + trustline + optional balances", () => {
@@ -27,7 +27,7 @@ describe("§4.3 relayer types", () => {
     expectTypeOf<Receipt["ok"]>().toEqualTypeOf<boolean>();
     expectTypeOf<Receipt["via"]>().toEqualTypeOf<string>();
     expectTypeOf<Receipt["token"]>().toEqualTypeOf<string>();
-    expectTypeOf<Receipt["chain"]>().toEqualTypeOf<FacilitatorChain>();
+    expectTypeOf<Receipt["chain"]>().toEqualTypeOf<FacilitatorChain | SwapChain>();
     expectTypeOf<Receipt["transferTx"]>().toEqualTypeOf<string>();
     expectTypeOf<Receipt["ledger"]>().toEqualTypeOf<number | undefined>();
     expectTypeOf<Receipt["status"]>().toEqualTypeOf<string>();

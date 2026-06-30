@@ -5,17 +5,22 @@ import {
   type FeeQuote,
   type Network,
   type Receipt,
+  type Relayer,
   type RelayPayload,
-  type Relayer
+  type SwapChain,
+  type SwapQuote,
+  type SwapQuoteRequest
 } from "@buckspay/core";
 import {
   accountStateSchema,
   deployContractSchema,
   feeQuoteSchema,
   mapFacilitatorError,
+  mapSwapError,
   onboardBuildSchema,
   onboardSubmitSchema,
   receiptSchema,
+  swapQuoteResponseSchema,
   toFacilitatorChain
 } from "./internals.js";
 
@@ -25,6 +30,9 @@ export interface FacilitatorOptions {
   url: string;
   apiKey?: string;
   network: Network;
+  /** STRETCH: the EVM chain for the facilitator's /swap/* rail. When set, the relayer exposes
+   *  quoteSwap/swap; when absent both are omitted (BuckspayClient.swap fails closed). */
+  swapChain?: SwapChain;
 }
 
 interface Deps {
@@ -75,7 +83,57 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
     return data;
   }
 
+  // STRETCH: the gasless-swap methods exist only when a swapChain is configured (the rail is the
+  // facilitator's EXISTING EVM /swap/* path). Without it the relayer omits them and BuckspayClient.swap
+  // fails closed with SWAP_FAILED.
+  const swapMethods: Pick<Relayer, "quoteSwap" | "swap"> =
+    opts.swapChain === undefined
+      ? {}
+      : {
+          async quoteSwap(req: SwapQuoteRequest): Promise<SwapQuote> {
+            let data: unknown;
+            try {
+              data = await request("/swap/quote", {
+                method: "POST",
+                body: {
+                  chain: opts.swapChain,
+                  payer: req.payer,
+                  merchant: req.payer, // self-custody swap: the output settles to the payer
+                  sellToken: req.tokenIn,
+                  buyToken: req.tokenOut,
+                  sellAmount: req.amount
+                }
+              });
+            } catch (cause) {
+              throw mapSwapError(cause);
+            }
+            const parsed = swapQuoteResponseSchema.safeParse(data);
+            if (!parsed.success) throw mapSwapError(parsed.error);
+            return {
+              tokenIn: req.tokenIn,
+              tokenOut: req.tokenOut,
+              amountIn: parsed.data.sellAmount,
+              amountOut: parsed.data.expectedBuyAmount
+            };
+          },
+          swap(): Promise<Receipt> {
+            // The existing /swap/submit rail consumes an EIP-712 batchSignature from the payer's EVM
+            // wallet — NOT the SDK's Soroban BuckspaySigner. The realistic wiring is the app's BFF
+            // (@buckspay/nextjs createRelayRoute) forwarding the wallet-signed typed data to /swap/submit.
+            // quoteSwap (above) is signer-agnostic and works end-to-end; this submit leg is fail-closed
+            // until the EVM wallet path (or a native Stellar/Soroswap rail) is wired.
+            return Promise.reject(
+              new BuckspayError(
+                "SWAP_FAILED",
+                "swap submit requires an EVM typed-data signature from the caller's wallet; wire it via the " +
+                  "app BFF (@buckspay/nextjs) → /swap/submit before enabling submit"
+              )
+            );
+          }
+        };
+
   return {
+    ...swapMethods,
     async relay(payload: RelayPayload): Promise<Receipt> {
       const data = await request("/relay", { method: "POST", body: payload });
       const parsed = receiptSchema.safeParse(data);

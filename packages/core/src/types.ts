@@ -160,7 +160,9 @@ export interface Receipt {
   ok: boolean;
   via: string; // "buckspay_self" | ...
   token: string;
-  chain: FacilitatorChain;
+  // Additive widening: the Soroban relay returns a stellar-* chain; the optional EVM swap rail
+  // returns its own SwapChain. Every existing value stays valid.
+  chain: FacilitatorChain | SwapChain;
   transferTx: string;
   ledger?: number;
   status: string;
@@ -180,6 +182,11 @@ export interface Relayer {
    *  does not support session accounts omits it; the policy-account adapter then refuses to deploy
    *  with INVALID_CONFIG. POST /stellar/session-account/deploy */
   deploySessionAccount?(input: { rootPublicKey: string }): Promise<{ address: string }>;
+  /** STRETCH: gasless swap via the facilitator's EXISTING /swap/* rail. OPTIONAL — a relayer
+   *  without swap support (no swapChain) omits these; `BuckspayClient.swap` then fails closed with
+   *  SWAP_FAILED. */
+  quoteSwap?(req: SwapQuoteRequest): Promise<SwapQuote>;
+  swap?(req: SwapRequest): Promise<Receipt>;
 }
 
 // ── §4.4 Engine, intents, client, config, state ────────────────────────────
@@ -233,6 +240,29 @@ export interface SwapQuote {
   tokenOut: string;
   amountIn: string;
   amountOut: string;
+}
+
+/** EVM chains the facilitator's existing /swap/* rail supports. Mirrors
+ *  facilitator/src/schema.ts `swapChainSchema`. STRETCH-only. */
+export type SwapChain =
+  | "avalanche"
+  | "celo"
+  | "polygon"
+  | "base"
+  | "avalanche-fuji"
+  | "polygon-amoy"
+  | "base-sepolia"
+  | "celo-sepolia";
+
+/** Normalized swap request the client hands the relayer adapter (the connected wallet is the payer). */
+export interface SwapQuoteRequest {
+  payer: string;
+  tokenIn: string;
+  tokenOut: string;
+  amount: string; // sell amount, minimal units (wei), decimal string
+}
+export interface SwapRequest extends SwapQuoteRequest {
+  minOut?: string; // tokenOut minimal-unit floor; the client enforces it before submit
 }
 
 export interface PreparedIntent {

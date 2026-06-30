@@ -91,6 +91,26 @@ export const deployContractSchema = z.object({
   address: z.string().regex(/^C[A-Z2-7]{55}$/, "facilitator returned a non-C address")
 });
 
+// STRETCH swaps. /swap/quote response (facilitator/src/swapRoutes.ts) — only the fields the SDK reads.
+export const swapQuoteResponseSchema = z.object({
+  quoteId: z.string().uuid(),
+  sellAmount: z.string().regex(/^\d+$/),
+  expectedBuyAmount: z.string().regex(/^\d+$/),
+  minBuyAmount: z.string().regex(/^\d+$/),
+  typedData: z.string(),
+  needsAuthorization: z.boolean(),
+  source: z.string(),
+  expiresAt: z.string()
+});
+
+/** Any swap-rail failure → SWAP_FAILED (README §4.7), cause preserved. `request` pre-maps HTTP
+ *  errors to generic codes (e.g. RELAYER_REJECTED); in the swap context they all surface as
+ *  SWAP_FAILED. Already-SWAP_FAILED errors pass through to avoid double-wrapping. */
+export function mapSwapError(cause: unknown): BuckspayError {
+  if (cause instanceof BuckspayError && cause.code === "SWAP_FAILED") return cause;
+  return new BuckspayError("SWAP_FAILED", "facilitator swap rail rejected the request", { cause });
+}
+
 interface FacilitatorErrorBody {
   error?: string;
   message?: string;

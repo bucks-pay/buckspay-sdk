@@ -23,7 +23,9 @@ import type {
   Session,
   SessionGrant,
   SessionManager,
-  SignedIntent
+  SignedIntent,
+  SwapQuote,
+  SwapRequest
 } from "./types";
 
 /**
@@ -261,6 +263,56 @@ export class BuckspayClient {
     const intent = await this.prepare(calls);
     const signed = await this.sign(intent);
     return this.send(signed);
+  }
+
+  /** STRETCH: quote a gasless swap via the relayer's /swap/* rail. README §4.9. */
+  async quoteSwap(opts: { tokenIn: string; tokenOut: string; amount: string | bigint }): Promise<SwapQuote> {
+    if (!this.address) {
+      throw new BuckspayError("ACCOUNT_NOT_READY", "not connected; call connect() before quoteSwap()");
+    }
+    const relayer = this.config.relayer;
+    if (!relayer.quoteSwap) {
+      throw new BuckspayError("SWAP_FAILED", "this relayer does not support swaps (construct it with a swapChain)");
+    }
+    const amount = typeof opts.amount === "bigint" ? opts.amount.toString() : opts.amount;
+    try {
+      return await relayer.quoteSwap({ payer: this.address, tokenIn: opts.tokenIn, tokenOut: opts.tokenOut, amount });
+    } catch (cause) {
+      if (cause instanceof BuckspayError) throw cause;
+      throw new BuckspayError("SWAP_FAILED", "swap quote failed", { cause });
+    }
+  }
+
+  /** STRETCH: execute a gasless swap. Enforces the minOut floor BEFORE submit. README §4.9. */
+  async swap(opts: { tokenIn: string; tokenOut: string; amount: string | bigint; minOut?: string }): Promise<Receipt> {
+    if (!this.address) {
+      throw new BuckspayError("ACCOUNT_NOT_READY", "not connected; call connect() before swap()");
+    }
+    const relayer = this.config.relayer;
+    if (!relayer.swap) {
+      throw new BuckspayError("SWAP_FAILED", "this relayer does not support swaps (construct it with a swapChain)");
+    }
+    const amount = typeof opts.amount === "bigint" ? opts.amount.toString() : opts.amount;
+    // Slippage guard: refuse to submit if the live quote is below the caller's floor.
+    if (opts.minOut !== undefined) {
+      const quote = await this.quoteSwap({ tokenIn: opts.tokenIn, tokenOut: opts.tokenOut, amount });
+      if (BigInt(quote.amountOut) < BigInt(opts.minOut)) {
+        throw new BuckspayError("SWAP_FAILED", `quote amountOut ${quote.amountOut} is below minOut ${opts.minOut}`);
+      }
+    }
+    const req: SwapRequest = {
+      payer: this.address,
+      tokenIn: opts.tokenIn,
+      tokenOut: opts.tokenOut,
+      amount,
+      ...(opts.minOut !== undefined ? { minOut: opts.minOut } : {})
+    };
+    try {
+      return await relayer.swap(req);
+    } catch (cause) {
+      if (cause instanceof BuckspayError) throw cause;
+      throw new BuckspayError("SWAP_FAILED", "swap submit failed", { cause });
+    }
   }
 
   private sessionManager(): SessionManager {
