@@ -14,7 +14,7 @@ export type BuckspayErrorCode =
   | "INSUFFICIENT_BALANCE"
   | "INVALID_CONFIG"
   | "UNKNOWN"
-  // ── SP-2 feature codes (sprint-0/01 lands the union; each sprint maps its code) ──
+  // ── additional feature codes (the union is declared up front; each feature maps its code) ──
   | "TOKEN_GAS_REJECTED"
   | "BATCH_TOO_LARGE"
   | "SESSION_EXPIRED"

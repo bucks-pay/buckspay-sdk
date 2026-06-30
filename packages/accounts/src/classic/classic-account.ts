@@ -14,7 +14,7 @@ import { buildBatchTransferEntry } from "../batch/build-batch-transfer-entry.js"
 import { resolveMulticallContract } from "../batch/multicall-pin.js";
 
 export interface ClassicAccountOptions {
-  /** Multicall router C-address for atomic batches (sprint-2). Defaults to the network's pinned
+  /** Multicall router C-address for atomic batches. Defaults to the network's pinned
    *  MULTICALL_CONTRACT_ID. Only consulted for calls.length > 1. */
   multicallContract?: string;
 }
@@ -88,7 +88,7 @@ export function classicAccount(opts: ClassicAccountOptions = {}): AccountAdapter
 
       // Translate the core `Call` (token/fn/args) into the byte-exact builder's
       // params. core.buildUnsignedEntry rebuilds the args verbatim from the
-      // dashboard port, preserving the Sprint 3 byte-parity invariant.
+      // dashboard port, preserving the byte-parity invariant.
       const toArg = call.args[1];
       const amountArg = call.args[2];
       if (!toArg || !amountArg) {
@@ -111,7 +111,7 @@ export function classicAccount(opts: ClassicAccountOptions = {}): AccountAdapter
       if (!first) {
         throw new BuckspayError("INVALID_CONFIG", "buildUnsignedBatchEntry requires at least one call");
       }
-      // Batch of 1 → byte-identical to the SP-1 single entry (golden invariant).
+      // Batch of 1 → byte-identical to the single-call entry (golden invariant).
       if (input.calls.length === 1) {
         return this.buildUnsignedEntry({ from: input.from, call: first, nonce: input.nonce });
       }

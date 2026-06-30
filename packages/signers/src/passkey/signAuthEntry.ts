@@ -58,13 +58,12 @@ export async function passkeySignAuthEntry(
 
 /**
  * OZ Smart Account `WebAuthnSigData` scval — the value `__check_auth` receives as
- * `Self::Signature`. BYTE-IDENTICAL to the on-chain-validated spike
- * (`spikes/passkey-contract/src/check-auth.ts` `assembleWebAuthnSigData`): a Soroban map
- * with canonical sorted keys `authenticator_data` < `client_data` < `signature`, each
- * value an `scvBytes`. The signature MUST be raw 64-byte r‖s (low-S).
+ * `Self::Signature`. BYTE-IDENTICAL to the structure the contract validates on-chain:
+ * a Soroban map with canonical sorted keys `authenticator_data` < `client_data` <
+ * `signature`, each value an `scvBytes`. The signature MUST be raw 64-byte r‖s (low-S).
  *
- * LOCK-STEP: these field names are the single value to keep in sync with `DECISION.md`
- * and the OZ `__check_auth`. Note `client_data` (NOT `client_data_json`).
+ * LOCK-STEP: these field names are the single value to keep in sync with the OZ
+ * `__check_auth`. Note `client_data` (NOT `client_data_json`).
  */
 export function formatCheckAuthSignature(parts: CheckAuthParts): xdr.ScVal {
   if (parts.signature.length !== 64) {

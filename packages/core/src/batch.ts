@@ -2,7 +2,7 @@ import type { Call } from "./types";
 import { BuckspayError } from "./errors";
 
 /**
- * Atomic-batch ceiling. Pinned by the sprint-0/03 multicall spike (classic op-limit /
+ * Atomic-batch ceiling, set by the multicall constraints (classic op-limit /
  * contract Multicall resource budget). `build()` refuses to exceed it — fail closed.
  */
 export const MAX_BATCH_CALLS = 16;
@@ -15,7 +15,7 @@ export interface BatchBuilder {
 
 /**
  * Pure, framework-agnostic call collector. The account adapter turns the returned calls
- * into one atomic entry (classic multi-op / contract Multicall) in SP-2 sprint-2.
+ * into one atomic entry (classic multi-op / contract Multicall).
  */
 export function batch(...calls: Call[]): BatchBuilder {
   const items: Call[] = [...calls];

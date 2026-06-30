@@ -43,7 +43,7 @@ export interface BuckspaySigner {
    */
   signTransaction?(txXdr: string, ctx: { network: Network; address: string }): Promise<string>;
   /**
-   * Social/email signers only (SP-2 sprint-4): run the provider's auth flow and
+   * Social/email signers only: run the provider's auth flow and
    * resolve the Stellar key. wallets-kit / passkey signers omit it. After it
    * resolves, getPublicKey()/signAuthEntry() operate on the provider-issued key.
    */
@@ -99,7 +99,7 @@ export interface AccountAdapter {
    *  Multicall router's `batch_transfer(payer, token, Vec<(to, amount)>)` invocation with the N
    *  transfers as sub-invocations (one nonce, one signature for the whole batch — SAME shape for
    *  classic and contract, only the signer differs). A batch of 1 MUST equal buildUnsignedEntry of
-   *  the same call (golden no-regression invariant). Spike-gated by sprint-0/03 (multicall-batch.json). */
+   *  the same call (golden no-regression invariant). */
   buildUnsignedBatchEntry(input: BuildBatchEntryInput): xdr.SorobanAuthorizationEntry;
   /** returns the SIGNED auth entry as base64 XDR. */
   assembleSignedEntry(input: AssembleInput): Promise<string>;
@@ -117,13 +117,13 @@ export interface AccountState {
 /** EXACT shape of facilitator stellarSorobanSchema. */
 export interface RelayPayload {
   token: string; // C…
-  from: string; // G… (classic) or C… (contract, Sprint 4)
+  from: string; // G… (classic) or C… (contract account model)
   to: string; // G…
   value: string; // stroops, decimal string
   authorizationEntryXdr: string; // base64, signed
   nonce: string; // decimal string
   signatureExpirationLedger: number;
-  // SP-2 sprint-1 (gas mode "token") — signals the facilitator to validate a forward() invocation
+  // gas mode "token" — signals the facilitator to validate a forward() invocation
   // (the authorizationEntryXdr above IS the forward() entry; there is no separate fee entry).
   feeToken?: string;
 }
@@ -149,19 +149,19 @@ export interface Relayer {
   getAccountState(address: string): Promise<AccountState>; // GET /stellar/account/:pk (or /contract/:addr)
   buildOnboard(input: { publicKey: string }): Promise<{ xdr: string }>; // POST /stellar/onboard/build
   submitOnboard(input: { publicKey: string; signedTxXdr: string }): Promise<{ ok: boolean }>; // POST /stellar/onboard/submit
-  deployContract(input: { passkeyPublicKey: string }): Promise<{ address: string }>; // POST /stellar/contract/deploy (Sprint 4)
+  deployContract(input: { passkeyPublicKey: string }): Promise<{ address: string }>; // POST /stellar/contract/deploy (contract account model)
 }
 
 // ── §4.4 Engine, intents, client, config, state ────────────────────────────
 
-// GasConfig is a discriminated union: `sponsored` (v1, gasless) | `token` (SP-2
-// sprint-1: the fee is paid in a stablecoin via the FeeForwarder). A union is not an
+// GasConfig is a discriminated union: `sponsored` (v1, gasless) | `token`
+// (the fee is paid in a stablecoin via the FeeForwarder). A union is not an
 // object-type alias, so no consistent-type-definitions exception is needed.
 export type GasConfig =
   | { mode: "sponsored" }
   | { mode: "token"; token: string; maxFee?: string };
 
-/** FeeForwarder quote returned by the facilitator (`POST /fee/quote`) — SP-2 sprint-1. */
+/** FeeForwarder quote returned by the facilitator (`POST /fee/quote`). */
 export interface FeeQuote {
   forwarder: string;
   collector: string;
@@ -171,14 +171,14 @@ export interface FeeQuote {
   expiresAtLedger: number;
 }
 
-/** Resolved identity a social/email provider hands back — SP-2 sprint-4. */
+/** Resolved identity a social/email provider hands back. */
 export interface AuthDetails {
   publicKey: string;
   provider: string;
   expiresAt?: number;
 }
 
-/** Session policy — SP-2 sprint-3; compiled to an on-chain policy signer in `__check_auth`. */
+/** Session policy compiled to an on-chain policy signer in `__check_auth`. */
 export type SessionPolicy =
   | { kind: "spendLimit"; token: string; max: string; period: "day" | "week" | "month" | "total" }
   | { kind: "allowlist"; contracts: string[] };
@@ -197,7 +197,7 @@ export interface Session {
   expiresAt: number;
 }
 
-/** Swap quote — SP-2 sprint-6 (stretch). */
+/** Swap quote. */
 export interface SwapQuote {
   tokenIn: string;
   tokenOut: string;
@@ -215,7 +215,7 @@ export interface PreparedIntent {
   network: Network;
   unsignedEntry: xdr.SorobanAuthorizationEntry;
   preimageXdr: string;
-  // SP-2 sprint-1 (gas mode "token") — `unsignedEntry`/`preimageXdr` above describe the single forward()
+  // gas mode "token" — `unsignedEntry`/`preimageXdr` above describe the single forward()
   // invocation; `feeQuote` is the quote it was built from. No separate fee entry.
   feeQuote?: FeeQuote;
 }
@@ -229,7 +229,7 @@ export interface SignedIntent {
   signatureExpirationLedger: number;
   network: Network;
   authorizationEntryXdr: string; // signed, base64
-  // SP-2 sprint-1 (gas mode "token") — `authorizationEntryXdr` IS the signed forward() entry; this names the fee token.
+  // gas mode "token" — `authorizationEntryXdr` IS the signed forward() entry; this names the fee token.
   feeToken?: string;
 }
 

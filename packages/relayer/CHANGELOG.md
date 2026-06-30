@@ -4,19 +4,18 @@
 
 ### Patch Changes
 
-- 9b6cabd: SP-2 gas-in-token (core): `gas: { mode: "token", token }` pays Soroban gas in a stablecoin. The SDK
+- 9b6cabd: **Gas-in-token.** `gas: { mode: "token", token }` pays Soroban gas in a stablecoin. The SDK
   quotes the fee via the **optional** `Relayer.feeQuote` (`POST /fee/quote`) and relays a single FeeForwarder
   `forward(payer, token, merchant, payment, collector, fee)` invocation (one auth entry) instead of the direct
   transfer, enforcing a `gas.maxFee` ceiling (`TOKEN_GAS_REJECTED`). Adds `FeeQuote.collector` and the generic
   `buildUnsignedCallEntry`. `feeQuote` is optional on `Relayer` (additive — a relayer without it refuses token
   mode with `INVALID_CONFIG`); sponsored mode is byte-identical to before.
-- 282d74b: SP-2 scaffolding: additive type surface (the `sponsored | token` gas union, `FeeQuote` /
-  `AuthDetails` / session / `SwapQuote` types, six new `BuckspayError` codes, the optional
+- 282d74b: Additive type surface (the `sponsored | token` gas union, `FeeQuote` /
+  `AuthDetails` / session / `SwapQuote` types, new `BuckspayError` codes, the optional
   `BuckspaySigner.authenticate`, optional fee fields on the intents/relay payload), the pure
   `batch()` builder + `MAX_BATCH_CALLS`, and buildable skeletons for the new `@buckspay/nextjs`
   and `@buckspay/react-native` packages plus the `signers/social`, `signers/email`, and
-  `accounts/policy` subpaths. No behavior change to existing paths — `gas: { mode: "token" }`
-  fails closed with `TOKEN_GAS_REJECTED` until SP-2 sprint-1 wires the FeeForwarder.
+  `accounts/policy` subpaths. No behavior change to existing paths.
 - Updated dependencies [3c577dc]
 - Updated dependencies [9b6cabd]
 - Updated dependencies [282d74b]

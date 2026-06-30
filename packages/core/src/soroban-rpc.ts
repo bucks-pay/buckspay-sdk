@@ -54,7 +54,7 @@ export function createSorobanSimulator(
       // the invocation — and the SAC balance footprint — against that account's ledger state.
       // For the classic model `from` is itself a real G…. For the contract model `from` is a
       // C… (which `Account` rejects anyway), so we frame with `simSource` — the facilitator
-      // sponsor's public key: a funded, existing G…, mirroring the on-chain-validated spike.
+      // sponsor's public key: a funded, existing G…, mirroring the on-chain-validated behavior.
       // A throwaway/non-existent placeholder makes simulateTransaction resolve the footprint
       // against a state that can't see the contract's balance → spurious "zero balance" reverts.
       let sourceId: string;

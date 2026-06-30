@@ -24,8 +24,8 @@ import type {
 
 /**
  * Capabilities the client needs to `prepare` an intent: a recording simulator
- * and a current-ledger source. Sprint 2 supplies the real RPC-backed pair on
- * the account adapter wiring; tests inject a deterministic context.
+ * and a current-ledger source. The account adapter wiring supplies the real
+ * RPC-backed pair; tests inject a deterministic context.
  */
 export interface AccountSimContext {
   simulator: SorobanSimulator;
@@ -98,10 +98,10 @@ export class BuckspayClient {
   }
 
   async prepare(calls: Call[]): Promise<PreparedIntent> {
-    // SP-2 sprint-2: an atomic batch routes through prepareBatch. The single-call path below is
-    // left BYTE-IDENTICAL to SP-1 (a batch of 1 never reaches prepareBatch).
+    // An atomic batch routes through prepareBatch. The single-call path below is
+    // left BYTE-IDENTICAL to the original single-call (sponsored) path (a batch of 1 never reaches prepareBatch).
     if (calls.length > 1) return this.prepareBatch(calls);
-    const call = calls[0]; // v1 single-transfer path — byte-identical to SP-1, untouched
+    const call = calls[0]; // v1 single-transfer path — byte-identical to the original sponsored path, untouched
     if (!call) {
       throw new BuckspayError("INVALID_CONFIG", "prepare() requires at least one call");
     }
@@ -138,7 +138,7 @@ export class BuckspayClient {
 
     const gas = this.config.gas;
     if (gas.mode === "token") {
-      // SP-2 gas-in-token (sprint-0/02 spike design): the user pays Soroban gas in `gas.token`. The SDK
+      // gas-in-token: the user pays Soroban gas in `gas.token`. The SDK
       // does NOT relay the direct transfer — it relays a SINGLE FeeForwarder `forward(...)` invocation
       // that pays the merchant AND the relayer's gas in one auth entry. The facilitator quotes the fee +
       // forwarder + collector; the user signs ONE entry whose tree is forward() + the two sub-transfers.
@@ -186,7 +186,7 @@ export class BuckspayClient {
         args: forwardArgs,
         nonce,
         // The forwarder performs two payer-authorized transfers; declare them so the SAC's
-        // require_auth() is covered by this one auth tree (verified against the spike fixture).
+        // require_auth() is covered by this one auth tree (verified on-chain).
         subInvocations: [
           { contract: gas.token, fn: "transfer", args: [fromScv, merchantScv, paymentScv] },
           { contract: gas.token, fn: "transfer", args: [fromScv, collectorScv, feeScv] }
@@ -197,7 +197,7 @@ export class BuckspayClient {
       return { ...base, unsignedEntry, preimageXdr, feeQuote: quote };
     }
 
-    // sponsored — byte-identical to SP-1: the direct transfer entry, no fee fields.
+    // sponsored — byte-identical to the original single-call entry: the direct transfer entry, no fee fields.
     await simulateRecording({ from, call, network: this.config.network, simulator: this.sim.simulator });
     const unsignedEntry = this.config.account.buildUnsignedEntry({ from, call, nonce });
     const preimageXdr = this.toPreimageXdr(unsignedEntry, signatureExpirationLedger);

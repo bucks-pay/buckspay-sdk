@@ -91,9 +91,10 @@ export function defaultWebAuthn(): WebAuthnLike {
 }
 
 /**
- * Deterministic SOFTWARE secp256r1 authenticator for tests. Mirrors the spike's
- * `secp256r1.ts`/`check-auth.ts` exactly: authenticatorData = sha256(rpId) ‖ UP|UV ‖ counter,
- * and the assertion signs sha256(authenticatorData ‖ sha256(clientDataJSON)) as raw r‖s low-S.
+ * Deterministic SOFTWARE secp256r1 authenticator for tests. Reproduces the exact
+ * WebAuthn assertion construction the contract verifies on-chain:
+ * authenticatorData = sha256(rpId) ‖ UP|UV ‖ counter, and the assertion signs
+ * sha256(authenticatorData ‖ sha256(clientDataJSON)) as raw r‖s low-S.
  *
  * Test-only: the private key is seed-derived and this factory is never reached on the
  * production path (it requires explicit injection via `passkey({ webauthn })`). It is

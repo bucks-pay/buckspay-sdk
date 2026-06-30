@@ -95,7 +95,7 @@ function authorizedContractFn(contract: string, fn: string, args: xdr.ScVal[]): 
  * Build an unsigned auth entry for an ARBITRARY contract call (generalizes `buildUnsignedEntry`, which
  * hardcodes `transfer`). Used by gas mode "token" to authorize the FeeForwarder `forward(...)` invocation
  * together with its `subInvocations` (the merchant + fee transfers the forwarder performs on the signer's
- * behalf — the entry tree must include them, verified against the sprint-0/02 fixture). Credentials bind to
+ * behalf — the entry tree must include them, verified on-chain). Credentials bind to
  * `from`; `signatureExpirationLedger`/`signature` stay void until the assemble step.
  */
 export function buildUnsignedCallEntry(params: {

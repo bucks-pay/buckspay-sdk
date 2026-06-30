@@ -4,15 +4,14 @@
 
 ### Minor Changes
 
-- 3c577dc: SP-2 sprint-2 atomic batch: `client.sendCalls(calls)` (EIP-5792-style) and `client.prepare(calls)` settle
+- 3c577dc: **Atomic batch.** `client.sendCalls(calls)` (EIP-5792-style) and `client.prepare(calls)` settle
   N USDC transfers **all-or-nothing in ONE tx** via the pinned Multicall router's
   `batch_transfer(payer, token, Vec<(to, amount)>)` — one nonce, one signature for the whole batch, the
   same shape for classic (`G…`) and contract (`C…`) accounts. Adds the **required**
   `AccountAdapter.buildUnsignedBatchEntry` (both first-party account models implement it; a batch of 1 is
-  byte-identical to the SP-1 single-call entry — the sponsored path is unchanged) plus `BuildBatchEntryInput`.
+  byte-identical to the single-call entry — the sponsored path is unchanged) plus `BuildBatchEntryInput`.
   `MAX_BATCH_CALLS` (16) is enforced fail-closed at `batch().build()`, `prepare`, and `sendCalls`
-  (`BATCH_TOO_LARGE`). Proven on testnet with real Circle USDC (the Multicall router is the sprint-0/03
-  spike deploy, wasm-hash-pinned).
+  (`BATCH_TOO_LARGE`). Verified on testnet with real USDC.
 
   Adding a required member to the public `AccountAdapter` interface is a breaking interface change →
   **minor** (pre-1.0). Batch is a universal account capability (every account that authorizes a single
@@ -20,13 +19,12 @@
 
 ### Patch Changes
 
-- 282d74b: SP-2 scaffolding: additive type surface (the `sponsored | token` gas union, `FeeQuote` /
-  `AuthDetails` / session / `SwapQuote` types, six new `BuckspayError` codes, the optional
+- 282d74b: Additive type surface (the `sponsored | token` gas union, `FeeQuote` /
+  `AuthDetails` / session / `SwapQuote` types, new `BuckspayError` codes, the optional
   `BuckspaySigner.authenticate`, optional fee fields on the intents/relay payload), the pure
   `batch()` builder + `MAX_BATCH_CALLS`, and buildable skeletons for the new `@buckspay/nextjs`
   and `@buckspay/react-native` packages plus the `signers/social`, `signers/email`, and
-  `accounts/policy` subpaths. No behavior change to existing paths — `gas: { mode: "token" }`
-  fails closed with `TOKEN_GAS_REJECTED` until SP-2 sprint-1 wires the FeeForwarder.
+  `accounts/policy` subpaths. No behavior change to existing paths.
 - Updated dependencies [3c577dc]
 - Updated dependencies [9b6cabd]
 - Updated dependencies [282d74b]
@@ -57,7 +55,7 @@
 
 ### Patch Changes
 
-- Sprint 5 (hero hardening), all backward-compatible:
+- Hero hardening, all backward-compatible:
 
   - **`@buckspay/accounts`** — browser-safe **isomorphic SHA-256** for the C-address salt
     (was `node:crypto`, which broke the browser build of `oz-contract`); same hash, so the

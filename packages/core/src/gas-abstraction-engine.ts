@@ -7,8 +7,8 @@ import type { GasConfig, RelayPayload, SignedIntent } from "./types";
  * pays the XLM fee, so the body carries no fee/token-payment fields.
  *
  * The gas mode is validated once at construction; v1 keeps no instance state
- * because `sponsored` projection is fixed. SP-2 (token / self) will store the
- * config and branch on it inside `toRelayPayload`.
+ * because `sponsored` projection is fixed. The token / self gas modes will store
+ * the config and branch on it inside `toRelayPayload`.
  */
 export class GasAbstractionEngine {
   constructor(gas: GasConfig) {
@@ -16,9 +16,9 @@ export class GasAbstractionEngine {
     // so widen to `string` before comparing (the literal type would make the
     // guard look unreachable to the type checker).
     const mode: string = (gas as { mode: string }).mode;
-    // `sponsored` is fully implemented. `token` (SP-2 sprint-1, FeeForwarder) is an
+    // `sponsored` is fully implemented. `token` (the FeeForwarder path) is an
     // ACCEPTED config that fails closed downstream in `BuckspayClient.prepare`
-    // (TOKEN_GAS_REJECTED) until sprint-1 wires it — so the feature gate lives where
+    // (TOKEN_GAS_REJECTED) until that path is wired — so the feature gate lives where
     // the feature will be built, not here. Any other mode is rejected at construction.
     if (mode !== "sponsored" && mode !== "token") {
       throw new BuckspayError(
@@ -45,7 +45,7 @@ export class GasAbstractionEngine {
       nonce: signed.nonce,
       signatureExpirationLedger: signed.signatureExpirationLedger,
       // gas mode "token": signal the facilitator to validate a forward() invocation. Absent (not
-      // `undefined`) in sponsored mode → the seven-field SP-1 body, byte-identical (golden test).
+      // `undefined`) in sponsored mode → the seven-field sponsored body, byte-identical (golden test).
       ...(signed.feeToken !== undefined ? { feeToken: signed.feeToken } : {})
     };
   }

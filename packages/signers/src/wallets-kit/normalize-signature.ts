@@ -17,9 +17,9 @@ function base64ToBytes(b64: string): Uint8Array {
  * shipping a malformed signature to the relayer fails far downstream with a
  * cryptic error, so we fail loudly here as `SIGNATURE_REJECTED`.
  *
- * Ported from the dashboard's `web3-stellar/sign.ts` (Fase 0 spike fixtures back
- * this behavior); the dashboard's silent `return decoded` fallback is replaced
- * by the assertion below so no consumer ever sees a non-64-byte value.
+ * Ported from the dashboard's `web3-stellar/sign.ts` (verified against real
+ * wallet-captured fixtures); the dashboard's silent `return decoded` fallback is
+ * replaced by the assertion below so no consumer ever sees a non-64-byte value.
  */
 export function normalizeSignature(signedAuthEntryB64: string): Uint8Array {
   const decoded = base64ToBytes(signedAuthEntryB64);

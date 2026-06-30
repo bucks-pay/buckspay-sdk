@@ -3,9 +3,9 @@
  * (`@buckspay/accounts/oz-contract`).
  *
  * `ozContractAccount(opts?)` returns an `AccountAdapter` (model "contract") that derives
- * the deterministic C-address (= facilitator plan 01), deploys the OZ smart account via
- * the relayer when needed, and builds + assembles the `__check_auth` auth entry with the
- * passkey signature (plan 03). The sponsor key lives only in the facilitator.
+ * the deterministic C-address (matching the facilitator's derivation), deploys the OZ smart
+ * account via the relayer when needed, and builds + assembles the `__check_auth` auth entry
+ * with the passkey signature. The sponsor key lives only in the facilitator.
  */
 import { BuckspayError } from "@buckspay/core";
 import type {
@@ -44,7 +44,7 @@ export function ozContractAccount(opts: OzContractOptions = {}): AccountAdapter 
       if (!first) {
         throw new BuckspayError("INVALID_CONFIG", "buildUnsignedBatchEntry requires at least one call");
       }
-      // Batch of 1 → byte-identical to the SP-1 single __check_auth entry (golden invariant).
+      // Batch of 1 → byte-identical to the single-call __check_auth entry (golden invariant).
       if (input.calls.length === 1) {
         return buildContractEntry({ from: input.from, call: first, nonce: input.nonce });
       }

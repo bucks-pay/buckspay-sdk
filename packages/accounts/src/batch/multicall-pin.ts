@@ -6,8 +6,8 @@ import type { Network } from "@buckspay/core";
  * once per network (hash-pinned `97b8f81a…`, like the OZ smart-account + FeeForwarder wasm) and
  * its `batch_transfer(payer, token, Vec<(to, amount)>)` entrypoint settles an atomic batch.
  *
- *  - testnet: deployed + proven on-chain by the sprint-0/03 multicall spike (DECISION.md = GO).
- *  - pubnet:  empty until the facilitator deploys + pins it (sprint-2/02) — a pubnet batch then
+ *  - testnet: deployed and verified on-chain — the Multicall router is live.
+ *  - pubnet:  empty until the facilitator deploys + pins it — a pubnet batch then
  *             fails closed with INVALID_CONFIG rather than using a wrong/testnet router.
  *
  * A caller may override per-call via `ozContractAccount({ multicallContract })` /

@@ -5,7 +5,7 @@ import type { AssembleInput, Network } from "@buckspay/core";
 /**
  * Sign and assemble the contract auth entry. Builds the network-scoped HashIDPreimage
  * over the entry (IDENTICAL to `BuckspayClient.toPreimageXdr` and the on-chain-validated
- * spike `signContractAuthEntries`), hands it to the passkey signer, then injects the
+ * `signContractAuthEntries`), hands it to the passkey signer, then injects the
  * returned `WebAuthnSigData` scval + expiration into the Address credentials. The
  * signature itself is verified ON-CHAIN by `__check_auth` — never here.
  */
@@ -28,7 +28,7 @@ export async function assembleContractEntry(input: AssembleInput): Promise<strin
     signatureExpirationLedger
   });
 
-  // The passkey Signature.signature is the OZ __check_auth scval bytes (plan 03). We
+  // The passkey Signature.signature is the OZ __check_auth scval bytes. We
   // only decode it to confirm it's a valid ScVal before injecting; we never verify it.
   let sigScval: xdr.ScVal;
   try {

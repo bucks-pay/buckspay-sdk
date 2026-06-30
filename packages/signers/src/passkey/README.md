@@ -33,16 +33,16 @@ const sig = await signer.signAuthEntry(payload);     // { signature: <WebAuthnSi
   DER→raw + low-S (and sha256).
 - **Production** uses `defaultWebAuthn()` → `navigator.credentials.{create,get}`. Requires a browser, a
   **secure context** (https), and a registered `rpId`. The COSE parse in `defaultWebAuthn().create()` runs
-  only in a browser and is covered by manual QA (the hero e2e in Sprint 5/01).
+  only in a browser and is covered by manual QA (the passkey hero e2e).
 
 ## ⚠️ The load-bearing contract: `formatCheckAuthSignature`
 
 The `WebAuthnSigData` scval is a Soroban **map** with **canonical sorted keys**
 `authenticator_data` < `client_data` < `signature` (note `client_data`, **not** `client_data_json`),
 each value an `scvBytes`, with `signature` a raw 64-byte `r‖s`. This is **byte-identical** to the
-on-chain-validated spike (`spikes/passkey-contract/src/check-auth.ts` `assembleWebAuthnSigData`,
-`DECISION.md` = GO) and is asserted by `test/passkey/checkauth-parity.test.ts`.
+structure the contract validates on-chain (`assembleWebAuthnSigData`) and is asserted by
+`test/passkey/checkauth-parity.test.ts`.
 
-**These field names/order are the single value to keep in lock-step with `DECISION.md` and the OZ
+**These field names/order are the single value to keep in lock-step with the OZ
 `__check_auth`.** If the OZ Smart Account version changes the struct, update `formatCheckAuthSignature`
 (and the parity test) to match — divergence by a single byte makes the contract reject the signature.

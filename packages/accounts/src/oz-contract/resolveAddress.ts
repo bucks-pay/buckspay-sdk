@@ -13,13 +13,13 @@ export interface OzContractOptions {
   sponsorAddress?: string;
   /** Network whose passphrase folds into the derivation. Defaults to testnet. */
   network?: Network;
-  /** Multicall router C-address for atomic contract batches (sprint-2). Defaults to the network's
+  /** Multicall router C-address for atomic contract batches. Defaults to the network's
    *  pinned MULTICALL_CONTRACT_ID. Only consulted for calls.length > 1. */
   multicallContract?: string;
 }
 
 /**
- * MUST match facilitator `contractSalt` (plan 01): sha256(pubkeyBytes). Uses the
+ * MUST match facilitator `contractSalt`: sha256(pubkeyBytes). Uses the
  * stellar-sdk's isomorphic `hash` (NOT node:crypto) so the SDK runs in the browser —
  * same SHA-256 as the facilitator, so the derivation stays byte-identical.
  */
@@ -29,7 +29,7 @@ export function contractSalt(passkeyPublicKey: string): Buffer {
 
 /**
  * Deterministic C-address from (deployer=sponsor, salt=sha256(pubkey), networkId).
- * BYTE-IDENTICAL to the facilitator's `derivedContractAddress` (plan 01, validated
+ * BYTE-IDENTICAL to the facilitator's `derivedContractAddress` (validated
  * on-chain): same `ContractIdPreimage::Address` preimage. The contract id depends only
  * on deployer + salt + network — NOT on the Wasm hash or constructor args.
  */

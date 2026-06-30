@@ -5,8 +5,7 @@ import { BuckspayError } from "@buckspay/core";
  * code buckspay deploys/authorizes against; any other hash is rejected so a compromised or
  * swapped Wasm cannot be silently used.
  *
- * VALUE: the hash validated on-chain in the Sprint 0/03 + Sprint 4/01 spike
- * (`spikes/passkey-contract/DECISION.md` = GO) against the installed testnet Wasm. The
+ * VALUE: the hash validated on-chain against the installed testnet Wasm. The
  * hash is the sha256 of the Wasm bytes, so it is network-independent (same on pubnet once
  * installed). It must stay byte-identical to the facilitator's `OZ_SMART_ACCOUNT_WASM_HASH`.
  */
