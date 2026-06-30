@@ -1,6 +1,6 @@
 {
   "name": "@buckspay/react",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "type": "module",
   "license": "MIT",
   "description": "React 19 hooks for the Buckspay SDK: BuckspayProvider, useWallet, useStellarPay for gasless Stellar (Soroban) USDC payments.",
