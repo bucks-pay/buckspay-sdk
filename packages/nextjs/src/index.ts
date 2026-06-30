@@ -1,4 +1,10 @@
-// @buckspay/nextjs — scaffold. createRelayRoute()/createSignerProxyRoute() are planned.
-// The BFF the dashboard already does, packaged: the facilitator apiKey + provider secrets stay
-// server-side; the browser never holds them. Re-export the core contract consumers type against now.
+// @buckspay/nextjs — App Router server helpers: BFF relay + social/email signer-proxy.
+// The route factories are SERVER-ONLY (they hold the facilitator apiKey / read server env).
+export { createRelayRoute, createSignerProxyRoute } from "./routes.js";
+export type {
+  CreateRelayRouteOptions,
+  CreateRelayRouteDeps,
+  CreateSignerProxyRouteOptions,
+  CreateSignerProxyRouteDeps
+} from "./routes.js";
 export type { Network } from "@buckspay/core";

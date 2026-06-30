@@ -62,6 +62,9 @@ importers:
       '@buckspay/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@buckspay/nextjs':
+        specifier: workspace:*
+        version: link:../../packages/nextjs
       '@buckspay/react':
         specifier: workspace:*
         version: link:../../packages/react

@@ -12,6 +12,7 @@
     "@buckspay/signers": "workspace:*",
     "@buckspay/relayer": "workspace:*",
     "@buckspay/react": "workspace:*",
+    "@buckspay/nextjs": "workspace:*",
     "@stellar/stellar-sdk": "^14.6.1",
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
