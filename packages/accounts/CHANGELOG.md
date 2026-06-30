@@ -1,5 +1,11 @@
 # @buckspay/accounts
 
+## 0.2.3
+
+### Patch Changes
+
+- @buckspay/core@0.2.3
+
 ## 0.2.2
 
 ### Patch Changes

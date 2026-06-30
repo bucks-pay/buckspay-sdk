@@ -1,6 +1,6 @@
 {
   "name": "@buckspay/react-native",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "type": "module",
   "license": "MIT",
   "description": "React Native bindings for the Buckspay SDK: native passkey + secure storage + the BuckspayProvider/useWallet/useStellarPay hooks for gasless Stellar (Soroban) USDC payments on mobile.",
