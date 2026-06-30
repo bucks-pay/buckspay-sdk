@@ -1,4 +1,4 @@
-import { xdr } from "@stellar/stellar-sdk";
+import type { xdr } from "@stellar/stellar-sdk";
 import type { SessionInstallInput, SessionRevokeInput } from "@buckspay/core";
 import { buildInstallArgs, buildRevokeArgs } from "../policy/index.js";
 import { buildContractEntry } from "./buildEntry.js";

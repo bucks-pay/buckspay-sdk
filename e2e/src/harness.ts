@@ -7,6 +7,7 @@ import {
 } from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
 import { ozContractAccount } from "@buckspay/accounts/oz-contract";
+import { policyAccount } from "@buckspay/accounts/policy-account";
 import { walletsKit } from "@buckspay/signers/wallets-kit";
 import { passkey } from "@buckspay/signers/passkey";
 import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
@@ -54,6 +55,34 @@ export function buildClient(model: AccountModel, signerOverride?: BuckspaySigner
     sim
   );
   return { client, relayer };
+}
+
+/**
+ * Build a real `BuckspayClient` for the policy session-account model, wired with an ed25519 ROOT
+ * signer. `connect()` deploys the sponsored policy account (its `__check_auth` enforces session-key
+ * spend/allow-list/expiry policies); `grantSession`/`revokeSession` are root-signed. The `account`
+ * adapter is returned so the caller can build a session-key payment directly: the client derives
+ * `from` from its signer, but a session pays FROM the account address while signing with the session
+ * key, so the payment entry is assembled against the adapter and relayed straight through.
+ */
+export function buildSessionClient(rootSigner: BuckspaySigner) {
+  const relayer = buckspayFacilitator({
+    url: e2eEnv.FACILITATOR_URL,
+    ...(e2eEnv.FACILITATOR_API_KEY ? { apiKey: e2eEnv.FACILITATOR_API_KEY } : {}),
+    network: "testnet"
+  });
+  const account = policyAccount({
+    network: "testnet",
+    ...(e2eEnv.E2E_SPONSOR_G ? { sponsorAddress: e2eEnv.E2E_SPONSOR_G } : {})
+  });
+  const sim = createRpcSimContext(e2eEnv.SOROBAN_RPC_URL, {
+    ...(e2eEnv.E2E_SPONSOR_G ? { simSource: e2eEnv.E2E_SPONSOR_G } : {})
+  });
+  const client = createBuckspayClient(
+    { network: "testnet", account, signer: rootSigner, relayer, gas: { mode: "sponsored" } },
+    sim
+  );
+  return { client, relayer, account };
 }
 
 /**

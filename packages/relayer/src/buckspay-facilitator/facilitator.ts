@@ -158,11 +158,28 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
     },
 
     async deployContract(input: { passkeyPublicKey: string }): Promise<{ address: string }> {
-      // Sponsor-paid OZ smart-account deploy (plan 01). The SDK sends only the passkey
-      // PUBLIC key + chain; the facilitator holds the sponsor secret and enforces the Wasm pin.
+      // Sponsor-paid passkey smart-account deploy. The SDK sends only the passkey PUBLIC key
+      // + chain; the facilitator holds the sponsor secret and enforces the Wasm pin.
       const data = await request("/stellar/contract/deploy", {
         method: "POST",
         body: { passkeyPublicKey: input.passkeyPublicKey, chain }
+      });
+      const parsed = deployContractSchema.safeParse(data);
+      if (!parsed.success) {
+        throw new BuckspayError("RELAYER_REJECTED", "facilitator returned an invalid deploy response", {
+          cause: parsed.error
+        });
+      }
+      return { address: parsed.data.address };
+    },
+
+    async deploySessionAccount(input: { rootPublicKey: string }): Promise<{ address: string }> {
+      // Sponsor-paid policy session-account deploy. The SDK sends only the ed25519 root
+      // PUBLIC key + chain; the facilitator holds the sponsor secret, binds the root key as
+      // the account's admin, and enforces the Wasm pin. Same `{ address }` deploy shape.
+      const data = await request("/stellar/session-account/deploy", {
+        method: "POST",
+        body: { rootPublicKey: input.rootPublicKey, chain }
       });
       const parsed = deployContractSchema.safeParse(data);
       if (!parsed.success) {

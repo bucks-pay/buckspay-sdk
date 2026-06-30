@@ -5,7 +5,14 @@ describe("@buckspay/relayer/buckspay-facilitator package surface", () => {
     const { buckspayFacilitator } = await import("../src/buckspay-facilitator/index.js");
     expect(typeof buckspayFacilitator).toBe("function");
     const relayer = buckspayFacilitator({ url: "https://fac.test", network: "testnet" });
-    for (const m of ["relay", "getAccountState", "buildOnboard", "submitOnboard", "deployContract"]) {
+    for (const m of [
+      "relay",
+      "getAccountState",
+      "buildOnboard",
+      "submitOnboard",
+      "deployContract",
+      "deploySessionAccount"
+    ]) {
       expect(typeof (relayer as unknown as Record<string, unknown>)[m]).toBe("function");
     }
   });
