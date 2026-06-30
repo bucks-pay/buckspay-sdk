@@ -8,8 +8,9 @@ describe("onboarding signer subpath scaffolds", () => {
     expect("socialSigner" in social).toBe(true);
     expect(typeof (social as { socialSigner: unknown }).socialSigner).toBe("function");
   });
-  it("email subpath module loads (factory arrives later)", () => {
+  it("email subpath ships the emailSigner factory", () => {
     expect(email).toBeDefined();
-    expect("emailSigner" in email).toBe(false);
+    expect("emailSigner" in email).toBe(true);
+    expect(typeof (email as { emailSigner: unknown }).emailSigner).toBe("function");
   });
 });
