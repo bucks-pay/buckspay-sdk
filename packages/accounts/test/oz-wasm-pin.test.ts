@@ -3,7 +3,7 @@ import { ozContractAccount } from "../src/oz-contract/index.js";
 import { OZ_SMART_ACCOUNT_WASM_HASH, assertPinnedWasmHash } from "../src/oz-contract/wasm-pin.js";
 
 describe("OZ Smart Account Wasm pinning", () => {
-  it("exposes a 32-byte hex wasm hash (real spike value, not the zero placeholder)", () => {
+  it("exposes a 32-byte hex wasm hash (real pinned value, not the zero placeholder)", () => {
     expect(OZ_SMART_ACCOUNT_WASM_HASH).toMatch(/^[0-9a-f]{64}$/);
     expect(OZ_SMART_ACCOUNT_WASM_HASH).not.toBe("0".repeat(64));
   });

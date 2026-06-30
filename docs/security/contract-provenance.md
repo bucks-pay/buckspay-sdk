@@ -21,7 +21,7 @@ OpenZeppelin's **audited** WebAuthn/secp256r1 verifier `stellar_accounts::verifi
 (stellar-accounts 0.7.1) for the cryptography. The `__constructor` + `__check_auth` wrapper around
 that verifier is buckspay code (`spikes/passkey-contract/contract/src/lib.rs`). It deliberately
 skips the OZ composable framework (context rules / policies / external verifier contracts) — the
-Fase 0 gate only needed to prove the `secp256r1 → __check_auth → relay` path with a single deploy.
+initial gate only needed to prove the `secp256r1 → __check_auth → relay` path with a single deploy.
 
 - **Pinned hash:** `bf1aa9b2a4f8c05e1e5226009800bf69bd9ab7375ad160a1113d8d31a6ffdc69`
 - The hash is the **sha256 of the wasm bytes**, so it is **network-independent** — identical on

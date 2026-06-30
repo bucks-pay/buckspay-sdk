@@ -55,6 +55,11 @@ const schema = z.object({
     .string()
     .regex(/^G[A-Z2-7]{55}$/)
     .optional(),
+  // Cross-feature smoke: a pre-funded session keypair (test-runner only) the smoke grants + uses.
+  E2E_SESSION_SECRET_PUBNET: z
+    .string()
+    .regex(/^S[A-Z2-7]{55}$/)
+    .optional(),
 
   // ── React Native simulator smoke — third-tier gate, distinct from BUCKSPAY_E2E ──
   // Never runs in a default `pnpm test`; requires a built app + a running simulator/device.
@@ -102,7 +107,8 @@ export const MAINNET_ENABLED =
   !!e2eEnv.E2E_USDC_PUBNET_SAC &&
   !!e2eEnv.E2E_SPONSOR_G_PUBNET &&
   !!e2eEnv.E2E_PAYER_SECRET_PUBNET &&
-  !!e2eEnv.E2E_MERCHANT_G_PUBNET;
+  !!e2eEnv.E2E_MERCHANT_G_PUBNET &&
+  !!e2eEnv.E2E_SESSION_SECRET_PUBNET;
 
 /**
  * React Native simulator smoke is enabled only when the dedicated flag is set AND a target

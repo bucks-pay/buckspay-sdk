@@ -3,11 +3,11 @@ import { nativeToScVal, xdr } from "@stellar/stellar-sdk";
 import { formatCheckAuthSignature, decodeCheckAuthSignature } from "../../src/passkey/signAuthEntry.js";
 
 /**
- * EXACT replica of `spikes/passkey-contract/src/check-auth.ts` `assembleWebAuthnSigData`
- * — the scval the OZ Smart Account `__check_auth` accepted ON-CHAIN (DECISION.md = GO).
- * If `formatCheckAuthSignature` diverges by even a byte, the contract rejects the signature.
+ * EXACT replica of the reference `assembleWebAuthnSigData` — the scval the OZ
+ * Smart Account `__check_auth` accepted ON-CHAIN. If `formatCheckAuthSignature`
+ * diverges by even a byte, the contract rejects the signature.
  */
-function spikeAssembleWebAuthnSigData(a: {
+function referenceAssembleWebAuthnSigData(a: {
   authenticatorData: Uint8Array;
   clientData: Uint8Array;
   signature64: Uint8Array;
@@ -28,20 +28,20 @@ function spikeAssembleWebAuthnSigData(a: {
   ]);
 }
 
-describe("__check_auth signature byte-parity with the on-chain-validated spike", () => {
+describe("__check_auth signature byte-parity with the on-chain-validated reference", () => {
   const authenticatorData = new Uint8Array(37).fill(0xab);
   const clientData = new TextEncoder().encode(
     '{"type":"webauthn.get","challenge":"abc","origin":"https://buckspay.dev"}'
   );
   const signature = new Uint8Array(64).fill(0xcd);
 
-  it("formatCheckAuthSignature emits the exact spike scval (byte-identical XDR)", () => {
+  it("formatCheckAuthSignature emits the exact reference scval (byte-identical XDR)", () => {
     const mine = formatCheckAuthSignature({ authenticatorData, clientDataJSON: clientData, signature });
-    const spike = spikeAssembleWebAuthnSigData({ authenticatorData, clientData, signature64: signature });
-    expect(Buffer.from(mine.toXDR())).toEqual(Buffer.from(spike.toXDR()));
+    const reference = referenceAssembleWebAuthnSigData({ authenticatorData, clientData, signature64: signature });
+    expect(Buffer.from(mine.toXDR())).toEqual(Buffer.from(reference.toXDR()));
   });
 
-  it("decode round-trips the spike field names (authenticator_data, client_data, signature)", () => {
+  it("decode round-trips the reference field names (authenticator_data, client_data, signature)", () => {
     const scval = formatCheckAuthSignature({ authenticatorData, clientDataJSON: clientData, signature });
     const parts = decodeCheckAuthSignature(scval.toXDR());
     expect(Buffer.from(parts.authenticatorData)).toEqual(Buffer.from(authenticatorData));

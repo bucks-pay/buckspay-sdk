@@ -21,7 +21,7 @@ Onboarding is also sponsored — see [Onboarding](./04-onboarding.md).
 ## Roadmap (not in v1)
 
 > `token` (pay gas in USDC via the FeeForwarder) and `self` (payer pays their own fee)
-> modes are **SP-2**, not available in v1. The `GasConfig` type only admits
+> modes are **not available in v1**. The `GasConfig` type only admits
 > `{ mode: "sponsored" }`, so an unimplemented mode fails to type-check — you can't
 > accidentally configure something unsupported.
 

@@ -26,7 +26,7 @@ reproduced here).
 
 | Secret | What it controls | Rotation action | New home | Old-value disposition |
 |---|---|---|---|---|
-| `STELLAR_SPONSOR_SECRET_TESTNET` | Sponsors/pays for ALL testnet gasless Soroban txs. **Leaked sponsor public key: `GDKACWHUTPRUFHENFT56SL7XPM5FJU25DARE76OG43Q73XCATTUX4RPI`.** | Generate a brand-new sponsor keypair on a clean host; **drain** the leaked G's XLM to the new sponsor (or treasury); abandon the old G permanently — never re-fund it. | Secret manager (`KmsSecretProvider`, sprint-6/03) | Drained to 0, abandoned, never reused |
+| `STELLAR_SPONSOR_SECRET_TESTNET` | Sponsors/pays for ALL testnet gasless Soroban txs. **Leaked sponsor public key: `GDKACWHUTPRUFHENFT56SL7XPM5FJU25DARE76OG43Q73XCATTUX4RPI`.** | Generate a brand-new sponsor keypair on a clean host; **drain** the leaked G's XLM to the new sponsor (or treasury); abandon the old G permanently — never re-fund it. | Secret manager (`KmsSecretProvider`) | Drained to 0, abandoned, never reused |
 | `RELAYER_PRIVATE_KEY` | EVM relayer signer — pays gas / submits on AVAX/Polygon/Base/Celo (`chain.ts` `privateKeyToAccount(env.RELAYER_PRIVATE_KEY)`). | Generate a new EOA; move any operational float off the leaked address; repoint `chain.ts` to the new key. | Secret manager | Float swept out, abandoned |
 | `DEPLOYER_PRIVATE_KEY` | Contract-deployer EOA. | Rotate to a new deployer; the leaked one must hold nothing and never deploy again. | Secret manager | Emptied, never deploys again |
 | `API_KEY` | Facilitator inbound auth key (`env.API_KEY`, checked on `/relay`). | Issue a new key; distribute to legitimate callers (dashboard BFF); revoke the old at the gateway so the burned value `401`s. | Secret manager / BFF env | Revoked at gateway |
@@ -48,8 +48,8 @@ Apply these four steps to **every** row above:
 
 1. **Generate** new material on a clean host. Never paste an old value into a new file; never
    reuse a leaked key on a "fresh" account.
-2. **Deploy** to the secret manager / deploy target — the facilitator's `SecretProvider`
-   (sprint-6/03): `KmsSecretProvider` in prod, a gitignored `.env` in dev. **Never** into a
+2. **Deploy** to the secret manager / deploy target — the facilitator's `SecretProvider`:
+   `KmsSecretProvider` in prod, a gitignored `.env` in dev. **Never** into a
    tracked file.
 3. **Revoke / abandon** the old value at its source: gateway revoke for API keys (0x/1inch/
    `API_KEY`); for on-chain keys, sweep all funds out and never reuse the address.
@@ -69,7 +69,7 @@ then record the leaked G as abandoned in this doc. Never re-fund it.
    `.env*` (≠ `.env.example`) is tracked, and fails if the configured pubnet sponsor equals the
    leaked address.
 3. **Pre-commit / CI secret scanner** (`gitleaks` or `trufflehog`) blocks secret-shaped strings
-   before they land. This extends `scripts/check-no-secrets-in-src.sh` (Sprint 5/03 — blocks
+   before they land. This extends `scripts/check-no-secrets-in-src.sh` (blocks
    `S…` seeds / PEM markers / `apiKey` literals in `packages/*/src`) to **tracked files
    anywhere**, not just `src`.
 

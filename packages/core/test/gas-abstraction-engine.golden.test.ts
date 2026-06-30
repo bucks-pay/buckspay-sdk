@@ -4,7 +4,7 @@ import { GasAbstractionEngine } from "../src/gas-abstraction-engine";
 import type { SignedIntent } from "../src/types";
 
 // The dashboard's SorobanRelayBody, reconstructed as a SignedIntent. The engine
-// must reproduce `golden` exactly (parity invariant for the Sprint-3 migration).
+// must reproduce `golden` exactly (parity invariant for the dashboard migration).
 const signed: SignedIntent = {
   token: golden.token,
   from: golden.from,

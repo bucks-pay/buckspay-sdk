@@ -1,4 +1,4 @@
-# buckspay SDK — Threat Model (v1 / M2)
+# buckspay SDK — Threat Model (v1)
 
 STRIDE-style rows for the six surfaces. Status ∈ {mitigated · accepted · deferred-to-audit}.
 Verified present by `scripts/check-threat-model.sh`.
@@ -57,5 +57,5 @@ responsibility). **Status: mitigated in SDK**; integrator-responsibility boundar
 ## Out of scope for v1 / deferred to audit
 
 The audited OpenZeppelin Smart Account *contract* (we pin its Wasm, we don't re-audit OZ),
-the wallet/authenticator implementations, and SP-2 features (token-gas, batch, sessions,
+the wallet/authenticator implementations, and the gasless features (token-gas, batch, sessions,
 social login). See [audit-prep](./audit-prep.md).

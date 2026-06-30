@@ -18,7 +18,7 @@ import type {
 } from "../src/types";
 
 describe("§4.4 engine/intents/client/config/state types", () => {
-  it("GasConfig is the sponsored | token discriminated union (SP-2)", () => {
+  it("GasConfig is the sponsored | token discriminated union", () => {
     expectTypeOf<GasConfig>().toEqualTypeOf<
       { mode: "sponsored" } | { mode: "token"; token: string; maxFee?: string }
     >();

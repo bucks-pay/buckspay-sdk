@@ -30,7 +30,7 @@ function fakeSim(): AccountSimContext {
 }
 
 describe("BuckspayClient.prepare — batch path", () => {
-  it("calls.length === 1 produces the SAME intent as SP-1 (byte-identical entry, no batch wrapping)", async () => {
+  it("calls.length === 1 produces the SAME intent as the single-call path (byte-identical entry, no batch wrapping)", async () => {
     const { config } = makeMockConfig();
     const c = new BuckspayClient(config, fakeSim());
     await c.connect();

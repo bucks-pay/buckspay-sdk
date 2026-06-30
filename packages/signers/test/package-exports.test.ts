@@ -7,7 +7,7 @@ describe("@buckspay/signers package surface", () => {
     expect(typeof mod.normalizeSignature).toBe("function");
   });
 
-  it("root resolves and passkey subpath exports the passkey factory (Sprint 4)", async () => {
+  it("root resolves and passkey subpath exports the passkey factory", async () => {
     const root = await import("../src/index.js");
     const passkey = await import("../src/passkey/index.js");
     expect(typeof root.version).toBe("string");

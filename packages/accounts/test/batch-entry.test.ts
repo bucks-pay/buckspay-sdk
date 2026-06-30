@@ -22,7 +22,7 @@ const transfer = (from: string, to: string, amt: bigint): Call => ({
 });
 
 describe("buildUnsignedBatchEntry — golden batch-of-1 parity (CRITICAL INVARIANT)", () => {
-  it("classic: a 1-call batch is byte-identical to SP-1 buildUnsignedEntry", () => {
+  it("classic: a 1-call batch is byte-identical to the single-call buildUnsignedEntry", () => {
     const a = classicAccount();
     const call = transfer(FROM_G, TO_1, 1500000n);
     const single = a.buildUnsignedEntry({ from: FROM_G, call, nonce: NONCE });
@@ -30,7 +30,7 @@ describe("buildUnsignedBatchEntry — golden batch-of-1 parity (CRITICAL INVARIA
     expect(batched.toXDR("base64")).toBe(single.toXDR("base64"));
   });
 
-  it("oz-contract: a 1-call batch is byte-identical to SP-1 buildUnsignedEntry", () => {
+  it("oz-contract: a 1-call batch is byte-identical to the single-call buildUnsignedEntry", () => {
     const a = ozContractAccount({ network: "testnet" });
     const call = transfer(FROM_C, TO_1, 1500000n);
     const single = a.buildUnsignedEntry({ from: FROM_C, call, nonce: NONCE });
@@ -39,7 +39,7 @@ describe("buildUnsignedBatchEntry — golden batch-of-1 parity (CRITICAL INVARIA
   });
 });
 
-describe("buildUnsignedBatchEntry — N>1 (Multicall batch_transfer, spike-gated)", () => {
+describe("buildUnsignedBatchEntry — N>1 (Multicall batch_transfer)", () => {
   it("classic N>1: root = router.batch_transfer(payer, token, Vec<[to,amount]>) + N transfer subs", () => {
     const a = classicAccount({ multicallContract: ROUTER });
     const calls = [transfer(FROM_G, TO_1, 1n), transfer(FROM_G, TO_2, 2n)];
@@ -88,8 +88,8 @@ describe("buildUnsignedBatchEntry — N>1 (Multicall batch_transfer, spike-gated
   });
 });
 
-describe("buildUnsignedBatchEntry — spike fixture golden (REAL on-chain entry)", () => {
-  // The sprint-0/03 spike's multicall-batch.json is the on-chain-proven batch entry. The SDK
+describe("buildUnsignedBatchEntry — fixture golden (REAL on-chain entry)", () => {
+  // The multicall-batch.json fixture is the on-chain-proven batch entry. The SDK
   // encoder must reproduce it byte-for-byte (unsigned). We reconstruct its inputs and rebuild.
   const here = dirname(fileURLToPath(import.meta.url));
   const fixturePath = join(here, "..", "..", "..", "spikes", "sp2-multicall", "fixtures", "multicall-batch.json");

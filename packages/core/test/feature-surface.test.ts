@@ -15,7 +15,7 @@ import type {
 
 const call = (i: number): Call => ({ contract: "C".padEnd(56, String(i)), fn: "transfer", args: [] });
 
-describe("SP-2 additive core surface", () => {
+describe("additive gasless core surface", () => {
   it("GasConfig accepts both sponsored and token variants", () => {
     const sponsored: GasConfig = { mode: "sponsored" };
     const token: GasConfig = { mode: "token", token: "CUSDC", maxFee: "1000" };
@@ -41,7 +41,7 @@ describe("SP-2 additive core surface", () => {
     expect(noAuth.authenticate).toBeUndefined();
   });
 
-  it("standalone SP-2 types are exported and structurally usable", () => {
+  it("standalone feature types are exported and structurally usable", () => {
     const q: FeeQuote = {
       forwarder: "CFWD",
       collector: "CCOL",

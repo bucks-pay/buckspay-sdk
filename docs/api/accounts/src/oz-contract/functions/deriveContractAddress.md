@@ -11,7 +11,7 @@
 Defined in: [packages/accounts/src/oz-contract/resolveAddress.ts:33](https://github.com/bucks-pay/buckspay-sdk/blob/e72c277e7ff52faad26c1268225fd15d97119646/packages/accounts/src/oz-contract/resolveAddress.ts#L33)
 
 Deterministic C-address from (deployer=sponsor, salt=sha256(pubkey), networkId).
-BYTE-IDENTICAL to the facilitator's `derivedContractAddress` (plan 01, validated
+BYTE-IDENTICAL to the facilitator's `derivedContractAddress` (validated
 on-chain): same `ContractIdPreimage::Address` preimage. The contract id depends only
 on deployer + salt + network — NOT on the Wasm hash or constructor args.
 

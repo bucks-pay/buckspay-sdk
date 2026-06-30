@@ -13,7 +13,7 @@ strategy. v1 supports `sponsored` only: the facilitator's sponsor account
 pays the XLM fee, so the body carries no fee/token-payment fields.
 
 The gas mode is validated once at construction; v1 keeps no instance state
-because `sponsored` projection is fixed. SP-2 (token / self) will store the
+because `sponsored` projection is fixed. The token / self modes will store the
 config and branch on it inside `toRelayPayload`.
 
 ## Constructors

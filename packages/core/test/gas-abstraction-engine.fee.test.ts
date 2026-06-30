@@ -21,7 +21,7 @@ describe("GasAbstractionEngine.toRelayPayload — feeToken", () => {
     expect(payload.feeToken).toBe(base.token);
   });
 
-  it("omits feeToken when absent → the seven-field SP-1 body (sponsored parity)", () => {
+  it("omits feeToken when absent → the seven-field sponsored body (sponsored parity)", () => {
     const payload = engine.toRelayPayload(base);
     expect("feeToken" in payload).toBe(false);
     expect(Object.keys(payload).sort()).toEqual(

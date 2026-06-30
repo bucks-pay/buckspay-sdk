@@ -59,7 +59,7 @@ describe("BuckspayClient.prepare — gas mode token (single forward() entry)", (
     expect(relayer.feeQuoteCalls).toHaveLength(1);
   });
 
-  it("sponsored mode attaches NO feeQuote (byte-identical to SP-1)", async () => {
+  it("sponsored mode attaches NO feeQuote (byte-identical to the single-call path)", async () => {
     const { config } = makeMockConfig(); // gas: sponsored
     const client = new BuckspayClient(config, fakeSim());
     await client.connect();

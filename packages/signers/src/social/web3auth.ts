@@ -39,7 +39,7 @@ const proxyResponseSchema = z.object({
   expiresAt: z.number().int().positive().optional()
 });
 
-// The browser-only web3auth SDK is pinned by the onboarding spike. Until then the default loader
+// The browser-only web3auth SDK is wired by the default loader. Until that is provisioned the loader
 // fails closed with a clear message — apps inject `loader`/`providerImpl`. Never imports during SSR/Node.
 const defaultLoader: Web3AuthLoader = () => {
   throw new BuckspayError(

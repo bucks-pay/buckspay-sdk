@@ -7,7 +7,7 @@ import { classicAccount } from "../src/classic/classic-account.js";
 /**
  * End-to-end proof that the SDK's flagship `connect → prepare → sign` runs with
  * the REAL RPC sim context (`createRpcSimContext`) — the path the dashboard
- * dogfood uses. fetch is mocked to answer both `getLatestLedger` and
+ * integration uses. fetch is mocked to answer both `getLatestLedger` and
  * `simulateTransaction` on the same RPC url; the signer uses a local keypair so
  * the signature is deterministic.
  */

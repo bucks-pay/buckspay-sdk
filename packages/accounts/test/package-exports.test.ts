@@ -12,7 +12,7 @@ describe("@buckspay/accounts package surface", () => {
     expect(typeof adapter.assembleSignedEntry).toBe("function");
   });
 
-  it("root resolves and oz-contract subpath exports a contract AccountAdapter (Sprint 4)", async () => {
+  it("root resolves and oz-contract subpath exports a contract AccountAdapter", async () => {
     const root = await import("../src/index.js");
     const { ozContractAccount } = await import("../src/oz-contract/index.js");
     expect(typeof root.version).toBe("string");

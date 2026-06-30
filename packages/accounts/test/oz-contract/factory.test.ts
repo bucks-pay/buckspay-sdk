@@ -11,7 +11,7 @@ describe("ozContractAccount factory", () => {
     expect(typeof a.buildUnsignedEntry).toBe("function");
     expect(typeof a.assembleSignedEntry).toBe("function");
   });
-  it("accepts the pinned wasmHash override (Sprint 5/03 pin guard)", () => {
+  it("accepts the pinned wasmHash override (pin guard)", () => {
     expect(ozContractAccount({ wasmHash: OZ_SMART_ACCOUNT_WASM_HASH }).model).toBe("contract");
   });
 });

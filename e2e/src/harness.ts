@@ -48,7 +48,7 @@ export function buildClient(model: AccountModel, signerOverride?: BuckspaySigner
       account,
       signer,
       relayer,
-      // Default sponsored (every SP-1 e2e call site is unchanged); SP-2 gas-in-token passes
+      // Default sponsored (the existing e2e call sites are unchanged); gas-in-token passes
       // `{ mode: "token", token }`. `?? ` keeps the key always present (exactOptionalPropertyTypes).
       gas: gasOverride ?? { mode: "sponsored" }
     },

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import * as rn from "../src/index";
 
 describe("@buckspay/react-native scaffold", () => {
-  it("re-exports the React hooks/provider (RN-wired in sprint-5, no core fork)", () => {
+  it("re-exports the React hooks/provider (RN-wired, no core fork)", () => {
     expect(typeof rn.BuckspayProvider).toBe("function");
     expect(typeof rn.useWallet).toBe("function");
     expect(typeof rn.useStellarPay).toBe("function");

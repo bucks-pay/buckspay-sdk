@@ -13,7 +13,7 @@ Defined in: [packages/react/src/use-wallet.ts:22](https://github.com/bucks-pay/b
 Wallet connection surface (README §4.6). `connect()` delegates to the core
 client, which resolves the address + runs `ensureReady` and drives the store
 status. `wallet` is derived from the store address: a minimal view backed by the
-live client (model is `classic` in SP-1; `getState` proxies the client).
+live client (model is `classic`; `getState` proxies the client).
 
 ## Returns
 

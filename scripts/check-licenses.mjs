@@ -19,7 +19,11 @@ const ALLOW = new Set([
   "(Apache-2.0 OR MPL-1.1)",
   "(MIT AND BSD-3-Clause)",
   "(Apache-2.0 AND MIT)",
-  "(MIT AND Apache-2.0)"
+  "(MIT AND Apache-2.0)",
+  // Permissive licenses entering the prod tree via the React Native binding's Hermes polyfills
+  // (text-encoding) and the browser-compat data transitive (caniuse-lite). Both permissive.
+  "(Unlicense OR Apache-2.0)",
+  "CC-BY-4.0"
 ]);
 
 /**

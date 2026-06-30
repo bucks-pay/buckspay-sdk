@@ -12,7 +12,7 @@ function make() {
   });
 }
 
-// Conformance suite (shared with email, sprint-4/02).
+// Conformance suite (shared with email).
 runBuckspaySignerConformance({
   label: "socialSigner(web3auth)",
   makeSigner: make,
