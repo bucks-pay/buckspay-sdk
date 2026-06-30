@@ -1,11 +1,12 @@
-import { Keypair, StrKey, xdr } from "@stellar/stellar-sdk";
-import { buildUnsignedEntry } from "../../src/auth-entry-builder";
+import { Address, Keypair, StrKey, xdr } from "@stellar/stellar-sdk";
+import { buildUnsignedCallEntry, buildUnsignedEntry } from "../../src/auth-entry-builder";
 import type {
   AccountAdapter,
   AccountState,
   AssembleInput,
   BuckspayConfig,
   BuckspaySigner,
+  BuildBatchEntryInput,
   BuildEntryInput,
   Call,
   EnsureReadyInput,
@@ -60,6 +61,23 @@ export function makeMockAccount(): MockAccount {
         to: MOCK_TO,
         stroops: 15_000_000n,
         nonce: input.nonce
+      });
+    },
+    buildUnsignedBatchEntry(input: BuildBatchEntryInput): xdr.SorobanAuthorizationEntry {
+      const first = input.calls[0];
+      if (!first) throw new Error("buildUnsignedBatchEntry requires at least one call");
+      if (input.calls.length === 1) {
+        return buildUnsignedEntry({ sac: MOCK_SAC, from: input.from, to: MOCK_TO, stroops: 15_000_000n, nonce: input.nonce });
+      }
+      // A batch_transfer-shaped entry (Address credentials) — enough for the client batch tests.
+      const transfers = xdr.ScVal.scvVec(input.calls.map((c) => xdr.ScVal.scvVec([c.args[1]!, c.args[2]!])));
+      return buildUnsignedCallEntry({
+        from: input.from,
+        contract: StrKey.encodeContract(Buffer.alloc(32, 77)),
+        fn: "batch_transfer",
+        args: [new Address(input.from).toScVal(), new Address(MOCK_SAC).toScVal(), transfers],
+        nonce: input.nonce,
+        subInvocations: input.calls.map((c) => ({ contract: c.contract, fn: c.fn, args: c.args }))
       });
     },
     async assembleSignedEntry(input: AssembleInput): Promise<string> {

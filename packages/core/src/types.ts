@@ -74,6 +74,15 @@ export interface BuildEntryInput {
   nonce: bigint;
 }
 
+export interface BuildBatchEntryInput {
+  from: string; // G… (classic) or C… (contract)
+  calls: Call[];
+  nonce: bigint;
+  // The active network selects the per-network pinned Multicall router C-address (the router
+  // contract differs per deploy). A batch of 1 ignores it (delegates to the single-call builder).
+  network: Network;
+}
+
 export interface AssembleInput {
   unsigned: xdr.SorobanAuthorizationEntry;
   signer: BuckspaySigner;
@@ -86,6 +95,12 @@ export interface AccountAdapter {
   resolveAddress(signer: BuckspaySigner): Promise<string>;
   ensureReady(input: EnsureReadyInput): Promise<void>;
   buildUnsignedEntry(input: BuildEntryInput): xdr.SorobanAuthorizationEntry;
+  /** Build ONE unsigned auth entry covering an atomic batch of calls. For N>1 it is the pinned
+   *  Multicall router's `batch_transfer(payer, token, Vec<(to, amount)>)` invocation with the N
+   *  transfers as sub-invocations (one nonce, one signature for the whole batch — SAME shape for
+   *  classic and contract, only the signer differs). A batch of 1 MUST equal buildUnsignedEntry of
+   *  the same call (golden no-regression invariant). Spike-gated by sprint-0/03 (multicall-batch.json). */
+  buildUnsignedBatchEntry(input: BuildBatchEntryInput): xdr.SorobanAuthorizationEntry;
   /** returns the SIGNED auth entry as base64 XDR. */
   assembleSignedEntry(input: AssembleInput): Promise<string>;
 }

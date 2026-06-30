@@ -7,6 +7,7 @@ import {
   type SorobanSimulator
 } from "./auth-entry-builder";
 import { GasAbstractionEngine } from "./gas-abstraction-engine";
+import { MAX_BATCH_CALLS } from "./batch";
 import { boundExpirationLedger } from "./expiration";
 import { resolveNetwork } from "./network-gate";
 import { BuckspayError } from "./errors";
@@ -97,7 +98,10 @@ export class BuckspayClient {
   }
 
   async prepare(calls: Call[]): Promise<PreparedIntent> {
-    const call = calls[0]; // v1: single transfer call (batch is SP-2 sprint-2)
+    // SP-2 sprint-2: an atomic batch routes through prepareBatch. The single-call path below is
+    // left BYTE-IDENTICAL to SP-1 (a batch of 1 never reaches prepareBatch).
+    if (calls.length > 1) return this.prepareBatch(calls);
+    const call = calls[0]; // v1 single-transfer path — byte-identical to SP-1, untouched
     if (!call) {
       throw new BuckspayError("INVALID_CONFIG", "prepare() requires at least one call");
     }
@@ -250,6 +254,86 @@ export class BuckspayClient {
     const intent = await this.prepare(calls);
     const signed = await this.sign(intent);
     return this.send(signed);
+  }
+
+  /** EIP-5792-style alias of pay(calls): submit an atomic, all-or-nothing batch. Enforces the
+   *  MAX_BATCH_CALLS ceiling up front so an over-cap batch fails before any simulation or signing.
+   *  A single call behaves exactly like pay([call]). */
+  async sendCalls(calls: Call[]): Promise<Receipt> {
+    if (calls.length > MAX_BATCH_CALLS) {
+      throw new BuckspayError(
+        "BATCH_TOO_LARGE",
+        `sendCalls received ${String(calls.length)} calls; the per-tx limit is ${String(MAX_BATCH_CALLS)}`
+      );
+    }
+    return this.pay(calls);
+  }
+
+  /**
+   * Atomic multi-call prepare (calls.length > 1). One nonce, one expiration, one batched auth
+   * entry (the Multicall `batch_transfer` invocation); the facilitator settles all-or-nothing
+   * through the existing /relay. `value` = sum of transfer amounts, `to` = the LAST recipient —
+   * the entry binds the exact list, so to/value are informational aggregates. Sponsored gas only
+   * (batch + gas-in-token is a later combination). Fails closed over the ceiling BEFORE any work.
+   */
+  private async prepareBatch(calls: Call[]): Promise<PreparedIntent> {
+    if (calls.length > MAX_BATCH_CALLS) {
+      throw new BuckspayError(
+        "BATCH_TOO_LARGE",
+        `batch has ${String(calls.length)} calls; the per-tx limit is ${String(MAX_BATCH_CALLS)}`
+      );
+    }
+    if (!this.address) {
+      throw new BuckspayError("ACCOUNT_NOT_READY", "not connected; call connect() before prepare()");
+    }
+    if (!this.sim) {
+      throw new BuckspayError("ACCOUNT_NOT_READY", "no simulation context wired");
+    }
+    const from = this.address;
+    const nonce = (this.sim.randomNonce ?? defaultRandomNonce)();
+
+    // Fail closed: every call's recording sim must succeed, else the whole batch reverts anyway.
+    for (const call of calls) {
+      await simulateRecording({ from, call, network: this.config.network, simulator: this.sim.simulator });
+    }
+
+    const latestLedger = await this.sim.getLatestLedger();
+    const signatureExpirationLedger = boundExpirationLedger(latestLedger, latestLedger + EXPIRY_LEDGER_DELTA);
+    const unsignedEntry = this.config.account.buildUnsignedBatchEntry({
+      from,
+      calls,
+      nonce,
+      network: this.config.network
+    });
+
+    let total = 0n;
+    let lastTo = from;
+    for (const call of calls) {
+      const toArg = call.args[1];
+      const amountArg = call.args[2];
+      if (!toArg || !amountArg) {
+        throw new BuckspayError("INVALID_CONFIG", "each batch transfer must include (from, to, amount) args");
+      }
+      total += BigInt(amountArg.i128().lo().toString());
+      lastTo = Address.fromScVal(toArg).toString();
+    }
+
+    const firstCall = calls[0];
+    if (!firstCall) {
+      throw new BuckspayError("INVALID_CONFIG", "prepare() requires at least one call");
+    }
+    const preimageXdr = this.toPreimageXdr(unsignedEntry, signatureExpirationLedger);
+    return {
+      from,
+      to: lastTo,
+      token: firstCall.contract,
+      value: total.toString(),
+      nonce: nonce.toString(),
+      signatureExpirationLedger,
+      network: this.config.network,
+      unsignedEntry,
+      preimageXdr
+    };
   }
 
   /** Build the HashIDPreimage the signer must sign (network id + nonce + entry). */

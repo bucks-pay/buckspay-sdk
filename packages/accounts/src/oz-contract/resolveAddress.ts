@@ -13,6 +13,9 @@ export interface OzContractOptions {
   sponsorAddress?: string;
   /** Network whose passphrase folds into the derivation. Defaults to testnet. */
   network?: Network;
+  /** Multicall router C-address for atomic contract batches (sprint-2). Defaults to the network's
+   *  pinned MULTICALL_CONTRACT_ID. Only consulted for calls.length > 1. */
+  multicallContract?: string;
 }
 
 /**

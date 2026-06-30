@@ -4,11 +4,20 @@ import { BuckspayError, buildUnsignedEntry as coreBuildUnsignedEntry } from "@bu
 import type {
   AccountAdapter,
   AssembleInput,
+  BuildBatchEntryInput,
   BuildEntryInput,
   BuckspaySigner,
   EnsureReadyInput,
   Network
 } from "@buckspay/core";
+import { buildBatchTransferEntry } from "../batch/build-batch-transfer-entry.js";
+import { resolveMulticallContract } from "../batch/multicall-pin.js";
+
+export interface ClassicAccountOptions {
+  /** Multicall router C-address for atomic batches (sprint-2). Defaults to the network's pinned
+   *  MULTICALL_CONTRACT_ID. Only consulted for calls.length > 1. */
+  multicallContract?: string;
+}
 
 function passphraseFor(network: Network): string {
   return network === "pubnet" ? Networks.PUBLIC : Networks.TESTNET;
@@ -36,7 +45,7 @@ function resolveTxSigner(signer: BuckspaySigner): SignTxFn | null {
  * Holds no key material: both the onboarding tx and the auth-entry are signed
  * inside the wallet via the injected `BuckspaySigner`.
  */
-export function classicAccount(): AccountAdapter {
+export function classicAccount(opts: ClassicAccountOptions = {}): AccountAdapter {
   return {
     model: "classic",
 
@@ -95,6 +104,18 @@ export function classicAccount(): AccountAdapter {
         stroops: BigInt(amountArg.i128().lo().toString()),
         nonce
       });
+    },
+
+    buildUnsignedBatchEntry(input: BuildBatchEntryInput): xdr.SorobanAuthorizationEntry {
+      const first = input.calls[0];
+      if (!first) {
+        throw new BuckspayError("INVALID_CONFIG", "buildUnsignedBatchEntry requires at least one call");
+      }
+      // Batch of 1 → byte-identical to the SP-1 single entry (golden invariant).
+      if (input.calls.length === 1) {
+        return this.buildUnsignedEntry({ from: input.from, call: first, nonce: input.nonce });
+      }
+      return buildBatchTransferEntry(input, resolveMulticallContract(input.network, opts.multicallContract));
     },
 
     async assembleSignedEntry(input: AssembleInput): Promise<string> {

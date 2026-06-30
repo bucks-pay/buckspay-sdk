@@ -10,6 +10,7 @@ export type {
   BuckspaySigner,
   BuckspayState,
   BuckspayWallet,
+  BuildBatchEntryInput,
   BuildEntryInput,
   Call,
   EnsureReadyInput,
