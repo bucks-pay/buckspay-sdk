@@ -77,6 +77,16 @@ export const onboardSubmitSchema = z.object({
 });
 
 /** POST /stellar/contract/deploy response (plan 01): `{ ok?, address: C…, chain?, txHash?, ledger? }`. */
+/** POST /fee/quote response (README §4.1 FeeQuote). Amounts are unsigned stroop strings. */
+export const feeQuoteSchema = z.object({
+  forwarder: z.string().regex(/^C[A-Z2-7]{55}$/, "forwarder must be a C address"),
+  collector: z.string().regex(/^[GC][A-Z2-7]{55}$/, "collector must be a G or C address"),
+  token: z.string().regex(/^C[A-Z2-7]{55}$/, "fee token must be a C address"),
+  estimatedXlmFee: z.string().regex(/^\d+$/, "estimatedXlmFee must be unsigned stroops"),
+  tokenAmount: z.string().regex(/^\d+$/, "tokenAmount must be unsigned stroops"),
+  expiresAtLedger: z.number().int().positive()
+});
+
 export const deployContractSchema = z.object({
   ok: z.boolean().optional(),
   address: z.string().regex(/^C[A-Z2-7]{55}$/, "facilitator returned a non-C address")

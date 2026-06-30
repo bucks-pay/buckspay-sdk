@@ -1,6 +1,8 @@
 import {
   BuckspayError,
   type AccountState,
+  type Call,
+  type FeeQuote,
   type Network,
   type Receipt,
   type RelayPayload,
@@ -9,6 +11,7 @@ import {
 import {
   accountStateSchema,
   deployContractSchema,
+  feeQuoteSchema,
   mapFacilitatorError,
   onboardBuildSchema,
   onboardSubmitSchema,
@@ -78,6 +81,31 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
       const parsed = receiptSchema.safeParse(data);
       if (!parsed.success) {
         throw new BuckspayError("RELAYER_REJECTED", "facilitator returned an invalid receipt", {
+          cause: parsed.error
+        });
+      }
+      return parsed.data;
+    },
+
+    async feeQuote(input: { from: string; token: string; calls: Call[] }): Promise<FeeQuote> {
+      // Serialize each ScVal arg to base64 so the body is JSON-safe; the facilitator decodes them
+      // to rebuild the invocation, simulate it, and quote the XLM gas as a fee-token amount.
+      const data = await request("/fee/quote", {
+        method: "POST",
+        body: {
+          chain,
+          from: input.from,
+          token: input.token,
+          calls: input.calls.map((c) => ({
+            contract: c.contract,
+            fn: c.fn,
+            args: c.args.map((a) => a.toXDR("base64"))
+          }))
+        }
+      });
+      const parsed = feeQuoteSchema.safeParse(data);
+      if (!parsed.success) {
+        throw new BuckspayError("RELAYER_REJECTED", "facilitator returned an invalid fee quote", {
           cause: parsed.error
         });
       }

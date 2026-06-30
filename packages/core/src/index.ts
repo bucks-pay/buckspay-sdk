@@ -26,6 +26,7 @@ export type {
   SignerType
 } from "./types";
 export {
+  buildUnsignedCallEntry,
   buildUnsignedEntry,
   getLatestLedger,
   randomNonce,
@@ -37,7 +38,8 @@ export type {
   RecordingResult,
   RpcFetch,
   SorobanSimulateRaw,
-  SorobanSimulator
+  SorobanSimulator,
+  SubInvocation
 } from "./auth-entry-builder";
 export { createRpcSimContext, createSorobanSimulator, mainnetSimContext } from "./soroban-rpc";
 export { GasAbstractionEngine } from "./gas-abstraction-engine";

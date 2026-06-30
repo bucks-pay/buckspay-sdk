@@ -43,7 +43,10 @@ export class GasAbstractionEngine {
       value: signed.value,
       authorizationEntryXdr: signed.authorizationEntryXdr,
       nonce: signed.nonce,
-      signatureExpirationLedger: signed.signatureExpirationLedger
+      signatureExpirationLedger: signed.signatureExpirationLedger,
+      // gas mode "token": signal the facilitator to validate a forward() invocation. Absent (not
+      // `undefined`) in sponsored mode → the seven-field SP-1 body, byte-identical (golden test).
+      ...(signed.feeToken !== undefined ? { feeToken: signed.feeToken } : {})
     };
   }
 }

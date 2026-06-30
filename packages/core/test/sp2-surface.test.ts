@@ -44,6 +44,7 @@ describe("SP-2 additive core surface", () => {
   it("standalone SP-2 types are exported and structurally usable", () => {
     const q: FeeQuote = {
       forwarder: "CFWD",
+      collector: "CCOL",
       token: "CUSDC",
       estimatedXlmFee: "100",
       tokenAmount: "5",

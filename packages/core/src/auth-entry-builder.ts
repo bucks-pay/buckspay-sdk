@@ -70,6 +70,65 @@ export function buildUnsignedEntry(params: {
   });
 }
 
+/** A nested authorized invocation: `contract.fn(args)`. Used to declare the sub-calls a contract makes
+ *  on the signer's behalf (e.g. the FeeForwarder's two `transfer`s), so the SAC's `require_auth()` is
+ *  covered by the same auth tree. */
+export interface SubInvocation {
+  contract: string;
+  fn: string;
+  args: xdr.ScVal[];
+}
+
+function authorizedContractFn(contract: string, fn: string, args: xdr.ScVal[]): xdr.SorobanAuthorizedInvocation {
+  const contractFn = new xdr.InvokeContractArgs({
+    contractAddress: Address.contract(StrKey.decodeContract(contract)).toScAddress(),
+    functionName: fn,
+    args
+  });
+  return new xdr.SorobanAuthorizedInvocation({
+    function: xdr.SorobanAuthorizedFunction.sorobanAuthorizedFunctionTypeContractFn(contractFn),
+    subInvocations: []
+  });
+}
+
+/**
+ * Build an unsigned auth entry for an ARBITRARY contract call (generalizes `buildUnsignedEntry`, which
+ * hardcodes `transfer`). Used by gas mode "token" to authorize the FeeForwarder `forward(...)` invocation
+ * together with its `subInvocations` (the merchant + fee transfers the forwarder performs on the signer's
+ * behalf — the entry tree must include them, verified against the sprint-0/02 fixture). Credentials bind to
+ * `from`; `signatureExpirationLedger`/`signature` stay void until the assemble step.
+ */
+export function buildUnsignedCallEntry(params: {
+  from: string;
+  contract: string;
+  fn: string;
+  args: xdr.ScVal[];
+  nonce: bigint;
+  subInvocations?: SubInvocation[];
+}): xdr.SorobanAuthorizationEntry {
+  const { from, contract, fn, args, nonce, subInvocations = [] } = params;
+  const invocation = new xdr.SorobanAuthorizedInvocation({
+    function: xdr.SorobanAuthorizedFunction.sorobanAuthorizedFunctionTypeContractFn(
+      new xdr.InvokeContractArgs({
+        contractAddress: Address.contract(StrKey.decodeContract(contract)).toScAddress(),
+        functionName: fn,
+        args
+      })
+    ),
+    subInvocations: subInvocations.map((s) => authorizedContractFn(s.contract, s.fn, s.args))
+  });
+  const credentials = new xdr.SorobanAddressCredentials({
+    address: new Address(from).toScAddress(),
+    nonce: xdr.Int64.fromString(nonce.toString()),
+    signatureExpirationLedger: 0,
+    signature: xdr.ScVal.scvVoid()
+  });
+  return new xdr.SorobanAuthorizationEntry({
+    credentials: xdr.SorobanCredentials.sorobanCredentialsAddress(credentials),
+    rootInvocation: invocation
+  });
+}
+
 export type RpcFetch = (input: string, init: RequestInit) => Promise<Response>;
 
 const latestLedgerSchema = z.object({

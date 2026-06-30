@@ -19,6 +19,7 @@ describe("@buckspay/core public entry", () => {
         "MAX_BATCH_CALLS",
         "USDC_DECIMALS",
         "batch",
+        "buildUnsignedCallEntry",
         "buildUnsignedEntry",
         "createBuckspayClient",
         "createBuckspayConfig",

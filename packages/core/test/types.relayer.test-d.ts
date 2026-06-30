@@ -18,7 +18,6 @@ describe("§4.3 relayer types", () => {
       authorizationEntryXdr: string;
       nonce: string;
       signatureExpirationLedger: number;
-      feeAuthorizationEntryXdr?: string;
       feeToken?: string;
     }>();
   });

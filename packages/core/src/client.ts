@@ -1,5 +1,6 @@
 import { Address, hash, nativeToScVal, Networks, xdr } from "@stellar/stellar-sdk";
 import {
+  buildUnsignedCallEntry,
   randomNonce as defaultRandomNonce,
   simulateRecording,
   toStroops,
@@ -96,15 +97,7 @@ export class BuckspayClient {
   }
 
   async prepare(calls: Call[]): Promise<PreparedIntent> {
-    // SP-2: gas mode "token" lands in sprint-1 (FeeForwarder). Until then, fail closed so a
-    // token config can never silently fall through to the sponsored path.
-    if (this.config.gas.mode === "token") {
-      throw new BuckspayError(
-        "TOKEN_GAS_REJECTED",
-        "gas mode 'token' (fee in stablecoin) is not available until SP-2 sprint-1"
-      );
-    }
-    const call = calls[0]; // v1: single transfer call (batch is SP-2)
+    const call = calls[0]; // v1: single transfer call (batch is SP-2 sprint-2)
     if (!call) {
       throw new BuckspayError("INVALID_CONFIG", "prepare() requires at least one call");
     }
@@ -117,15 +110,7 @@ export class BuckspayClient {
     const from = this.address;
     const nonce = (this.sim.randomNonce ?? defaultRandomNonce)();
 
-    // recording simulation — fails closed on revert (e.g. insufficient balance)
-    await simulateRecording({ from, call, network: this.config.network, simulator: this.sim.simulator });
-
-    const latestLedger = await this.sim.getLatestLedger();
-    const signatureExpirationLedger = boundExpirationLedger(latestLedger, latestLedger + EXPIRY_LEDGER_DELTA);
-
-    const unsignedEntry = this.config.account.buildUnsignedEntry({ from, call, nonce });
-
-    // value = the i128 transfer amount from the call's 3rd arg (lo bits; USDC stroops fit in 64 bits).
+    // value/to = the underlying payment (the user's transfer call: from, to, amount).
     const toArg = call.args[1];
     const amountArg = call.args[2];
     if (!toArg || !amountArg) {
@@ -134,19 +119,79 @@ export class BuckspayClient {
     const value = amountArg.i128().lo().toString();
     const to = Address.fromScVal(toArg).toString();
 
-    const preimageXdr = this.toPreimageXdr(unsignedEntry, signatureExpirationLedger);
+    const latestLedger = await this.sim.getLatestLedger();
+    const signatureExpirationLedger = boundExpirationLedger(latestLedger, latestLedger + EXPIRY_LEDGER_DELTA);
 
-    return {
+    const base = {
       from,
       to,
       token: call.contract,
       value,
       nonce: nonce.toString(),
       signatureExpirationLedger,
-      network: this.config.network,
-      unsignedEntry,
-      preimageXdr
+      network: this.config.network
     };
+
+    const gas = this.config.gas;
+    if (gas.mode === "token") {
+      // SP-2 gas-in-token (sprint-0/02 spike design): the user pays Soroban gas in `gas.token`. The SDK
+      // does NOT relay the direct transfer — it relays a SINGLE FeeForwarder `forward(...)` invocation
+      // that pays the merchant AND the relayer's gas in one auth entry. The facilitator quotes the fee +
+      // forwarder + collector; the user signs ONE entry whose tree is forward() + the two sub-transfers.
+      const quote = await this.config.relayer.feeQuote({ from, token: gas.token, calls });
+
+      // Refuse a quote above the ceiling BEFORE building/signing — the relayer can never charge more.
+      if (gas.maxFee !== undefined && BigInt(quote.tokenAmount) > BigInt(gas.maxFee)) {
+        throw new BuckspayError(
+          "TOKEN_GAS_REJECTED",
+          `fee quote ${quote.tokenAmount} exceeds maxFee ${gas.maxFee}`
+        );
+      }
+
+      const payment = BigInt(value);
+      const fee = BigInt(quote.tokenAmount);
+      const fromScv = new Address(from).toScVal();
+      const tokenScv = new Address(gas.token).toScVal();
+      const merchantScv = new Address(to).toScVal();
+      const collectorScv = new Address(quote.collector).toScVal();
+      const paymentScv = nativeToScVal(payment, { type: "i128" });
+      const feeScv = nativeToScVal(fee, { type: "i128" });
+
+      const forwardArgs = [fromScv, tokenScv, merchantScv, paymentScv, collectorScv, feeScv];
+      const forwardCall: Call = { contract: quote.forwarder, fn: "forward", args: forwardArgs };
+
+      // Recording sim of the actual forward() call — fails closed if the payer can't afford payment + fee.
+      await simulateRecording({
+        from,
+        call: forwardCall,
+        network: this.config.network,
+        simulator: this.sim.simulator
+      });
+
+      const unsignedEntry = buildUnsignedCallEntry({
+        from,
+        contract: quote.forwarder,
+        fn: "forward",
+        args: forwardArgs,
+        nonce,
+        // The forwarder performs two payer-authorized transfers; declare them so the SAC's
+        // require_auth() is covered by this one auth tree (verified against the spike fixture).
+        subInvocations: [
+          { contract: gas.token, fn: "transfer", args: [fromScv, merchantScv, paymentScv] },
+          { contract: gas.token, fn: "transfer", args: [fromScv, collectorScv, feeScv] }
+        ]
+      });
+      const preimageXdr = this.toPreimageXdr(unsignedEntry, signatureExpirationLedger);
+
+      return { ...base, unsignedEntry, preimageXdr, feeQuote: quote };
+    }
+
+    // sponsored — byte-identical to SP-1: the direct transfer entry, no fee fields.
+    await simulateRecording({ from, call, network: this.config.network, simulator: this.sim.simulator });
+    const unsignedEntry = this.config.account.buildUnsignedEntry({ from, call, nonce });
+    const preimageXdr = this.toPreimageXdr(unsignedEntry, signatureExpirationLedger);
+
+    return { ...base, unsignedEntry, preimageXdr };
   }
 
   async sign(intent: PreparedIntent): Promise<SignedIntent> {
@@ -165,7 +210,7 @@ export class BuckspayClient {
         cause
       });
     }
-    return {
+    const signed: SignedIntent = {
       from: intent.from,
       to: intent.to,
       token: intent.token,
@@ -175,6 +220,12 @@ export class BuckspayClient {
       network: intent.network,
       authorizationEntryXdr
     };
+    // gas mode "token": the signed authorizationEntryXdr IS the forward() entry — name the fee token so
+    // the facilitator validates a forward() invocation. Sponsored intents carry no feeQuote → no feeToken.
+    if (intent.feeQuote) {
+      return { ...signed, feeToken: intent.feeQuote.token };
+    }
+    return signed;
   }
 
   async send(signed: SignedIntent): Promise<Receipt> {

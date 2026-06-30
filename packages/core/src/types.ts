@@ -108,8 +108,8 @@ export interface RelayPayload {
   authorizationEntryXdr: string; // base64, signed
   nonce: string; // decimal string
   signatureExpirationLedger: number;
-  // SP-2 sprint-1 (gas mode "token") — present only when paying gas in a token.
-  feeAuthorizationEntryXdr?: string;
+  // SP-2 sprint-1 (gas mode "token") — signals the facilitator to validate a forward() invocation
+  // (the authorizationEntryXdr above IS the forward() entry; there is no separate fee entry).
   feeToken?: string;
 }
 
@@ -127,6 +127,8 @@ export interface Receipt {
 
 export interface Relayer {
   relay(payload: RelayPayload): Promise<Receipt>; // POST /relay
+  /** Quote the fee-token amount + forwarder/collector for paying Soroban gas in `token` (gas mode "token"). POST /fee/quote */
+  feeQuote(input: { from: string; token: string; calls: Call[] }): Promise<FeeQuote>;
   getAccountState(address: string): Promise<AccountState>; // GET /stellar/account/:pk (or /contract/:addr)
   buildOnboard(input: { publicKey: string }): Promise<{ xdr: string }>; // POST /stellar/onboard/build
   submitOnboard(input: { publicKey: string; signedTxXdr: string }): Promise<{ ok: boolean }>; // POST /stellar/onboard/submit
@@ -145,6 +147,7 @@ export type GasConfig =
 /** FeeForwarder quote returned by the facilitator (`POST /fee/quote`) — SP-2 sprint-1. */
 export interface FeeQuote {
   forwarder: string;
+  collector: string;
   token: string;
   estimatedXlmFee: string;
   tokenAmount: string;
@@ -195,9 +198,8 @@ export interface PreparedIntent {
   network: Network;
   unsignedEntry: xdr.SorobanAuthorizationEntry;
   preimageXdr: string;
-  // SP-2 sprint-1 (gas mode "token") — the second auth entry authorizing the fee payment.
-  feeUnsignedEntry?: xdr.SorobanAuthorizationEntry;
-  feePreimageXdr?: string;
+  // SP-2 sprint-1 (gas mode "token") — `unsignedEntry`/`preimageXdr` above describe the single forward()
+  // invocation; `feeQuote` is the quote it was built from. No separate fee entry.
   feeQuote?: FeeQuote;
 }
 
@@ -210,8 +212,7 @@ export interface SignedIntent {
   signatureExpirationLedger: number;
   network: Network;
   authorizationEntryXdr: string; // signed, base64
-  // SP-2 sprint-1 (gas mode "token") — the signed fee auth entry + its token.
-  feeAuthorizationEntryXdr?: string;
+  // SP-2 sprint-1 (gas mode "token") — `authorizationEntryXdr` IS the signed forward() entry; this names the fee token.
   feeToken?: string;
 }
 

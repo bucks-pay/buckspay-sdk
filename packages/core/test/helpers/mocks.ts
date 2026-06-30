@@ -7,7 +7,9 @@ import type {
   BuckspayConfig,
   BuckspaySigner,
   BuildEntryInput,
+  Call,
   EnsureReadyInput,
+  FeeQuote,
   Receipt,
   RelayPayload,
   Relayer,
@@ -77,14 +79,18 @@ export function makeMockAccount(): MockAccount {
 
 export interface MockRelayer extends Relayer {
   relayCalls: RelayPayload[];
+  feeQuoteCalls: { from: string; token: string; calls: Call[] }[];
   nextReceipt: Receipt;
+  nextFeeQuote: FeeQuote;
   nextState: AccountState;
 }
 
 export function makeMockRelayer(): MockRelayer {
   const relayCalls: RelayPayload[] = [];
+  const feeQuoteCalls: { from: string; token: string; calls: Call[] }[] = [];
   const r: MockRelayer = {
     relayCalls,
+    feeQuoteCalls,
     nextReceipt: {
       ok: true,
       via: "buckspay_self",
@@ -94,10 +100,22 @@ export function makeMockRelayer(): MockRelayer {
       ledger: 1000061,
       status: "success"
     },
+    nextFeeQuote: {
+      forwarder: StrKey.encodeContract(Buffer.alloc(32, 55)),
+      collector: StrKey.encodeContract(Buffer.alloc(32, 66)),
+      token: MOCK_SAC,
+      estimatedXlmFee: "1000000",
+      tokenAmount: "132000",
+      expiresAtLedger: 1_000_120
+    },
     nextState: { exists: true, hasUsdcTrustline: true, xlmBalance: "5", usdcBalance: "100" },
     async relay(payload: RelayPayload): Promise<Receipt> {
       relayCalls.push(payload);
       return r.nextReceipt;
+    },
+    async feeQuote(input: { from: string; token: string; calls: Call[] }): Promise<FeeQuote> {
+      feeQuoteCalls.push(input);
+      return r.nextFeeQuote;
     },
     async getAccountState(): Promise<AccountState> {
       return r.nextState;
