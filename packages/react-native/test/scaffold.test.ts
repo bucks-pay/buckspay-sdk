@@ -7,7 +7,8 @@ describe("@buckspay/react-native scaffold", () => {
     expect(typeof rn.useWallet).toBe("function");
     expect(typeof rn.useStellarPay).toBe("function");
   });
-  it("nativePasskey + secure storage arrive in sprint-5", () => {
-    expect("nativePasskey" in rn).toBe(false);
+  it("ships nativePasskey + the SecureStore port", () => {
+    expect(typeof rn.nativePasskey).toBe("function");
+    expect(typeof rn.memorySecureStore).toBe("function");
   });
 });
