@@ -1,5 +1,26 @@
 # @buckspay/signers
 
+## 0.2.2
+
+### Patch Changes
+
+- c70012d: **Email / OTP login.** `@buckspay/signers/email` ships `emailSigner({ proxyUrl, network })` with
+  `requestOtp(email)` (issue) + `authenticate({ email, otp })` (verify) resolving a server-custodied
+  Stellar ed25519 key, and `signAuthEntry` signing through the signer-proxy. The OTP-derived private key
+  is custodied server-side by the facilitator and never reaches the browser — the signer holds only the
+  public key, an opaque session token, and the returned 64-byte signatures. No OTP credentials or private
+  key ship client-side. Passes the shared `BuckspaySigner` conformance suite (type `"email"`).
+- a00a9ed: **Social login.** `@buckspay/signers/social` ships `socialSigner({ provider: "web3auth", clientId, network, proxyUrl })`,
+  a `BuckspaySigner` whose `authenticate()` runs the provider's OAuth flow — the public part client-side,
+  the secret-bearing verifier callback through your server-side signer-proxy — and resolves a Stellar
+  ed25519 key that backs the classic account model. After that, `getPublicKey()` / `signAuthEntry()` operate
+  on that key; the ed25519 signing stays inside the provider's secure context, so the SDK holds only the
+  public key and the 64-byte signature — no provider secret or private key ships client-side. The factory is
+  provider-agnostic behind a structural transport (v1 ships web3auth). `SignerType` gains the additive
+  `"social"` / `"email"` members.
+- Updated dependencies [a00a9ed]
+  - @buckspay/core@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

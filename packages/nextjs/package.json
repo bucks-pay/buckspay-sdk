@@ -1,6 +1,6 @@
 {
   "name": "@buckspay/nextjs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "license": "MIT",
   "description": "Next.js (App Router) server helpers for the Buckspay SDK: BFF relay proxy + social/email signer-proxy route handlers for gasless Stellar (Soroban) USDC payments.",
