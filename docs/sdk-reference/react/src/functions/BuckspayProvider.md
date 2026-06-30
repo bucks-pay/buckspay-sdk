@@ -8,7 +8,7 @@
 
 > **BuckspayProvider**(`__namedParameters`): `Element`
 
-Defined in: [packages/react/src/provider.tsx:23](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/provider.tsx#L23)
+Defined in: [packages/react/src/provider.tsx:23](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/provider.tsx#L23)
 
 Builds the core client+store exactly once (lazy state initializer), then shares
 them via context. Re-renders of the provider never rebuild the client/store.

@@ -1,4 +1,4 @@
-// Recipe A — classic wallet account (G…), for users who already have a Stellar wallet.
+// Recipe A - classic wallet account (G...), for users who already have a Stellar wallet.
 import { createBuckspayClient, createRpcSimContext, type BuckspayConfig } from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
 import { walletsKit } from "@buckspay/signers/wallets-kit";
@@ -12,7 +12,7 @@ export const classicConfig: BuckspayConfig = {
   gas: { mode: "sponsored" }
 };
 
-// connect() resolves the G… address and runs sponsored onboarding (account + USDC trustline) if missing.
+// connect() resolves the G... address and runs sponsored onboarding (account + USDC trustline) if missing.
 export const classicClient = createBuckspayClient(
   classicConfig,
   createRpcSimContext("https://soroban-testnet.stellar.org")

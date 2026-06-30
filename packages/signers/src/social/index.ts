@@ -1,9 +1,9 @@
-// @buckspay/signers/social — social-login signer (web3auth-backed).
+// @buckspay/signers/social - social-login signer (web3auth-backed).
 //
 // `socialSigner({ provider: "web3auth", clientId, network, proxyUrl })` returns a
-// `BuckspaySigner` (type "social"). `authenticate()` runs the provider's OAuth flow — the
+// `BuckspaySigner` (type "social"). `authenticate()` runs the provider's OAuth flow - the
 // PUBLIC part client-side, the SECRET-bearing verifier callback through the server-side
-// signer-proxy (`@buckspay/nextjs` → facilitator POST /auth/social) — and resolves an
+// signer-proxy (`@buckspay/nextjs` -> facilitator POST /auth/social) - and resolves an
 // `AuthDetails` whose `publicKey` is a Stellar G-address (ed25519). After that,
 // getPublicKey()/signAuthEntry() operate on that key; the ed25519 signing stays inside the
 // provider's secure context, so the SDK holds only the public key + the 64-byte signature.
@@ -37,7 +37,7 @@ export interface SocialSignerOptions {
  * `ACCOUNT_NOT_READY`; a malformed preimage maps to `INVALID_CONFIG`.
  */
 export function socialSigner(opts: SocialSignerOptions): BuckspaySigner {
-  // Defensive runtime guard for untyped (JS) callers — the type already pins "web3auth".
+  // Defensive runtime guard for untyped (JS) callers - the type already pins "web3auth".
   const providerName = opts.provider as string;
   if (providerName !== "web3auth") {
     throw new BuckspayError("INVALID_CONFIG", `socialSigner: unsupported provider '${providerName}'`);
@@ -75,7 +75,7 @@ export function socialSigner(opts: SocialSignerOptions): BuckspaySigner {
         throw new BuckspayError("AUTH_PROVIDER_ERROR", "social provider failed to authenticate", { cause });
       }
       if (!result.publicKey.startsWith("G")) {
-        throw new BuckspayError("AUTH_PROVIDER_ERROR", "social provider returned a non-Stellar (G…) public key");
+        throw new BuckspayError("AUTH_PROVIDER_ERROR", "social provider returned a non-Stellar (G...) public key");
       }
       connectedKey = result.publicKey;
       return {

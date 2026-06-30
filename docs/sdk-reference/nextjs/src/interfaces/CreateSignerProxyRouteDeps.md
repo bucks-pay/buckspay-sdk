@@ -6,7 +6,7 @@
 
 # Interface: CreateSignerProxyRouteDeps
 
-Defined in: [packages/nextjs/src/routes.ts:85](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L85)
+Defined in: [packages/nextjs/src/routes.ts:85](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L85)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/nextjs/src/routes.ts:85](https://github.com/bucks-pay/buck
 
 > `optional` **apiKey?**: `string`
 
-Defined in: [packages/nextjs/src/routes.ts:89](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L89)
+Defined in: [packages/nextjs/src/routes.ts:89](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L89)
 
 Defaults to BUCKSPAY_FACILITATOR_API_KEY (server env). SERVER-SIDE ONLY.
 
@@ -24,7 +24,7 @@ Defaults to BUCKSPAY_FACILITATOR_API_KEY (server env). SERVER-SIDE ONLY.
 
 > `optional` **facilitatorUrl?**: `string`
 
-Defined in: [packages/nextjs/src/routes.ts:87](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L87)
+Defined in: [packages/nextjs/src/routes.ts:87](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L87)
 
 Defaults to BUCKSPAY_FACILITATOR_URL (server env).
 
@@ -34,7 +34,7 @@ Defaults to BUCKSPAY_FACILITATOR_URL (server env).
 
 > `optional` **fetchImpl?**: \{(`input`, `init?`): `Promise`\<`Response`\>; (`input`, `init?`): `Promise`\<`Response`\>; \}
 
-Defined in: [packages/nextjs/src/routes.ts:90](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L90)
+Defined in: [packages/nextjs/src/routes.ts:90](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L90)
 
 #### Call Signature
 

@@ -6,7 +6,7 @@ import type { SocialProvider } from "./provider.js";
 /**
  * Structural surface the default provider needs from the web3auth SDK. The real
  * `@web3auth/single-factor-auth` surface is mapped onto this by the loader. The PRIVATE
- * key stays inside web3auth's secure context — `signEd25519` is the only signing
+ * key stays inside web3auth's secure context - `signEd25519` is the only signing
  * capability that crosses this boundary.
  */
 export interface Web3AuthLike {
@@ -40,7 +40,7 @@ const proxyResponseSchema = z.object({
 });
 
 // The browser-only web3auth SDK is wired by the default loader. Until that is provisioned the loader
-// fails closed with a clear message — apps inject `loader`/`providerImpl`. Never imports during SSR/Node.
+// fails closed with a clear message - apps inject `loader`/`providerImpl`. Never imports during SSR/Node.
 const defaultLoader: Web3AuthLoader = () => {
   throw new BuckspayError(
     "AUTH_PROVIDER_ERROR",
@@ -52,7 +52,7 @@ export function defaultWeb3AuthProvider(opts: DefaultWeb3AuthOptions): SocialPro
   if (!opts.proxyUrl || opts.proxyUrl.trim() === "") {
     throw new BuckspayError(
       "INVALID_CONFIG",
-      "socialSigner(web3auth): proxyUrl is required — the verifier secret is server-side only"
+      "socialSigner(web3auth): proxyUrl is required - the verifier secret is server-side only"
     );
   }
   const proxyUrl = opts.proxyUrl;

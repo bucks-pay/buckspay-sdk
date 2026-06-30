@@ -1,5 +1,5 @@
-// Recipe 10 — ATOMIC BATCH (sendCalls). N USDC transfers settle all-or-nothing in ONE tx via the
-// pinned Multicall router's `batch_transfer` — the smart account (or classic wallet) authorizes the
+// Recipe 10 - ATOMIC BATCH (sendCalls). N USDC transfers settle all-or-nothing in ONE tx via the
+// pinned Multicall router's `batch_transfer` - the smart account (or classic wallet) authorizes the
 // whole batch with a SINGLE signature. A batch of 1 is exactly pay([call]).
 import {
   createBuckspayClient,

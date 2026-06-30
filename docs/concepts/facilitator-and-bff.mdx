@@ -10,7 +10,7 @@ authorization entry, wraps it in a fee-bump transaction, and submits it to the n
 is what makes the payment gasless: the facilitator's sponsor account sources the XLM fee so
 the payer does not need any.
 
-In the SDK the facilitator is represented as a `Relayer` — the third config slot in
+In the SDK the facilitator is represented as a `Relayer` - the third config slot in
 `createBuckspayClient`. You construct one with `buckspayFacilitator({ url, network })` from
 `@buckspay/relayer/buckspay-facilitator`.
 
@@ -25,7 +25,7 @@ The standard pattern is a **Backend for Frontend (BFF)** route on your own serve
 1. The browser runs `prepare()` and `sign()`, then POSTs the `SignedIntent` to your backend.
 2. Your backend validates business rules (intent not expired, amount within tolerance, etc.).
 3. Your backend calls `server.send(signed)` using a `createBuckspayClient` that is configured
-   with `buckspayFacilitator({ url, apiKey, network })` — the `apiKey` is an environment
+   with `buckspayFacilitator({ url, apiKey, network })` - the `apiKey` is an environment
    variable, never bundled.
 
 <Warning>
@@ -34,18 +34,18 @@ The standard pattern is a **Backend for Frontend (BFF)** route on your own serve
   network tab.
 </Warning>
 
-The `RelayPayload` that `send()` forwards is byte-identical to what the facilitator expects —
+The `RelayPayload` that `send()` forwards is byte-identical to what the facilitator expects -
 the BFF is a pass-through after your validation, not a translation layer.
 
 ## BFF example
 
 The example below is the canonical server-side pattern. It is the only Buckspay example that
-passes an `apiKey` — all browser examples omit it and point `url` at a same-origin route
+passes an `apiKey` - all browser examples omit it and point `url` at a same-origin route
 like `/api/gasless`.
 
 {/* @snippet:start 07-bff-relay.ts */}
 ```ts
-// SERVER-ONLY — this file holds the facilitator API key. NEVER import it in a browser
+// SERVER-ONLY - this file holds the facilitator API key. NEVER import it in a browser
 // bundle. It is the BFF boundary: the browser POSTs a SignedIntent here; this validates
 // and forwards to the facilitator with the secret key server-side.
 import { createBuckspayClient, createRpcSimContext, type Receipt, type SignedIntent } from "@buckspay/core";
@@ -62,7 +62,7 @@ const server = createBuckspayClient(
     signer: walletsKit({ network: "testnet" }),
     relayer: buckspayFacilitator({
       url: process.env.FACILITATOR_URL ?? "http://localhost:3000",
-      // server-side secret — never shipped to the browser
+      // server-side secret - never shipped to the browser
       ...(process.env.FACILITATOR_API_KEY ? { apiKey: process.env.FACILITATOR_API_KEY } : {}),
       network: "testnet"
     }),
@@ -96,7 +96,7 @@ handler validates, then calls the real facilitator with the key.
 If you currently `fetch` the facilitator directly from a backend route (hand-building the
 `SorobanRelayBody`), the migration is:
 
-- Delete the hand-rolled `signTransferAuth` / `normalizeSignature` helpers — `walletsKit`
+- Delete the hand-rolled `signTransferAuth` / `normalizeSignature` helpers - `walletsKit`
   absorbs the double-encode quirk of Freighter automatically.
 - Replace the raw `fetch` with `server.send(signed)`, where `server` is a
   `createBuckspayClient` with `buckspayFacilitator({ url, apiKey, network })`.
@@ -108,7 +108,7 @@ If you currently `fetch` the facilitator directly from a backend route (hand-bui
   <Card title="Networks" href="/concepts/networks">
     Testnet vs. pubnet, the mainnet opt-in, and USDC decimals.
   </Card>
-  <Card title="Prepare → Sign → Send" href="/concepts/prepare-sign-send">
+  <Card title="Prepare -> Sign -> Send" href="/concepts/prepare-sign-send">
     The three-phase flow and where the BFF slot fits in.
   </Card>
 </CardGroup>

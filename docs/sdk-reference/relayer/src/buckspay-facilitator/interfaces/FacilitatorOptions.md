@@ -6,7 +6,7 @@
 
 # Interface: FacilitatorOptions
 
-Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:29](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/relayer/src/buckspay-facilitator/facilitator.ts#L29)
+Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:29](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/relayer/src/buckspay-facilitator/facilitator.ts#L29)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:29](https:
 
 > `optional` **apiKey?**: `string`
 
-Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:31](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/relayer/src/buckspay-facilitator/facilitator.ts#L31)
+Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:31](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/relayer/src/buckspay-facilitator/facilitator.ts#L31)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:31](https:
 
 > **network**: [`Network`](../../../../nextjs/src/type-aliases/Network.md)
 
-Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:32](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/relayer/src/buckspay-facilitator/facilitator.ts#L32)
+Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:32](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/relayer/src/buckspay-facilitator/facilitator.ts#L32)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:32](https:
 
 > `optional` **swapChain?**: `SwapChain`
 
-Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:35](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/relayer/src/buckspay-facilitator/facilitator.ts#L35)
+Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:35](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/relayer/src/buckspay-facilitator/facilitator.ts#L35)
 
 STRETCH: the EVM chain for the facilitator's /swap/* rail. When set, the relayer exposes
  quoteSwap/swap; when absent both are omitted (BuckspayClient.swap fails closed).
@@ -41,4 +41,4 @@ STRETCH: the EVM chain for the facilitator's /swap/* rail. When set, the relayer
 
 > **url**: `string`
 
-Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/relayer/src/buckspay-facilitator/facilitator.ts#L30)
+Defined in: [packages/relayer/src/buckspay-facilitator/facilitator.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/relayer/src/buckspay-facilitator/facilitator.ts#L30)

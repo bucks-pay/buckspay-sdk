@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Buckspay SDK",
-  "description": "Gasless smart-wallet SDK for Stellar (Soroban) USDC payments — web and mobile.",
+  "description": "Gasless smart-wallet SDK for Stellar (Soroban) USDC payments - web and mobile.",
   "colors": { "primary": "#1884FF", "light": "#21CBF3", "dark": "#1884FF" },
   "appearance": { "default": "dark" },
   "background": { "color": { "dark": "#0A0D10" } },

@@ -17,8 +17,8 @@ function passphraseFor(network: Network): string {
 /**
  * Build a `BuckspaySigner` backed by Stellar Wallets Kit (Freighter/xBull/LOBSTR).
  *
- * Holds only the connected `G…` public key and the 64-byte signatures the wallet
- * returns — never a secret. The kit and address are memoized per signer instance,
+ * Holds only the connected `G...` public key and the 64-byte signatures the wallet
+ * returns - never a secret. The kit and address are memoized per signer instance,
  * so a signer is safe to construct once and reuse across many sign cycles. An
  * already-built kit may be injected (production app or tests); otherwise the
  * browser-only library is lazily imported on first use.

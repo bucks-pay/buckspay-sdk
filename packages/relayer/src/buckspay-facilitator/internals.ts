@@ -15,7 +15,7 @@ function parseLedger(v: string | number | null | undefined): number | undefined 
 
 /**
  * README §4.3 Receipt. The soroban `/relay` response sends `blockNumber`
- * (string | null) — NOT `ledger` — plus `via`/`chain`; we map `blockNumber → ledger`
+ * (string | null) - NOT `ledger` - plus `via`/`chain`; we map `blockNumber -> ledger`
  * (README §4.3 contract) and strip extras to the contract shape. A direct numeric
  * `ledger` is also tolerated (forward-compat if a BFF pre-maps it).
  */
@@ -46,7 +46,7 @@ export const receiptSchema = z
 /**
  * README §4.3 AccountState. The facilitator sends `nativeBalance` (string | null)
  * for XLM and `usdcBalance` (string | null), plus `chain`/`publicKey`/sponsor
- * extras. We rename `nativeBalance → xlmBalance`, drop nulls, and strip extras.
+ * extras. We rename `nativeBalance -> xlmBalance`, drop nulls, and strip extras.
  */
 export const accountStateSchema = z
   .object({
@@ -76,7 +76,7 @@ export const onboardSubmitSchema = z.object({
   ok: z.boolean()
 });
 
-/** POST /fee/quote response — the FeeQuote shape. Amounts are unsigned stroop strings. */
+/** POST /fee/quote response - the FeeQuote shape. Amounts are unsigned stroop strings. */
 export const feeQuoteSchema = z.object({
   forwarder: z.string().regex(/^C[A-Z2-7]{55}$/, "forwarder must be a C address"),
   collector: z.string().regex(/^[GC][A-Z2-7]{55}$/, "collector must be a G or C address"),
@@ -91,7 +91,7 @@ export const deployContractSchema = z.object({
   address: z.string().regex(/^C[A-Z2-7]{55}$/, "facilitator returned a non-C address")
 });
 
-// STRETCH swaps. /swap/quote response (facilitator/src/swapRoutes.ts) — only the fields the SDK reads.
+// STRETCH swaps. /swap/quote response (facilitator/src/swapRoutes.ts) - only the fields the SDK reads.
 export const swapQuoteResponseSchema = z.object({
   quoteId: z.string().uuid(),
   sellAmount: z.string().regex(/^\d+$/),
@@ -103,7 +103,7 @@ export const swapQuoteResponseSchema = z.object({
   expiresAt: z.string()
 });
 
-/** Any swap-rail failure → SWAP_FAILED (README §4.7), cause preserved. `request` pre-maps HTTP
+/** Any swap-rail failure -> SWAP_FAILED (README §4.7), cause preserved. `request` pre-maps HTTP
  *  errors to generic codes (e.g. RELAYER_REJECTED); in the swap context they all surface as
  *  SWAP_FAILED. Already-SWAP_FAILED errors pass through to avoid double-wrapping. */
 export function mapSwapError(cause: unknown): BuckspayError {
@@ -150,6 +150,6 @@ export function mapFacilitatorError(status: number, body: FacilitatorErrorBody):
     return new BuckspayError("RELAYER_UNREACHABLE", message);
   }
   // auth_invalid, tx_reverted, recipient_not_allowed, value_exceeds_max,
-  // self_transfer_not_allowed, invalid_payload, invalid_onboard_tx, …
+  // self_transfer_not_allowed, invalid_payload, invalid_onboard_tx, ...
   return new BuckspayError("RELAYER_REJECTED", message);
 }

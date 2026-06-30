@@ -6,7 +6,7 @@
 
 # Interface: SocialSignerOptions
 
-Defined in: [packages/signers/src/social/index.ts:23](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/index.ts#L23)
+Defined in: [packages/signers/src/social/index.ts:23](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L23)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/signers/src/social/index.ts:23](https://github.com/bucks-p
 
 > **clientId**: `string`
 
-Defined in: [packages/signers/src/social/index.ts:25](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/index.ts#L25)
+Defined in: [packages/signers/src/social/index.ts:25](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L25)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/signers/src/social/index.ts:25](https://github.com/bucks-p
 
 > **network**: [`Network`](../../../../nextjs/src/type-aliases/Network.md)
 
-Defined in: [packages/signers/src/social/index.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/index.ts#L26)
+Defined in: [packages/signers/src/social/index.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L26)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/signers/src/social/index.ts:26](https://github.com/bucks-p
 
 > **provider**: `"web3auth"`
 
-Defined in: [packages/signers/src/social/index.ts:24](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/index.ts#L24)
+Defined in: [packages/signers/src/social/index.ts:24](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L24)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/signers/src/social/index.ts:24](https://github.com/bucks-p
 
 > `optional` **providerImpl?**: [`SocialProvider`](SocialProvider.md)
 
-Defined in: [packages/signers/src/social/index.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/index.ts#L30)
+Defined in: [packages/signers/src/social/index.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L30)
 
 Test/advanced seam: inject the provider transport. Defaults to the web3auth impl.
 
@@ -48,6 +48,6 @@ Test/advanced seam: inject the provider transport. Defaults to the web3auth impl
 
 > `optional` **proxyUrl?**: `string`
 
-Defined in: [packages/signers/src/social/index.ts:28](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/index.ts#L28)
+Defined in: [packages/signers/src/social/index.ts:28](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/index.ts#L28)
 
 Server signer-proxy that completes the SECRET OAuth/verifier callback (see @buckspay/nextjs).

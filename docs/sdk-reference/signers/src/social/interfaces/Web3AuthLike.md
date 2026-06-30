@@ -6,11 +6,11 @@
 
 # Interface: Web3AuthLike
 
-Defined in: [packages/signers/src/social/web3auth.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/web3auth.ts#L12)
+Defined in: [packages/signers/src/social/web3auth.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/web3auth.ts#L12)
 
 Structural surface the default provider needs from the web3auth SDK. The real
 `@web3auth/single-factor-auth` surface is mapped onto this by the loader. The PRIVATE
-key stays inside web3auth's secure context — `signEd25519` is the only signing
+key stays inside web3auth's secure context - `signEd25519` is the only signing
 capability that crosses this boundary.
 
 ## Methods
@@ -19,7 +19,7 @@ capability that crosses this boundary.
 
 > **login**(`opts`): `Promise`\<\{ `ed25519PublicKeyHex`: `string`; `idToken`: `string`; \}\>
 
-Defined in: [packages/signers/src/social/web3auth.ts:14](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/web3auth.ts#L14)
+Defined in: [packages/signers/src/social/web3auth.ts:14](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/web3auth.ts#L14)
 
 Run OAuth (the popup) and resolve the OIDC idToken + the derived ed25519 public key (hex).
 
@@ -49,7 +49,7 @@ Run OAuth (the popup) and resolve the OIDC idToken + the derived ed25519 public 
 
 > **signEd25519**(`digest`): `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
 
-Defined in: [packages/signers/src/social/web3auth.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/social/web3auth.ts#L20)
+Defined in: [packages/signers/src/social/web3auth.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/social/web3auth.ts#L20)
 
 ed25519-sign a 32-byte digest with the logged-in key, returning the raw 64-byte signature.
 

@@ -25,7 +25,7 @@ export interface SessionManagerDeps {
   network: Network;
   sim: AccountSimContext;
   address: string; // the connected smart-account C-address
-  now: () => number; // injected clock (epoch ms) — the only time source
+  now: () => number; // injected clock (epoch ms) - the only time source
   randomNonce?: () => bigint;
 }
 

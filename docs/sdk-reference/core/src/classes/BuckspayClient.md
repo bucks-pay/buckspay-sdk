@@ -6,7 +6,7 @@
 
 # Class: BuckspayClient
 
-Defined in: [packages/core/src/client.ts:50](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L50)
+Defined in: [packages/core/src/client.ts:50](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L50)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/client.ts:50](https://github.com/bucks-pay/bucksp
 
 > **new BuckspayClient**(`config`, `sim?`, `opts?`): `BuckspayClient`
 
-Defined in: [packages/core/src/client.ts:58](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L58)
+Defined in: [packages/core/src/client.ts:58](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L58)
 
 #### Parameters
 
@@ -42,7 +42,7 @@ Defined in: [packages/core/src/client.ts:58](https://github.com/bucks-pay/bucksp
 
 > **connect**(): `Promise`\<[`BuckspayWallet`](../interfaces/BuckspayWallet.md)\>
 
-Defined in: [packages/core/src/client.ts:73](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L73)
+Defined in: [packages/core/src/client.ts:73](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L73)
 
 #### Returns
 
@@ -54,7 +54,7 @@ Defined in: [packages/core/src/client.ts:73](https://github.com/bucks-pay/bucksp
 
 > **getAccountState**(`address?`): `Promise`\<[`AccountState`](../interfaces/AccountState.md)\>
 
-Defined in: [packages/core/src/client.ts:85](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L85)
+Defined in: [packages/core/src/client.ts:85](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L85)
 
 #### Parameters
 
@@ -72,7 +72,7 @@ Defined in: [packages/core/src/client.ts:85](https://github.com/bucks-pay/bucksp
 
 > **grantSession**(`grant`): `Promise`\<\{ `receipt`: [`Receipt`](../interfaces/Receipt.md); `session`: [`Session`](../interfaces/Session.md); \}\>
 
-Defined in: [packages/core/src/client.ts:341](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L341)
+Defined in: [packages/core/src/client.ts:341](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L341)
 
 Grant a policy-scoped session key (contract account model only; throws INVALID_CONFIG on classic).
  The root signer authorizes the install once; thereafter the session key transacts within its
@@ -94,7 +94,7 @@ Grant a policy-scoped session key (contract account model only; throws INVALID_C
 
 > **pay**(`calls`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
 
-Defined in: [packages/core/src/client.ts:262](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L262)
+Defined in: [packages/core/src/client.ts:262](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L262)
 
 #### Parameters
 
@@ -112,7 +112,7 @@ Defined in: [packages/core/src/client.ts:262](https://github.com/bucks-pay/bucks
 
 > **prepare**(`calls`): `Promise`\<[`PreparedIntent`](../interfaces/PreparedIntent.md)\>
 
-Defined in: [packages/core/src/client.ts:109](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L109)
+Defined in: [packages/core/src/client.ts:109](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L109)
 
 #### Parameters
 
@@ -130,7 +130,7 @@ Defined in: [packages/core/src/client.ts:109](https://github.com/bucks-pay/bucks
 
 > **quoteSwap**(`opts`): `Promise`\<[`SwapQuote`](../interfaces/SwapQuote.md)\>
 
-Defined in: [packages/core/src/client.ts:269](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L269)
+Defined in: [packages/core/src/client.ts:269](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L269)
 
 STRETCH: quote a gasless swap via the relayer's /swap/* rail. README §4.9.
 
@@ -160,10 +160,10 @@ STRETCH: quote a gasless swap via the relayer's /swap/* rail. README §4.9.
 
 > **revokeSession**(`session`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
 
-Defined in: [packages/core/src/client.ts:347](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L347)
+Defined in: [packages/core/src/client.ts:347](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L347)
 
 Revoke a granted session by its object or id (contract account model only). Takes effect
- immediately on-chain — the session key no longer authorizes anything.
+ immediately on-chain - the session key no longer authorizes anything.
 
 #### Parameters
 
@@ -181,7 +181,7 @@ Revoke a granted session by its object or id (contract account model only). Take
 
 > **send**(`signed`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
 
-Defined in: [packages/core/src/client.ts:251](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L251)
+Defined in: [packages/core/src/client.ts:251](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L251)
 
 #### Parameters
 
@@ -199,7 +199,7 @@ Defined in: [packages/core/src/client.ts:251](https://github.com/bucks-pay/bucks
 
 > **sendCalls**(`calls`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
 
-Defined in: [packages/core/src/client.ts:354](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L354)
+Defined in: [packages/core/src/client.ts:354](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L354)
 
 EIP-5792-style alias of pay(calls): submit an atomic, all-or-nothing batch. Enforces the
  MAX_BATCH_CALLS ceiling up front so an over-cap batch fails before any simulation or signing.
@@ -221,7 +221,7 @@ EIP-5792-style alias of pay(calls): submit an atomic, all-or-nothing batch. Enfo
 
 > **sign**(`intent`): `Promise`\<[`SignedIntent`](../interfaces/SignedIntent.md)\>
 
-Defined in: [packages/core/src/client.ts:217](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L217)
+Defined in: [packages/core/src/client.ts:217](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L217)
 
 #### Parameters
 
@@ -239,7 +239,7 @@ Defined in: [packages/core/src/client.ts:217](https://github.com/bucks-pay/bucks
 
 > **swap**(`opts`): `Promise`\<[`Receipt`](../interfaces/Receipt.md)\>
 
-Defined in: [packages/core/src/client.ts:287](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L287)
+Defined in: [packages/core/src/client.ts:287](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L287)
 
 STRETCH: execute a gasless swap. Enforces the minOut floor BEFORE submit. README §4.9.
 
@@ -273,7 +273,7 @@ STRETCH: execute a gasless swap. Enforces the minOut floor BEFORE submit. README
 
 > **transfer**(`opts`): [`Call`](../interfaces/Call.md)
 
-Defined in: [packages/core/src/client.ts:93](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L93)
+Defined in: [packages/core/src/client.ts:93](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L93)
 
 #### Parameters
 

@@ -7,7 +7,7 @@ import type { AssembleInput, Network } from "@buckspay/core";
  * over the entry (IDENTICAL to `BuckspayClient.toPreimageXdr` and the on-chain-validated
  * `signContractAuthEntries`), hands it to the passkey signer, then injects the
  * returned `WebAuthnSigData` scval + expiration into the Address credentials. The
- * signature itself is verified ON-CHAIN by `__check_auth` — never here.
+ * signature itself is verified ON-CHAIN by `__check_auth` - never here.
  */
 export async function assembleContractEntry(input: AssembleInput): Promise<string> {
   const { unsigned, signer, signatureExpirationLedger } = input;

@@ -8,7 +8,7 @@
 
 > **spendLimit**(`opts`): [`SessionPolicy`](../type-aliases/SessionPolicy.md)
 
-Defined in: [packages/accounts/src/policy/compile.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/accounts/src/policy/compile.ts#L12)
+Defined in: [packages/accounts/src/policy/compile.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/accounts/src/policy/compile.ts#L12)
 
 Build a `spendLimit` session policy. `max` is coerced to a decimal string of token base units
 (USDC = 7 decimals); `period` defaults to "day". This is the shape `SessionManager` consumes and the

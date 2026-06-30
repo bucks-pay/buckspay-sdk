@@ -1,7 +1,7 @@
-// @buckspay/react-native — mobile binding. The core (auth-entry build, fee-bump,
+// @buckspay/react-native - mobile binding. The core (auth-entry build, fee-bump,
 // prepare/sign/send) lives in @buckspay/core and is platform-agnostic: this package only swaps
 // the passkey signer (native enclave), the storage adapter, and the Hermes polyfills, and
-// re-wires the provider. The provider/hooks below are the SAME @buckspay/react exports — never a
+// re-wires the provider. The provider/hooks below are the SAME @buckspay/react exports - never a
 // fork (pinned by test/wiring.test.tsx).
 import "./polyfills"; // SIDE EFFECT: install Hermes globals before stellar-sdk is used.
 

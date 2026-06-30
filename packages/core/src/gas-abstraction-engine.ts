@@ -18,7 +18,7 @@ export class GasAbstractionEngine {
     const mode: string = (gas as { mode: string }).mode;
     // `sponsored` is fully implemented. `token` (the FeeForwarder path) is an
     // ACCEPTED config that fails closed downstream in `BuckspayClient.prepare`
-    // (TOKEN_GAS_REJECTED) until that path is wired — so the feature gate lives where
+    // (TOKEN_GAS_REJECTED) until that path is wired - so the feature gate lives where
     // the feature will be built, not here. Any other mode is rejected at construction.
     if (mode !== "sponsored" && mode !== "token") {
       throw new BuckspayError(
@@ -33,7 +33,7 @@ export class GasAbstractionEngine {
    * mode this is exactly the seven fields of `stellarSorobanSchema`; the
    * intent-only `network` field is intentionally dropped (the relayer is
    * already network-bound). Output is byte-identical to the dashboard's
-   * `SorobanRelayBody` — enforced by the golden test.
+   * `SorobanRelayBody` - enforced by the golden test.
    */
   toRelayPayload(signed: SignedIntent): RelayPayload {
     return {
@@ -45,7 +45,7 @@ export class GasAbstractionEngine {
       nonce: signed.nonce,
       signatureExpirationLedger: signed.signatureExpirationLedger,
       // gas mode "token": signal the facilitator to validate a forward() invocation. Absent (not
-      // `undefined`) in sponsored mode → the seven-field sponsored body, byte-identical (golden test).
+      // `undefined`) in sponsored mode -> the seven-field sponsored body, byte-identical (golden test).
       ...(signed.feeToken !== undefined ? { feeToken: signed.feeToken } : {})
     };
   }

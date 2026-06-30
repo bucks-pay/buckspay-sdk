@@ -8,7 +8,7 @@
 
 > **createSessionManager**(`deps`): [`SessionManager`](../interfaces/SessionManager.md)
 
-Defined in: [packages/core/src/session-manager.ts:39](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L39)
+Defined in: [packages/core/src/session-manager.ts:39](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L39)
 
 ## Parameters
 

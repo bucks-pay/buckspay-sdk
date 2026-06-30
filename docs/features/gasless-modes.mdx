@@ -1,10 +1,10 @@
 ---
 title: "Gasless modes"
-description: "Sponsored vs. token-fee gas abstraction — choose who pays for the transaction fee."
+description: "Sponsored vs. token-fee gas abstraction - choose who pays for the transaction fee."
 ---
 
 `GasConfig` controls who covers the Stellar transaction fee. The type is a discriminated union
-with exactly two members — any other value fails to type-check:
+with exactly two members - any other value fails to type-check:
 
 ```ts
 type GasConfig =
@@ -18,23 +18,23 @@ The facilitator's sponsor account pays the XLM fee on behalf of the payer. The p
 only the `SorobanAuthorizationEntry` off-chain; the facilitator wraps it in a fee-bump
 transaction, supplies the XLM, and submits to the network.
 
-**The payer needs zero XLM** — not to transact, and not even to exist on-chain. This is the
+**The payer needs zero XLM** - not to transact, and not even to exist on-chain. This is the
 default for most applications. See [Onboarding](/features/onboarding) to understand how an
 account with no XLM balance is materialized in the first place.
 
 {/* @snippet:start 03-gasless-sponsored.ts */}
 ```ts
-// Gasless modes — v1 ships exactly one: sponsored. The facilitator's sponsor account
+// Gasless modes - v1 ships exactly one: sponsored. The facilitator's sponsor account
 // pays the XLM fee; the payer needs zero XLM.
 import type { GasConfig } from "@buckspay/core";
 
 export const sponsored: GasConfig = { mode: "sponsored" };
 
-// Roadmap (NOT available in v1 — do not pass these):
+// Roadmap (NOT available in v1 - do not pass these):
 //   { mode: "token", token: "USDC:GA5..." }  // pay gas in USDC via FeeForwarder
 //   { mode: "self" }                          // payer pays their own fee
 // The GasConfig type only admits `{ mode: "sponsored" }` today, so an unimplemented
-// mode fails to type-check — the docs can't drift into an unsupported config.
+// mode fails to type-check - the docs can't drift into an unsupported config.
 ```
 {/* @snippet:end */}
 
@@ -42,7 +42,7 @@ export const sponsored: GasConfig = { mode: "sponsored" };
 
 `{ mode: "token", token }` lets the payer cover the fee in USDC instead of XLM. The
 facilitator still fronts the XLM gas; the `FeeForwarder` contract collects reimbursement
-from the payer's stablecoin balance in a single authorization entry — the payer signs once.
+from the payer's stablecoin balance in a single authorization entry - the payer signs once.
 
 Use token-fee when **you want the user, not your sponsor, to bear the gas cost** in the
 asset they already hold.
@@ -56,11 +56,11 @@ the `maxFee` ceiling, and the `TOKEN_GAS_REJECTED` error code.
 |---|---|
 | Your app subsidizes fees (UX priority) | `sponsored` |
 | User holds USDC, no sponsor budget | `token` |
-| Any other token | not yet supported — use `sponsored` |
+| Any other token | not yet supported - use `sponsored` |
 
 <Note>
   The `GasConfig` type only admits these two members. Passing an undeclared mode is a
-  compile-time error — you cannot accidentally configure something unsupported.
+  compile-time error - you cannot accidentally configure something unsupported.
 </Note>
 
 ## Next

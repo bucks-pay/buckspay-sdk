@@ -1,11 +1,11 @@
 ---
 title: "Allowlist policy"
-description: "Restrict a session key to a fixed set of contracts — enforced on-chain in __check_auth."
+description: "Restrict a session key to a fixed set of contracts - enforced on-chain in __check_auth."
 ---
 
 `allowlist` restricts which contracts a session key may call. Any call to a contract
 not in the list is rejected **on-chain** in `__check_auth`. A stolen session blob cannot
-be used to interact with arbitrary contracts — it is scoped to exactly the set you declare.
+be used to interact with arbitrary contracts - it is scoped to exactly the set you declare.
 
 ## Usage
 
@@ -34,7 +34,7 @@ The contract rejects the authorization during `__check_auth`. The facilitator ma
 on-chain rejection to `BuckspayError("SESSION_POLICY_VIOLATION")`.
 
 <Note>
-  The allowlist check runs inside the contract — not in the SDK, not in the facilitator.
+  The allowlist check runs inside the contract - not in the SDK, not in the facilitator.
   A session key with an allowlist of `[APP_CONTRACT]` cannot be used to call any other
   contract, even if the session blob is extracted from memory.
 </Note>

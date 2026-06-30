@@ -33,5 +33,5 @@ Defined in: packages/react/dist/index.d.ts:6
 Defined in: packages/react/dist/index.d.ts:12
 
 Recording-simulation context for `prepare()` (a Soroban RPC sim). REQUIRED for
-`useStellarPay().pay()` — build it with `createRpcSimContext(sorobanRpcUrl)`.
+`useStellarPay().pay()` - build it with `createRpcSimContext(sorobanRpcUrl)`.
 Omit only if the app never calls `pay()` (connect-only).

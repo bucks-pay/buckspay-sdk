@@ -1,12 +1,12 @@
 ---
 title: "Signers"
-description: "Every signer factory returns a BuckspaySigner that plugs into the same client and the same prepare → sign → send flow. Only how you obtain the signer differs."
+description: "Every signer factory returns a BuckspaySigner that plugs into the same client and the same prepare -> sign -> send flow. Only how you obtain the signer differs."
 ---
 
 The central idea behind Buckspay signers: **the payment flow never changes**. Whether the user
 authenticates with a browser wallet, a device passkey, a social login, or a mobile secure enclave,
 every signer factory returns a `BuckspaySigner` value that drops into the same
-`createBuckspayClient` call and the same `prepare → sign → send` pipeline.
+`createBuckspayClient` call and the same `prepare -> sign -> send` pipeline.
 
 ```ts
 // The ONLY line that changes across all signer types:
@@ -27,11 +27,11 @@ const receipt = await client.pay([client.transfer({ token, to, amount })]);
 A signer factory is a function that returns a `BuckspaySigner` object. The object implements two
 methods the engine calls internally:
 
-- **`getPublicKey()`** — resolves the Stellar account address backing this signer.
-- **`signAuthEntry(payload)`** — signs a Soroban authorization entry for the current payment.
+- **`getPublicKey()`** - resolves the Stellar account address backing this signer.
+- **`signAuthEntry(payload)`** - signs a Soroban authorization entry for the current payment.
 
-The engine calls these during `sign()` (the second phase of `prepare → sign → send`). All user
-interaction — wallet pop-ups, WebAuthn prompts, OAuth redirects, OTP verification — happens inside
+The engine calls these during `sign()` (the second phase of `prepare -> sign -> send`). All user
+interaction - wallet pop-ups, WebAuthn prompts, OAuth redirects, OTP verification - happens inside
 this one call. The rest of the pipeline is silent.
 
 Some signers also expose an optional **`authenticate?()`** step for social and email flows, which
@@ -49,21 +49,21 @@ runs the identity-resolution phase before the payment itself.
 
 <CardGroup cols={2}>
   <Card title="Wallets Kit" href="/signers/wallets-kit">
-    Browser injected wallets — Freighter, xBull, LOBSTR.
+    Browser injected wallets - Freighter, xBull, LOBSTR.
   </Card>
   <Card title="Passkey" href="/signers/passkey">
     WebAuthn / secp256r1 on a smart contract account.
   </Card>
   <Card title="Social login" href="/signers/social-login">
-    Google, Apple, Discord via web3auth — secrets stay server-side.
+    Google, Apple, Discord via web3auth - secrets stay server-side.
   </Card>
   <Card title="Email OTP" href="/signers/email-otp">
-    One-time code over email — no wallet, no seed phrase.
+    One-time code over email - no wallet, no seed phrase.
   </Card>
   <Card title="Native passkey" href="/signers/native-passkey">
     iOS/Android secure enclave via `@buckspay/react-native`.
   </Card>
-  <Card title="Prepare → Sign → Send" href="/concepts/prepare-sign-send">
+  <Card title="Prepare -> Sign -> Send" href="/concepts/prepare-sign-send">
     The shared flow every signer feeds into.
   </Card>
 </CardGroup>

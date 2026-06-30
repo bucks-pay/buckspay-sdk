@@ -6,7 +6,7 @@
 
 # Interface: SwapQuote
 
-Defined in: [packages/core/src/types.ts:238](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L238)
+Defined in: [packages/core/src/types.ts:238](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L238)
 
 Swap quote.
 
@@ -16,7 +16,7 @@ Swap quote.
 
 > **amountIn**: `string`
 
-Defined in: [packages/core/src/types.ts:241](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L241)
+Defined in: [packages/core/src/types.ts:241](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L241)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/core/src/types.ts:241](https://github.com/bucks-pay/bucksp
 
 > **amountOut**: `string`
 
-Defined in: [packages/core/src/types.ts:242](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L242)
+Defined in: [packages/core/src/types.ts:242](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L242)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [packages/core/src/types.ts:242](https://github.com/bucks-pay/bucksp
 
 > **tokenIn**: `string`
 
-Defined in: [packages/core/src/types.ts:239](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L239)
+Defined in: [packages/core/src/types.ts:239](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L239)
 
 ***
 
@@ -40,4 +40,4 @@ Defined in: [packages/core/src/types.ts:239](https://github.com/bucks-pay/bucksp
 
 > **tokenOut**: `string`
 
-Defined in: [packages/core/src/types.ts:240](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L240)
+Defined in: [packages/core/src/types.ts:240](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L240)

@@ -6,7 +6,7 @@
 
 # Interface: Receipt
 
-Defined in: [packages/core/src/types.ts:159](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L159)
+Defined in: [packages/core/src/types.ts:159](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L159)
 
 EXACT shape of facilitator /relay response (soroban). The relayer adapter maps
  the facilitator's `blockNumber` (string) onto `ledger`.
@@ -17,7 +17,7 @@ EXACT shape of facilitator /relay response (soroban). The relayer adapter maps
 
 > **chain**: [`FacilitatorChain`](../type-aliases/FacilitatorChain.md) \| [`SwapChain`](../type-aliases/SwapChain.md)
 
-Defined in: [packages/core/src/types.ts:165](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L165)
+Defined in: [packages/core/src/types.ts:165](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L165)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [packages/core/src/types.ts:165](https://github.com/bucks-pay/bucksp
 
 > `optional` **ledger?**: `number`
 
-Defined in: [packages/core/src/types.ts:167](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L167)
+Defined in: [packages/core/src/types.ts:167](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L167)
 
 ***
 
@@ -33,7 +33,7 @@ Defined in: [packages/core/src/types.ts:167](https://github.com/bucks-pay/bucksp
 
 > **ok**: `boolean`
 
-Defined in: [packages/core/src/types.ts:160](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L160)
+Defined in: [packages/core/src/types.ts:160](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L160)
 
 ***
 
@@ -41,7 +41,7 @@ Defined in: [packages/core/src/types.ts:160](https://github.com/bucks-pay/bucksp
 
 > **status**: `string`
 
-Defined in: [packages/core/src/types.ts:168](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L168)
+Defined in: [packages/core/src/types.ts:168](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L168)
 
 ***
 
@@ -49,7 +49,7 @@ Defined in: [packages/core/src/types.ts:168](https://github.com/bucks-pay/bucksp
 
 > **token**: `string`
 
-Defined in: [packages/core/src/types.ts:162](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L162)
+Defined in: [packages/core/src/types.ts:162](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L162)
 
 ***
 
@@ -57,7 +57,7 @@ Defined in: [packages/core/src/types.ts:162](https://github.com/bucks-pay/bucksp
 
 > **transferTx**: `string`
 
-Defined in: [packages/core/src/types.ts:166](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L166)
+Defined in: [packages/core/src/types.ts:166](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L166)
 
 ***
 
@@ -65,4 +65,4 @@ Defined in: [packages/core/src/types.ts:166](https://github.com/bucks-pay/bucksp
 
 > **via**: `string`
 
-Defined in: [packages/core/src/types.ts:161](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L161)
+Defined in: [packages/core/src/types.ts:161](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L161)

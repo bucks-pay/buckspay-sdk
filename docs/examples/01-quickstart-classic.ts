@@ -1,4 +1,4 @@
-// Quickstart — classic gasless USDC transfer (browser; NO apiKey).
+// Quickstart - classic gasless USDC transfer (browser; NO apiKey).
 import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
 import { walletsKit } from "@buckspay/signers/wallets-kit";
@@ -23,6 +23,6 @@ export async function quickstart(): Promise<void> {
 
   await buckspay.connect(); // wallet + ensureReady
   const call = buckspay.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" });
-  const receipt = await buckspay.pay([call]); // prepare → sign → send
+  const receipt = await buckspay.pay([call]); // prepare -> sign -> send
   console.log(receipt.transferTx); // settled on testnet
 }

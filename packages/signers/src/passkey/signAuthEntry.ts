@@ -23,7 +23,7 @@ export async function passkeySignAuthEntry(
   payload: AuthEntryPayload,
   getCachedPubKey: () => string
 ): Promise<Signature> {
-  // 1. Decode the preimage and hash it — this is the WebAuthn challenge.
+  // 1. Decode the preimage and hash it - this is the WebAuthn challenge.
   let preimage: xdr.HashIdPreimage;
   try {
     preimage = xdr.HashIdPreimage.fromXDR(payload.preimageXdr, "base64");
@@ -42,7 +42,7 @@ export async function passkeySignAuthEntry(
     throw new BuckspayError("SIGNATURE_REJECTED", "passkey: assertion rejected", { cause: err });
   }
 
-  // 3. Normalize the authenticator signature to raw r‖s low-S (DER → raw if needed).
+  // 3. Normalize the authenticator signature to raw r‖s low-S (DER -> raw if needed).
   const rs = toRawLowS(assertion.signature);
 
   // 4. Pack into the OZ __check_auth signature struct (scval).
@@ -57,7 +57,7 @@ export async function passkeySignAuthEntry(
 }
 
 /**
- * OZ Smart Account `WebAuthnSigData` scval — the value `__check_auth` receives as
+ * OZ Smart Account `WebAuthnSigData` scval - the value `__check_auth` receives as
  * `Self::Signature`. BYTE-IDENTICAL to the structure the contract validates on-chain:
  * a Soroban map with canonical sorted keys `authenticator_data` < `client_data` <
  * `signature`, each value an `scvBytes`. The signature MUST be raw 64-byte r‖s (low-S).
@@ -103,7 +103,7 @@ export function decodeCheckAuthSignature(sigBytes: Uint8Array): CheckAuthParts {
   };
 }
 
-/** DER or raw → raw 64-byte r‖s, low-S normalized (Soroban's secp256r1_verify rejects high-S). */
+/** DER or raw -> raw 64-byte r‖s, low-S normalized (Soroban's secp256r1_verify rejects high-S). */
 function toRawLowS(sig: Uint8Array): Uint8Array {
   const raw = sig.length === 64 ? sig : p256.Signature.fromDER(sig).toCompactRawBytes();
   return p256.Signature.fromCompact(raw).normalizeS().toCompactRawBytes();

@@ -1,4 +1,4 @@
-// SERVER-ONLY — this module reads the facilitator apiKey / provider secrets. NEVER import it
+// SERVER-ONLY - this module reads the facilitator apiKey / provider secrets. NEVER import it
 // in a client component or a browser bundle. It is the BFF boundary: the browser POSTs to the
 // route this returns; this forwards to the facilitator with the secret key server-side.
 import { z } from "zod";
@@ -32,7 +32,7 @@ const relayPayloadSchema = z.object({
 
 export interface CreateRelayRouteOptions {
   facilitatorUrl: string;
-  /** SERVER-SIDE ONLY — pass `process.env.…`, never a client-exposed value. */
+  /** SERVER-SIDE ONLY - pass `process.env....`, never a client-exposed value. */
   apiKey: string;
   network: Network;
 }
@@ -68,7 +68,7 @@ export function createRelayRoute(
       const receipt = await relayer.relay(parsed.data as RelayPayload);
       return json(receipt, 200);
     } catch (err) {
-      // Return the coded error only — never the raw upstream message (may carry an address).
+      // Return the coded error only - never the raw upstream message (may carry an address).
       const code = err instanceof BuckspayError ? err.code : "UNKNOWN";
       const status = code === "RELAYER_UNREACHABLE" ? 502 : code === "INVALID_CONFIG" ? 401 : 400;
       return json({ error: code }, status);
@@ -80,7 +80,7 @@ export interface CreateSignerProxyRouteOptions {
   provider: "web3auth" | "email";
   network: Network;
   // provider secrets (web3auth verifier / OTP backend) live in the facilitator;
-  // this route only injects the facilitator apiKey — all server-side.
+  // this route only injects the facilitator apiKey - all server-side.
 }
 export interface CreateSignerProxyRouteDeps {
   /** Defaults to BUCKSPAY_FACILITATOR_URL (server env). */

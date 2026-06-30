@@ -1,7 +1,7 @@
 import { BuckspayError } from "@buckspay/core";
 
 /**
- * Minimal CBOR reader — only what a COSE_Key EC2 P-256 needs: maps, (un)signed
+ * Minimal CBOR reader - only what a COSE_Key EC2 P-256 needs: maps, (un)signed
  * ints (the COSE labels), and byte strings (the x/y coordinates). Deliberately not
  * a general CBOR decoder; it rejects anything outside that subset.
  */

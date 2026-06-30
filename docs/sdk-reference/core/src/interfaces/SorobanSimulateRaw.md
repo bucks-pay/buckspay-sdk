@@ -6,7 +6,7 @@
 
 # Interface: SorobanSimulateRaw
 
-Defined in: [packages/core/src/auth-entry-builder.ts:174](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/auth-entry-builder.ts#L174)
+Defined in: [packages/core/src/auth-entry-builder.ts:174](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/auth-entry-builder.ts#L174)
 
 Raw recording-simulation output: base64 auth entries + the min resource fee.
 
@@ -16,7 +16,7 @@ Raw recording-simulation output: base64 auth entries + the min resource fee.
 
 > **auth**: `string`[]
 
-Defined in: [packages/core/src/auth-entry-builder.ts:175](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/auth-entry-builder.ts#L175)
+Defined in: [packages/core/src/auth-entry-builder.ts:175](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/auth-entry-builder.ts#L175)
 
 ***
 
@@ -24,4 +24,4 @@ Defined in: [packages/core/src/auth-entry-builder.ts:175](https://github.com/buc
 
 > **minResourceFee**: `string`
 
-Defined in: [packages/core/src/auth-entry-builder.ts:176](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/auth-entry-builder.ts#L176)
+Defined in: [packages/core/src/auth-entry-builder.ts:176](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/auth-entry-builder.ts#L176)

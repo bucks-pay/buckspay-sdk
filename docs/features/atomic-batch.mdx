@@ -4,15 +4,15 @@ description: "Settle multiple transfers all-or-nothing in one Stellar transactio
 ---
 
 `sendCalls([...])` settles N calls **all-or-nothing in one transaction**, authorized with a
-**single** signature. It is the EIP-5792-style alias of `pay` — same input shape, same
-`Receipt` — with the atomicity guarantee made explicit.
+**single** signature. It is the EIP-5792-style alias of `pay` - same input shape, same
+`Receipt` - with the atomicity guarantee made explicit.
 
 ## Quick example
 
 {/* @snippet:start 10-batch.ts */}
 ```ts
-// Recipe 10 — ATOMIC BATCH (sendCalls). N USDC transfers settle all-or-nothing in ONE tx via the
-// pinned Multicall router's `batch_transfer` — the smart account (or classic wallet) authorizes the
+// Recipe 10 - ATOMIC BATCH (sendCalls). N USDC transfers settle all-or-nothing in ONE tx via the
+// pinned Multicall router's `batch_transfer` - the smart account (or classic wallet) authorizes the
 // whole batch with a SINGLE signature. A batch of 1 is exactly pay([call]).
 import {
   createBuckspayClient,
@@ -86,17 +86,17 @@ const calls = batch()
 const receipt = await client.sendCalls(calls);
 ```
 
-You can also pass an array directly to `sendCalls([...])` — the builder is optional.
+You can also pass an array directly to `sendCalls([...])` - the builder is optional.
 
 ## Native mechanism
 
 The atomic unit is always the **transaction**; partial application is impossible at the
-protocol level — not enforced by retry logic in the SDK.
+protocol level - not enforced by retry logic in the SDK.
 
 | Account type | Mechanism |
 |---|---|
-| Classic (`G…`) | Multi-operation Stellar transaction: operations share one envelope, so all land or none do. |
-| Contract (`C…`) | The pinned Multicall router's `batch_transfer`: the smart account authorizes the whole batch in `__check_auth` with one signature. |
+| Classic (`G...`) | Multi-operation Stellar transaction: operations share one envelope, so all land or none do. |
+| Contract (`C...`) | The pinned Multicall router's `batch_transfer`: the smart account authorizes the whole batch in `__check_auth` with one signature. |
 
 ## Size cap
 
@@ -113,7 +113,7 @@ is pinned by a regression golden so the core path cannot drift.
 <Note>
   **Throughput for independent payments.** Settling many independent payments fast is a
   separate concern from atomic batching. The facilitator spreads independent calls across a
-  pool of channel accounts with non-sequential nonces — transparently, with no API change
+  pool of channel accounts with non-sequential nonces - transparently, with no API change
   to how you call `pay`.
 </Note>
 

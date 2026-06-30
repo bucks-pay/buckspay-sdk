@@ -8,7 +8,7 @@
 
 > `const` **OZ\_SMART\_ACCOUNT\_WASM\_HASH**: `"bf1aa9b2a4f8c05e1e5226009800bf69bd9ab7375ad160a1113d8d31a6ffdc69"` = `"bf1aa9b2a4f8c05e1e5226009800bf69bd9ab7375ad160a1113d8d31a6ffdc69"`
 
-Defined in: [packages/accounts/src/oz-contract/wasm-pin.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/accounts/src/oz-contract/wasm-pin.ts#L12)
+Defined in: [packages/accounts/src/oz-contract/wasm-pin.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/accounts/src/oz-contract/wasm-pin.ts#L12)
 
 Pinned OpenZeppelin Smart Account Wasm hash (hex, 32 bytes). This is the EXACT contract
 code buckspay deploys/authorizes against; any other hash is rejected so a compromised or

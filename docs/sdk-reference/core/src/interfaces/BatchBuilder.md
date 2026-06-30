@@ -6,7 +6,7 @@
 
 # Interface: BatchBuilder
 
-Defined in: [packages/core/src/batch.ts:10](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/batch.ts#L10)
+Defined in: [packages/core/src/batch.ts:10](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/batch.ts#L10)
 
 ## Methods
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/batch.ts:10](https://github.com/bucks-pay/buckspa
 
 > **add**(`call`): `this`
 
-Defined in: [packages/core/src/batch.ts:11](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/batch.ts#L11)
+Defined in: [packages/core/src/batch.ts:11](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/batch.ts#L11)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [packages/core/src/batch.ts:11](https://github.com/bucks-pay/buckspa
 
 > **build**(): [`Call`](Call.md)[]
 
-Defined in: [packages/core/src/batch.ts:13](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/batch.ts#L13)
+Defined in: [packages/core/src/batch.ts:13](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/batch.ts#L13)
 
 #### Returns
 
@@ -44,7 +44,7 @@ Defined in: [packages/core/src/batch.ts:13](https://github.com/bucks-pay/buckspa
 
 > **size**(): `number`
 
-Defined in: [packages/core/src/batch.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/batch.ts#L12)
+Defined in: [packages/core/src/batch.ts:12](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/batch.ts#L12)
 
 #### Returns
 

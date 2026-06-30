@@ -8,14 +8,14 @@
 
 > **createRpcSimContext**(`rpcUrl`, `deps?`): [`AccountSimContext`](../interfaces/AccountSimContext.md)
 
-Defined in: [packages/core/src/soroban-rpc.ts:129](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/soroban-rpc.ts#L129)
+Defined in: [packages/core/src/soroban-rpc.ts:129](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/soroban-rpc.ts#L129)
 
 Build the `AccountSimContext` the `BuckspayClient` needs to `prepare`: an
 RPC-backed recording simulator + a current-ledger source, both pointed at the
 same Soroban RPC. Pass it as the second argument to `createBuckspayClient` /
 `createBuckspayConfig`.
 
-For the **contract/passkey** account model, pass `deps.simSource` — a funded,
+For the **contract/passkey** account model, pass `deps.simSource` - a funded,
 existing G-address (the facilitator sponsor's public key). A C-address can't
 frame a transaction, and the recording sim must run against an account that
 exists on-chain or the SAC balance footprint resolves to zero. The classic

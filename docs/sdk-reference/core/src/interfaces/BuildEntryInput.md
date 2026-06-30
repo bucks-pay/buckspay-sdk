@@ -6,7 +6,7 @@
 
 # Interface: BuildEntryInput
 
-Defined in: [packages/core/src/types.ts:73](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L73)
+Defined in: [packages/core/src/types.ts:73](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L73)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types.ts:73](https://github.com/bucks-pay/buckspa
 
 > **call**: [`Call`](Call.md)
 
-Defined in: [packages/core/src/types.ts:75](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L75)
+Defined in: [packages/core/src/types.ts:75](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L75)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types.ts:75](https://github.com/bucks-pay/buckspa
 
 > **from**: `string`
 
-Defined in: [packages/core/src/types.ts:74](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L74)
+Defined in: [packages/core/src/types.ts:74](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L74)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [packages/core/src/types.ts:74](https://github.com/bucks-pay/buckspa
 
 > **nonce**: `bigint`
 
-Defined in: [packages/core/src/types.ts:76](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L76)
+Defined in: [packages/core/src/types.ts:76](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L76)

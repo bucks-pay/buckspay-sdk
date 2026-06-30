@@ -6,7 +6,7 @@
 
 # Interface: AuthDetails
 
-Defined in: [packages/core/src/types.ts:212](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L212)
+Defined in: [packages/core/src/types.ts:212](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L212)
 
 Resolved identity a social/email provider hands back.
 
@@ -16,7 +16,7 @@ Resolved identity a social/email provider hands back.
 
 > `optional` **expiresAt?**: `number`
 
-Defined in: [packages/core/src/types.ts:215](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L215)
+Defined in: [packages/core/src/types.ts:215](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L215)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/core/src/types.ts:215](https://github.com/bucks-pay/bucksp
 
 > **provider**: `string`
 
-Defined in: [packages/core/src/types.ts:214](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L214)
+Defined in: [packages/core/src/types.ts:214](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L214)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [packages/core/src/types.ts:214](https://github.com/bucks-pay/bucksp
 
 > **publicKey**: `string`
 
-Defined in: [packages/core/src/types.ts:213](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L213)
+Defined in: [packages/core/src/types.ts:213](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L213)

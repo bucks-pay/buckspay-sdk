@@ -23,7 +23,7 @@ export function allowlist(contracts: string[]): SessionPolicy {
   return { kind: "allowlist", contracts };
 }
 
-/** Accounting period → rolling window length in seconds (the on-chain `spend_period`). */
+/** Accounting period -> rolling window length in seconds (the on-chain `spend_period`). */
 const PERIOD_SECONDS: Record<"day" | "week" | "month" | "total", bigint> = {
   day: 86_400n,
   week: 604_800n,
@@ -36,7 +36,7 @@ function entry(key: string, val: xdr.ScVal): xdr.ScMapEntry {
 }
 
 /**
- * Compile the session policies into the on-chain `Policy` struct the contract account expects — ONE
+ * Compile the session policies into the on-chain `Policy` struct the contract account expects - ONE
  * struct combining the allowlist, spend cap, and expiry. A session MUST carry BOTH a `spendLimit` and a
  * non-empty `allowlist`: an unbounded delegation (no cap, or no target restriction) is refused, matching
  * the contract's own `EmptyPolicy` rejection. `expiresAt` is the session's on-chain expiry as a ledger
@@ -44,7 +44,7 @@ function entry(key: string, val: xdr.ScVal): xdr.ScMapEntry {
  *
  * The struct's map keys are emitted in canonical sorted order
  * (`allowlist`, `expiration`, `spend_max`, `spend_period`, `spend_token`); enforcement is on-chain, so
- * the SDK's only job is to encode these rules exactly — pinned byte-for-byte by a golden test.
+ * the SDK's only job is to encode these rules exactly - pinned byte-for-byte by a golden test.
  */
 export function compilePolicies(policies: SessionPolicy[], expiresAt: number | bigint): xdr.ScVal {
   const spend = policies.find(

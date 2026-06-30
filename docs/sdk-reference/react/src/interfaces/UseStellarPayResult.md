@@ -6,7 +6,7 @@
 
 # Interface: UseStellarPayResult
 
-Defined in: [packages/react/src/use-stellar-pay.ts:15](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/use-stellar-pay.ts#L15)
+Defined in: [packages/react/src/use-stellar-pay.ts:15](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L15)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/react/src/use-stellar-pay.ts:15](https://github.com/bucks-
 
 > **error**: `BuckspayError` \| `null`
 
-Defined in: [packages/react/src/use-stellar-pay.ts:18](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/use-stellar-pay.ts#L18)
+Defined in: [packages/react/src/use-stellar-pay.ts:18](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L18)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/react/src/use-stellar-pay.ts:18](https://github.com/bucks-
 
 > **pay**: (`calls`) => `Promise`\<`Receipt`\>
 
-Defined in: [packages/react/src/use-stellar-pay.ts:21](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/use-stellar-pay.ts#L21)
+Defined in: [packages/react/src/use-stellar-pay.ts:21](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L21)
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: [packages/react/src/use-stellar-pay.ts:21](https://github.com/bucks-
 
 > **prepare**: (`calls`) => `Promise`\<`PreparedIntent`\>
 
-Defined in: [packages/react/src/use-stellar-pay.ts:19](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/use-stellar-pay.ts#L19)
+Defined in: [packages/react/src/use-stellar-pay.ts:19](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L19)
 
 #### Parameters
 
@@ -58,7 +58,7 @@ Defined in: [packages/react/src/use-stellar-pay.ts:19](https://github.com/bucks-
 
 > **receipt**: `Receipt` \| `null`
 
-Defined in: [packages/react/src/use-stellar-pay.ts:17](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/use-stellar-pay.ts#L17)
+Defined in: [packages/react/src/use-stellar-pay.ts:17](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L17)
 
 ***
 
@@ -66,7 +66,7 @@ Defined in: [packages/react/src/use-stellar-pay.ts:17](https://github.com/bucks-
 
 > **reset**: () => `void`
 
-Defined in: [packages/react/src/use-stellar-pay.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/use-stellar-pay.ts#L22)
+Defined in: [packages/react/src/use-stellar-pay.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L22)
 
 #### Returns
 
@@ -78,7 +78,7 @@ Defined in: [packages/react/src/use-stellar-pay.ts:22](https://github.com/bucks-
 
 > **sign**: (`intent`) => `Promise`\<`SignedIntent`\>
 
-Defined in: [packages/react/src/use-stellar-pay.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/use-stellar-pay.ts#L20)
+Defined in: [packages/react/src/use-stellar-pay.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L20)
 
 #### Parameters
 
@@ -96,4 +96,4 @@ Defined in: [packages/react/src/use-stellar-pay.ts:20](https://github.com/bucks-
 
 > **status**: `"idle"` \| `"connecting"` \| `"ready"` \| `"signing"` \| `"relaying"` \| `"success"` \| `"error"`
 
-Defined in: [packages/react/src/use-stellar-pay.ts:16](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react/src/use-stellar-pay.ts#L16)
+Defined in: [packages/react/src/use-stellar-pay.ts:16](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react/src/use-stellar-pay.ts#L16)

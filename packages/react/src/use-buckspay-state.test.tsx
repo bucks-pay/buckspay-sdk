@@ -41,6 +41,6 @@ describe("useBuckspayState", () => {
     act(() => {
       h.store.setState({ address: "GNEW" }); // unselected slice
     });
-    expect(renders).toBe(before); // status unchanged → no extra render
+    expect(renders).toBe(before); // status unchanged -> no extra render
   });
 });

@@ -2,14 +2,14 @@
  * Secure-storage port for the SCOPED session key at rest.
  *
  * Only the deliberately-minted session blob (the serialized `Session` from @buckspay/core) is
- * ever written here — it is policy-scoped and expiring, never the root account key. The root
+ * ever written here - it is policy-scoped and expiring, never the root account key. The root
  * passkey private key never leaves the device secure enclave and is never passed to this port.
  * Peer impls use the OS keystore (expo-secure-store / Keychain / Keystore), never plain
  * AsyncStorage. The peers are loaded with a memoized dynamic import so an app only needs the one
  * it chooses, and so the binding stays ESM/Hermes-correct (no CommonJS `require`).
  */
 import { BuckspayError } from "@buckspay/core";
-// Type-only imports of the OPTIONAL peers — erased at build, so they create no runtime dependency
+// Type-only imports of the OPTIONAL peers - erased at build, so they create no runtime dependency
 // for an app that uses the other store. The values are loaded lazily via dynamic import().
 import type * as ExpoSecureStore from "expo-secure-store";
 import type * as RNKeychain from "react-native-keychain";
@@ -34,7 +34,7 @@ function withKey<T>(key: string, fn: () => T): Promise<T> {
   return Promise.resolve(fn());
 }
 
-/** In-memory store — tests and connect-only flows. NOT durable; never the production default. */
+/** In-memory store - tests and connect-only flows. NOT durable; never the production default. */
 export function memorySecureStore(): SecureStore {
   const mem = new Map<string, string>();
   return {
@@ -46,7 +46,7 @@ export function memorySecureStore(): SecureStore {
 
 /** Expo apps: backed by `expo-secure-store` (Keychain on iOS, Keystore on Android). */
 // Variable specifiers (+ @vite-ignore) keep the bundler from eagerly resolving the OPTIONAL peers
-// at build time — they are only required at runtime by an app that uses that store.
+// at build time - they are only required at runtime by an app that uses that store.
 const EXPO_SECURE_STORE = "expo-secure-store";
 const RN_KEYCHAIN = "react-native-keychain";
 

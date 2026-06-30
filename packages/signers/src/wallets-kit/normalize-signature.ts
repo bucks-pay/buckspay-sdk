@@ -11,7 +11,7 @@ function base64ToBytes(b64: string): Uint8Array {
  * Normalize the signature returned by Wallets Kit to the 64-byte Ed25519 value.
  *
  * The FreighterModule double-encodes (`Buffer.from(string)` without `'base64'`),
- * so a 64-byte signature can come back as 88 bytes — the ASCII of its own base64.
+ * so a 64-byte signature can come back as 88 bytes - the ASCII of its own base64.
  * We detect that case (the bytes decode to a valid base64 string whose inner
  * decode is exactly 64 bytes) and unwrap it. Anything else is a hard failure:
  * shipping a malformed signature to the relayer fails far downstream with a

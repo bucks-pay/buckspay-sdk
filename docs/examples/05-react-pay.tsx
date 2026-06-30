@@ -1,4 +1,4 @@
-// React hooks — full pay component. Compiles against @types/react 19 + the real hook types.
+// React hooks - full pay component. Compiles against @types/react 19 + the real hook types.
 import { useMemo, type CSSProperties } from "react";
 import { Address, nativeToScVal } from "@stellar/stellar-sdk";
 import { useWallet, useStellarPay } from "@buckspay/react";
@@ -27,14 +27,14 @@ export function PayButton() {
   if (!wallet) {
     return (
       <button onClick={() => void connect()} style={btn} disabled={wStatus === "connecting"} aria-live="polite">
-        {wStatus === "connecting" ? "Connecting…" : "Connect"}
+        {wStatus === "connecting" ? "Connecting..." : "Connect"}
       </button>
     );
   }
   return (
     <div>
       <button onClick={() => transferCall && void pay([transferCall])} style={btn} disabled={busy || !transferCall}>
-        {busy ? "Paying…" : "Pay 1.50 USDC (free)"}
+        {busy ? "Paying..." : "Pay 1.50 USDC (free)"}
       </button>
       {receipt && <p aria-live="polite">settled: {receipt.transferTx}</p>}
       {shownError && (

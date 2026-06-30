@@ -12,7 +12,7 @@ export const INITIAL_STATE: BuckspayState = {
 /**
  * A REAL `zustand/vanilla` store (so `useSyncExternalStore` is exercised
  * authentically) plus a MOCK client whose methods you can resolve/reject. The
- * client is cast to `BuckspayClient` — individual `vi.fn()`s stay controllable
+ * client is cast to `BuckspayClient` - individual `vi.fn()`s stay controllable
  * in tests via `(client.method as ReturnType<typeof vi.fn>).mockImplementation`.
  */
 export function makeHarness(overrides?: Partial<BuckspayState>) {

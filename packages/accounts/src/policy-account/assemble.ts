@@ -6,7 +6,7 @@ import type { AssembleInput, Network } from "@buckspay/core";
  * Sign and assemble a policy-account auth entry. Builds the network-scoped HashIDPreimage over the
  * entry, has the root ed25519 signer sign it, then injects a `SigData` scval map ({ signature: 64
  * bytes, signer: 32-byte public key }, sorted keys) into the Address credentials. The signature is
- * verified ON-CHAIN by `__check_auth` — never here.
+ * verified ON-CHAIN by `__check_auth` - never here.
  */
 export async function assemblePolicyEntry(input: AssembleInput): Promise<string> {
   const { unsigned, signer, signatureExpirationLedger, network } = input;
@@ -34,7 +34,7 @@ export async function assemblePolicyEntry(input: AssembleInput): Promise<string>
     });
   }
 
-  // SigData struct → ScMap with canonical sorted symbol keys (signature < signer).
+  // SigData struct -> ScMap with canonical sorted symbol keys (signature < signer).
   const sigData = xdr.ScVal.scvMap([
     new xdr.ScMapEntry({
       key: nativeToScVal("signature", { type: "symbol" }),

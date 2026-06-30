@@ -6,7 +6,7 @@
 
 # Interface: CheckAuthParts
 
-Defined in: [packages/signers/src/passkey/signAuthEntry.ts:8](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/signAuthEntry.ts#L8)
+Defined in: [packages/signers/src/passkey/signAuthEntry.ts:8](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/signAuthEntry.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/signers/src/passkey/signAuthEntry.ts:8](https://github.com
 
 > **authenticatorData**: `Uint8Array`
 
-Defined in: [packages/signers/src/passkey/signAuthEntry.ts:9](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/signAuthEntry.ts#L9)
+Defined in: [packages/signers/src/passkey/signAuthEntry.ts:9](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/signAuthEntry.ts#L9)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/signers/src/passkey/signAuthEntry.ts:9](https://github.com
 
 > **clientDataJSON**: `Uint8Array`
 
-Defined in: [packages/signers/src/passkey/signAuthEntry.ts:10](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/signAuthEntry.ts#L10)
+Defined in: [packages/signers/src/passkey/signAuthEntry.ts:10](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/signAuthEntry.ts#L10)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [packages/signers/src/passkey/signAuthEntry.ts:10](https://github.co
 
 > **signature**: `Uint8Array`
 
-Defined in: [packages/signers/src/passkey/signAuthEntry.ts:11](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/signAuthEntry.ts#L11)
+Defined in: [packages/signers/src/passkey/signAuthEntry.ts:11](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/signAuthEntry.ts#L11)

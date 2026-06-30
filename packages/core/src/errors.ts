@@ -25,7 +25,7 @@ export type BuckspayErrorCode =
 /**
  * The single error type thrown across `@buckspay/*`. Carries a machine-readable
  * `code` for branching and preserves the originating `cause` for diagnostics
- * (never log raw addresses — see security standards).
+ * (never log raw addresses - see security standards).
  */
 export class BuckspayError extends Error {
   readonly code: BuckspayErrorCode;

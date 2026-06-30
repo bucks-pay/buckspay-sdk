@@ -1,15 +1,15 @@
 ---
-title: "Node / Core — @buckspay/core"
-description: "Use createBuckspayClient directly — no React. Suitable for server scripts, CLI tools, and backend workers."
+title: "Node / Core - @buckspay/core"
+description: "Use createBuckspayClient directly - no React. Suitable for server scripts, CLI tools, and backend workers."
 ---
 
-`@buckspay/core` is the platform-agnostic heart of the SDK. You can use it directly — without
-any React layer — in Node.js scripts, backend workers, or any environment where you control
+`@buckspay/core` is the platform-agnostic heart of the SDK. You can use it directly - without
+any React layer - in Node.js scripts, backend workers, or any environment where you control
 the signer manually.
 
-The surface is the same three-phase flow described in [Prepare → Sign → Send](/concepts/prepare-sign-send):
+The surface is the same three-phase flow described in [Prepare -> Sign -> Send](/concepts/prepare-sign-send):
 `createBuckspayClient` assembles the client; `createRpcSimContext` gives `prepare()` a Soroban
-simulator; then `connect()` → `pay()` (or the split `prepare` / `sign` / `send`) executes the
+simulator; then `connect()` -> `pay()` (or the split `prepare` / `sign` / `send`) executes the
 payment.
 
 <Steps>
@@ -58,7 +58,7 @@ console.log(receipt.transferTx);
 | React / React Native app | [`@buckspay/react`](/platforms/web-react) or [`@buckspay/react-native`](/platforms/react-native) |
 | Next.js App Router BFF route | [`@buckspay/nextjs`](/platforms/nextjs-bff) |
 | Node.js script, backend worker, or CLI | `@buckspay/core` directly |
-| Server-side relay (any framework) | `createBuckspayClient` + `buckspayFacilitator({ apiKey })` — server-only |
+| Server-side relay (any framework) | `createBuckspayClient` + `buckspayFacilitator({ apiKey })` - server-only |
 
 <Note>
   When using `@buckspay/core` in a server-side relay, pass `apiKey` to `buckspayFacilitator`
@@ -69,7 +69,7 @@ console.log(receipt.transferTx);
 
 {/* @snippet:start 01-quickstart-classic.ts */}
 ```ts
-// Quickstart — classic gasless USDC transfer (browser; NO apiKey).
+// Quickstart - classic gasless USDC transfer (browser; NO apiKey).
 import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
 import { walletsKit } from "@buckspay/signers/wallets-kit";
@@ -94,7 +94,7 @@ export async function quickstart(): Promise<void> {
 
   await buckspay.connect(); // wallet + ensureReady
   const call = buckspay.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" });
-  const receipt = await buckspay.pay([call]); // prepare → sign → send
+  const receipt = await buckspay.pay([call]); // prepare -> sign -> send
   console.log(receipt.transferTx); // settled on testnet
 }
 ```
@@ -106,7 +106,7 @@ export async function quickstart(): Promise<void> {
   <Card title="Quickstart" href="/get-started/quickstart">
     The full quickstart walkthrough with a classic G-address account.
   </Card>
-  <Card title="Prepare → Sign → Send" href="/concepts/prepare-sign-send">
+  <Card title="Prepare -> Sign -> Send" href="/concepts/prepare-sign-send">
     The three-phase flow and where the BFF slot fits.
   </Card>
 </CardGroup>

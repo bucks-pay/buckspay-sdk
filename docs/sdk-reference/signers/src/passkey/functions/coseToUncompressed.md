@@ -8,7 +8,7 @@
 
 > **coseToUncompressed**(`cose`): `Uint8Array`
 
-Defined in: [packages/signers/src/passkey/cose.ts:124](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/cose.ts#L124)
+Defined in: [packages/signers/src/passkey/cose.ts:124](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/cose.ts#L124)
 
 Rebuild the 65-byte uncompressed point `0x04 ‖ X(32) ‖ Y(32)` from COSE x/y.
 

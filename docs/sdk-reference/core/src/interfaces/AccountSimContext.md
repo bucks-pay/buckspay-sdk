@@ -6,7 +6,7 @@
 
 # Interface: AccountSimContext
 
-Defined in: [packages/core/src/client.ts:36](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L36)
+Defined in: [packages/core/src/client.ts:36](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L36)
 
 Capabilities the client needs to `prepare` an intent: a recording simulator
 and a current-ledger source. The account adapter wiring supplies the real
@@ -18,7 +18,7 @@ RPC-backed pair; tests inject a deterministic context.
 
 > **getLatestLedger**: () => `Promise`\<`number`\>
 
-Defined in: [packages/core/src/client.ts:38](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L38)
+Defined in: [packages/core/src/client.ts:38](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L38)
 
 #### Returns
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/client.ts:38](https://github.com/bucks-pay/bucksp
 
 > `optional` **randomNonce?**: () => `bigint`
 
-Defined in: [packages/core/src/client.ts:39](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L39)
+Defined in: [packages/core/src/client.ts:39](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L39)
 
 #### Returns
 
@@ -42,4 +42,4 @@ Defined in: [packages/core/src/client.ts:39](https://github.com/bucks-pay/bucksp
 
 > **simulator**: [`SorobanSimulator`](SorobanSimulator.md)
 
-Defined in: [packages/core/src/client.ts:37](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/client.ts#L37)
+Defined in: [packages/core/src/client.ts:37](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/client.ts#L37)

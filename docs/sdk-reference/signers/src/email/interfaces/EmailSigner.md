@@ -6,7 +6,7 @@
 
 # Interface: EmailSigner
 
-Defined in: [packages/signers/src/email/index.ts:28](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/email/index.ts#L28)
+Defined in: [packages/signers/src/email/index.ts:28](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/email/index.ts#L28)
 
 ## Extends
 
@@ -72,7 +72,7 @@ Defined in: packages/core/dist/index.d.ts:45
 
 > **requestOtp**(`email`): `Promise`\<`void`\>
 
-Defined in: [packages/signers/src/email/index.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/email/index.ts#L30)
+Defined in: [packages/signers/src/email/index.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/email/index.ts#L30)
 
 Trigger the OTP issue step (sends the code to `email`).
 

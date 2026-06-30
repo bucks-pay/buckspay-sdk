@@ -28,7 +28,7 @@ export function buildInstallArgs(input: {
 }
 
 /** Args for the policy account's `remove_signer(session_key: BytesN<32>)` revoke call: `[BytesN(sessionKey)]`.
- *  Revocation takes effect immediately — a subsequent session-signed call is rejected on-chain. */
+ *  Revocation takes effect immediately - a subsequent session-signed call is rejected on-chain. */
 export function buildRevokeArgs(input: { sessionKey: string }): xdr.ScVal[] {
   return [xdr.ScVal.scvBytes(sessionKeyBytes(input.sessionKey))];
 }

@@ -6,7 +6,7 @@
 
 # Interface: SorobanSimulator
 
-Defined in: [packages/core/src/auth-entry-builder.ts:180](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/auth-entry-builder.ts#L180)
+Defined in: [packages/core/src/auth-entry-builder.ts:180](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/auth-entry-builder.ts#L180)
 
 Narrow port over `rpc.Server.simulateTransaction`. Supplied by the account adapter.
 
@@ -16,7 +16,7 @@ Narrow port over `rpc.Server.simulateTransaction`. Supplied by the account adapt
 
 > **simulate**(`input`): `Promise`\<[`SorobanSimulateRaw`](SorobanSimulateRaw.md)\>
 
-Defined in: [packages/core/src/auth-entry-builder.ts:181](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/auth-entry-builder.ts#L181)
+Defined in: [packages/core/src/auth-entry-builder.ts:181](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/auth-entry-builder.ts#L181)
 
 #### Parameters
 

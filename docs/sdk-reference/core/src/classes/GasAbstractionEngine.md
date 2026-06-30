@@ -6,7 +6,7 @@
 
 # Class: GasAbstractionEngine
 
-Defined in: [packages/core/src/gas-abstraction-engine.ts:13](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/gas-abstraction-engine.ts#L13)
+Defined in: [packages/core/src/gas-abstraction-engine.ts:13](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/gas-abstraction-engine.ts#L13)
 
 Maps a signed intent into the relayer request body for the configured gas
 strategy. v1 supports `sponsored` only: the facilitator's sponsor account
@@ -22,7 +22,7 @@ the config and branch on it inside `toRelayPayload`.
 
 > **new GasAbstractionEngine**(`gas`): `GasAbstractionEngine`
 
-Defined in: [packages/core/src/gas-abstraction-engine.ts:14](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/gas-abstraction-engine.ts#L14)
+Defined in: [packages/core/src/gas-abstraction-engine.ts:14](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/gas-abstraction-engine.ts#L14)
 
 #### Parameters
 
@@ -40,13 +40,13 @@ Defined in: [packages/core/src/gas-abstraction-engine.ts:14](https://github.com/
 
 > **toRelayPayload**(`signed`): [`RelayPayload`](../interfaces/RelayPayload.md)
 
-Defined in: [packages/core/src/gas-abstraction-engine.ts:38](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/gas-abstraction-engine.ts#L38)
+Defined in: [packages/core/src/gas-abstraction-engine.ts:38](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/gas-abstraction-engine.ts#L38)
 
 Project a signed intent into the facilitator relay body. In `sponsored`
 mode this is exactly the seven fields of `stellarSorobanSchema`; the
 intent-only `network` field is intentionally dropped (the relayer is
 already network-bound). Output is byte-identical to the dashboard's
-`SorobanRelayBody` — enforced by the golden test.
+`SorobanRelayBody` - enforced by the golden test.
 
 #### Parameters
 

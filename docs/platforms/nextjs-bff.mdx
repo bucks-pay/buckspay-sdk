@@ -1,5 +1,5 @@
 ---
-title: "Next.js BFF — @buckspay/nextjs"
+title: "Next.js BFF - @buckspay/nextjs"
 description: "App Router route factories that keep the facilitator API key and provider secrets server-side behind same-origin BFF routes."
 ---
 
@@ -25,10 +25,10 @@ pnpm add @buckspay/nextjs @buckspay/core @buckspay/relayer
 ### Create the relay route
 
 Create `app/api/buckspay/relay/route.ts`. `createRelayRoute` returns a `(req: Request) => Promise<Response>`
-handler — assign it to `POST` as required by App Router conventions.
+handler - assign it to `POST` as required by App Router conventions.
 
 ```ts
-// app/api/buckspay/relay/route.ts — SERVER-ONLY
+// app/api/buckspay/relay/route.ts - SERVER-ONLY
 import { createRelayRoute } from "@buckspay/nextjs";
 
 export const POST = createRelayRoute({
@@ -43,7 +43,7 @@ export const POST = createRelayRoute({
 | Option | Type | Description |
 |---|---|---|
 | `facilitatorUrl` | `string` | Base URL of the Buckspay facilitator |
-| `apiKey` | `string` | Facilitator API key — from a server env var, never a literal |
+| `apiKey` | `string` | Facilitator API key - from a server env var, never a literal |
 | `network` | `Network` | `"testnet"` or `"mainnet"` |
 
 The route validates the incoming `RelayPayload` with a strict Zod schema before forwarding, so
@@ -56,13 +56,13 @@ If you use social or email-based signers, create proxy routes that forward the a
 facilitator's `/auth/*` endpoints while injecting the API key server-side.
 
 ```ts
-// app/api/buckspay/auth/social/route.ts — SERVER-ONLY
+// app/api/buckspay/auth/social/route.ts - SERVER-ONLY
 import { createSignerProxyRoute } from "@buckspay/nextjs";
 export const POST = createSignerProxyRoute({ provider: "web3auth", network: "testnet" });
 ```
 
 ```ts
-// app/api/buckspay/auth/email/route.ts — SERVER-ONLY
+// app/api/buckspay/auth/email/route.ts - SERVER-ONLY
 import { createSignerProxyRoute } from "@buckspay/nextjs";
 export const POST = createSignerProxyRoute({ provider: "email", network: "testnet" });
 ```
@@ -73,14 +73,14 @@ from the server environment by default. You can override both via the optional s
 
 ### Point the browser client at your BFF routes
 
-In your browser (or React) code, configure the relayer without an API key — it points at your
+In your browser (or React) code, configure the relayer without an API key - it points at your
 same-origin BFF routes:
 
 ```ts
 import { buckspayFacilitator } from "@buckspay/relayer/buckspay-facilitator";
 
 const relayer = buckspayFacilitator({ url: "/api/buckspay/relay", network: "testnet" });
-// No apiKey here — the key lives server-side in the route handler above.
+// No apiKey here - the key lives server-side in the route handler above.
 ```
 
 </Steps>
@@ -92,25 +92,25 @@ each goes in its own `route.ts` under `app/`.
 
 {/* @snippet:start 15-nextjs-bff.ts */}
 ```ts
-// Recipe 15 — NEXT.JS BFF (App Router). Three server-only route handlers, packaged.
+// Recipe 15 - NEXT.JS BFF (App Router). Three server-only route handlers, packaged.
 //
 // These are the same-origin endpoints your browser code calls (`/api/buckspay/...`). The
-// facilitator apiKey and the provider secrets stay SERVER-SIDE — they are never in the client
+// facilitator apiKey and the provider secrets stay SERVER-SIDE - they are never in the client
 // bundle. Each `export const POST` below lives in its own `route.ts` under app/.
 import { createRelayRoute, createSignerProxyRoute } from "@buckspay/nextjs";
 
-// app/api/buckspay/relay/route.ts — the gasless relay BFF (the dashboard pattern, packaged).
+// app/api/buckspay/relay/route.ts - the gasless relay BFF (the dashboard pattern, packaged).
 export const relayPOST = createRelayRoute({
   facilitatorUrl: process.env.BUCKSPAY_FACILITATOR_URL ?? "https://facilitator.example",
   apiKey: process.env.BUCKSPAY_FACILITATOR_API_KEY ?? "", // SERVER-SIDE ONLY
   network: "testnet"
 });
 
-// app/api/buckspay/auth/social/route.ts — social signer-proxy (forwards to /auth/social).
+// app/api/buckspay/auth/social/route.ts - social signer-proxy (forwards to /auth/social).
 // Reads BUCKSPAY_FACILITATOR_URL + BUCKSPAY_FACILITATOR_API_KEY from server env.
 export const socialPOST = createSignerProxyRoute({ provider: "web3auth", network: "testnet" });
 
-// app/api/buckspay/auth/email/route.ts — email signer-proxy (forwards to /auth/email).
+// app/api/buckspay/auth/email/route.ts - email signer-proxy (forwards to /auth/email).
 export const emailPOST = createSignerProxyRoute({ provider: "email", network: "testnet" });
 ```
 {/* @snippet:end */}
@@ -121,7 +121,7 @@ export const emailPOST = createSignerProxyRoute({ provider: "email", network: "t
   <Card title="Facilitator and BFF" href="/concepts/facilitator-and-bff">
     Why the API key must stay server-side and how the BFF slot fits the payment flow.
   </Card>
-  <Card title="Web — @buckspay/react" href="/platforms/web-react">
+  <Card title="Web - @buckspay/react" href="/platforms/web-react">
     The browser-side hooks that POST to your BFF relay route.
   </Card>
 </CardGroup>

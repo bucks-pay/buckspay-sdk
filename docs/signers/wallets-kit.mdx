@@ -1,16 +1,16 @@
 ---
 title: "Wallets Kit"
-description: "Connect Freighter, xBull, or LOBSTR with a single factory — the signer plugs into the same client and payment flow as every other Buckspay signer."
+description: "Connect Freighter, xBull, or LOBSTR with a single factory - the signer plugs into the same client and payment flow as every other Buckspay signer."
 ---
 
 The Wallets Kit signer wraps [Stellar Wallets Kit](https://github.com/creit-tech/StellarWalletsKit)
-and gives users their preferred browser wallet — Freighter, xBull, or LOBSTR — without any
+and gives users their preferred browser wallet - Freighter, xBull, or LOBSTR - without any
 wallet-specific branching in your application code.
 
 ## When to use
 
 Choose `walletsKit` when your users already have a Stellar wallet installed. It suits classic
-`G…` accounts backed by an existing keypair. For new users who have no wallet, consider the
+`G...` accounts backed by an existing keypair. For new users who have no wallet, consider the
 [passkey signer](/signers/passkey) instead.
 
 ## Factory
@@ -19,7 +19,7 @@ Choose `walletsKit` when your users already have a Stellar wallet installed. It 
 import { walletsKit } from "@buckspay/signers/wallets-kit";
 
 const signer = walletsKit({ network: "testnet" });
-//                          network: "pubnet"  — for production
+//                          network: "pubnet" - for production
 ```
 
 `walletsKit(opts)` accepts a `KitOptions` object:
@@ -39,7 +39,7 @@ The snippet below shows a complete classic gasless transfer using `walletsKit` p
 
 {/* @snippet:start 01-quickstart-classic.ts */}
 ```ts
-// Quickstart — classic gasless USDC transfer (browser; NO apiKey).
+// Quickstart - classic gasless USDC transfer (browser; NO apiKey).
 import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
 import { walletsKit } from "@buckspay/signers/wallets-kit";
@@ -64,7 +64,7 @@ export async function quickstart(): Promise<void> {
 
   await buckspay.connect(); // wallet + ensureReady
   const call = buckspay.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" });
-  const receipt = await buckspay.pay([call]); // prepare → sign → send
+  const receipt = await buckspay.pay([call]); // prepare -> sign -> send
   console.log(receipt.transferTx); // settled on testnet
 }
 ```
@@ -80,7 +80,7 @@ clean 64-byte signature regardless of which wallet or version the user has insta
 
 <CardGroup cols={2}>
   <Card title="Passkey" href="/signers/passkey">
-    Passwordless flow for new users — no wallet required.
+    Passwordless flow for new users - no wallet required.
   </Card>
   <Card title="Account models" href="/concepts/account-models">
     Pair walletsKit with classicAccount or ozContractAccount.

@@ -6,7 +6,7 @@
 
 # Interface: Session
 
-Defined in: [packages/core/src/types.ts:229](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L229)
+Defined in: [packages/core/src/types.ts:229](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L229)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types.ts:229](https://github.com/bucks-pay/bucksp
 
 > **account**: `string`
 
-Defined in: [packages/core/src/types.ts:231](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L231)
+Defined in: [packages/core/src/types.ts:231](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L231)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types.ts:231](https://github.com/bucks-pay/bucksp
 
 > **expiresAt**: `number`
 
-Defined in: [packages/core/src/types.ts:234](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L234)
+Defined in: [packages/core/src/types.ts:234](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L234)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types.ts:234](https://github.com/bucks-pay/bucksp
 
 > **id**: `string`
 
-Defined in: [packages/core/src/types.ts:230](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L230)
+Defined in: [packages/core/src/types.ts:230](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L230)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/core/src/types.ts:230](https://github.com/bucks-pay/bucksp
 
 > **policies**: [`SessionPolicy`](../type-aliases/SessionPolicy.md)[]
 
-Defined in: [packages/core/src/types.ts:233](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L233)
+Defined in: [packages/core/src/types.ts:233](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L233)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [packages/core/src/types.ts:233](https://github.com/bucks-pay/bucksp
 
 > **sessionKey**: `string`
 
-Defined in: [packages/core/src/types.ts:232](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L232)
+Defined in: [packages/core/src/types.ts:232](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L232)

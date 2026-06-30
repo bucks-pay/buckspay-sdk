@@ -1,4 +1,4 @@
-// @buckspay/accounts/policy-account — an ed25519-root contract account that enforces session-key
+// @buckspay/accounts/policy-account - an ed25519-root contract account that enforces session-key
 // policies (spend limit + allowlist) in its on-chain __check_auth. Pairs with @buckspay/accounts/policy
 // (the policy compiler) and the core SessionManager.
 import { BuckspayError } from "@buckspay/core";

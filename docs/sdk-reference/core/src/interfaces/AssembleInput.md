@@ -6,7 +6,7 @@
 
 # Interface: AssembleInput
 
-Defined in: [packages/core/src/types.ts:88](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L88)
+Defined in: [packages/core/src/types.ts:88](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L88)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types.ts:88](https://github.com/bucks-pay/buckspa
 
 > **network**: [`Network`](../type-aliases/Network.md)
 
-Defined in: [packages/core/src/types.ts:92](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L92)
+Defined in: [packages/core/src/types.ts:92](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L92)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types.ts:92](https://github.com/bucks-pay/buckspa
 
 > **signatureExpirationLedger**: `number`
 
-Defined in: [packages/core/src/types.ts:91](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L91)
+Defined in: [packages/core/src/types.ts:91](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L91)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types.ts:91](https://github.com/bucks-pay/buckspa
 
 > **signer**: [`BuckspaySigner`](BuckspaySigner.md)
 
-Defined in: [packages/core/src/types.ts:90](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L90)
+Defined in: [packages/core/src/types.ts:90](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L90)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [packages/core/src/types.ts:90](https://github.com/bucks-pay/buckspa
 
 > **unsigned**: `SorobanAuthorizationEntry`
 
-Defined in: [packages/core/src/types.ts:89](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L89)
+Defined in: [packages/core/src/types.ts:89](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L89)

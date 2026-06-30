@@ -6,7 +6,7 @@
 
 # Interface: EmailSignerDeps
 
-Defined in: [packages/signers/src/email/index.ts:24](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/email/index.ts#L24)
+Defined in: [packages/signers/src/email/index.ts:24](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/email/index.ts#L24)
 
 ## Properties
 
@@ -14,6 +14,6 @@ Defined in: [packages/signers/src/email/index.ts:24](https://github.com/bucks-pa
 
 > `optional` **fetchImpl?**: `FetchLike`
 
-Defined in: [packages/signers/src/email/index.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/email/index.ts#L26)
+Defined in: [packages/signers/src/email/index.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/email/index.ts#L26)
 
 Test seam: inject fetch (defaults to global fetch).

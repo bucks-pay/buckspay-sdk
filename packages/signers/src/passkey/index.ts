@@ -17,7 +17,7 @@ export type { WebAuthnLike, CreateInput, CreateOutput, GetInput, GetOutput } fro
 export { formatCheckAuthSignature, decodeCheckAuthSignature } from "./signAuthEntry.js";
 export type { CheckAuthParts } from "./signAuthEntry.js";
 // COSE helpers (pure) so a native WebAuthnLike can rebuild the 65-byte 0x04‖X‖Y key from a
-// platform attestation exactly as the web create() does — reused, not re-derived.
+// platform attestation exactly as the web create() does - reused, not re-derived.
 export { extractCoseKey, coseToUncompressed } from "./cose.js";
 
 export interface PasskeyOptions {

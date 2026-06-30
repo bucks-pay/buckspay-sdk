@@ -6,7 +6,7 @@
 
 # Interface: GetInput
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:17](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L17)
+Defined in: [packages/signers/src/passkey/webauthn.ts:17](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L17)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:17](https://github.com/buc
 
 > **challenge**: `Uint8Array`
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:19](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L19)
+Defined in: [packages/signers/src/passkey/webauthn.ts:19](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L19)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:19](https://github.com/buc
 
 > `optional` **credentialId?**: `Uint8Array`\<`ArrayBufferLike`\>
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L20)
+Defined in: [packages/signers/src/passkey/webauthn.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L20)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:20](https://github.com/buc
 
 > **rpId**: `string`
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:18](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L18)
+Defined in: [packages/signers/src/passkey/webauthn.ts:18](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L18)

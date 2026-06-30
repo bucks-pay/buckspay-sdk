@@ -8,14 +8,14 @@
 
 > **buildBatchTransferEntry**(`input`, `multicall`): `SorobanAuthorizationEntry`
 
-Defined in: [packages/accounts/src/batch/build-batch-transfer-entry.ts:21](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/accounts/src/batch/build-batch-transfer-entry.ts#L21)
+Defined in: [packages/accounts/src/batch/build-batch-transfer-entry.ts:21](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/accounts/src/batch/build-batch-transfer-entry.ts#L21)
 
-Shared atomic-batch entry builder for BOTH account models (classic G… and contract C…): the
+Shared atomic-batch entry builder for BOTH account models (classic G... and contract C...): the
 unsigned entry is identical across models; only the signer differs.
 
 For N>1 same-token `transfer` calls it builds ONE auth entry whose root invocation is the pinned
 Multicall router's `batch_transfer(payer, token, Vec<(to, amount)>)` with the N transfers as
-sub-invocations — so the user authorizes the whole batch with a single signature and it settles
+sub-invocations - so the user authorizes the whole batch with a single signature and it settles
 all-or-nothing through the EXISTING `/relay` (one host-function op; Soroban allows only one).
 
 Encoding ported verbatim from the multicall reference (`buildBatchTransferArgs`):

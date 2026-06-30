@@ -31,7 +31,7 @@ export interface KitOptions {
 /**
  * Resolve the wallets kit. An already-built kit may be injected (production: the
  * app builds + connects it once; tests: a mock). Otherwise the real library is
- * dynamically imported — it is browser-only (touches `window` at module eval),
+ * dynamically imported - it is browser-only (touches `window` at module eval),
  * so the import is lazy and never runs during SSR/Node unless explicitly hit.
  * Freighter/xBull/LOBSTR modules are registered (README §4.6).
  */

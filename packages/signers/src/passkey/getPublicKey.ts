@@ -5,7 +5,7 @@ import type { WebAuthnLike } from "./webauthn.js";
 /**
  * Register a passkey (WebAuthn `create`) and return its secp256r1 public key as the
  * 65-byte uncompressed hex the OZ Smart Account binds. The private key never leaves
- * the authenticator — we only ever see the public key.
+ * the authenticator - we only ever see the public key.
  */
 export async function passkeyGetPublicKey(
   wa: WebAuthnLike,

@@ -6,7 +6,7 @@
 
 # Interface: RelayPayload
 
-Defined in: [packages/core/src/types.ts:141](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L141)
+Defined in: [packages/core/src/types.ts:141](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L141)
 
 EXACT shape of facilitator stellarSorobanSchema.
 
@@ -16,7 +16,7 @@ EXACT shape of facilitator stellarSorobanSchema.
 
 > **authorizationEntryXdr**: `string`
 
-Defined in: [packages/core/src/types.ts:146](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L146)
+Defined in: [packages/core/src/types.ts:146](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L146)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/core/src/types.ts:146](https://github.com/bucks-pay/bucksp
 
 > `optional` **feeToken?**: `string`
 
-Defined in: [packages/core/src/types.ts:151](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L151)
+Defined in: [packages/core/src/types.ts:151](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L151)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [packages/core/src/types.ts:151](https://github.com/bucks-pay/bucksp
 
 > **from**: `string`
 
-Defined in: [packages/core/src/types.ts:143](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L143)
+Defined in: [packages/core/src/types.ts:143](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L143)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [packages/core/src/types.ts:143](https://github.com/bucks-pay/bucksp
 
 > **nonce**: `string`
 
-Defined in: [packages/core/src/types.ts:147](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L147)
+Defined in: [packages/core/src/types.ts:147](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L147)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [packages/core/src/types.ts:147](https://github.com/bucks-pay/bucksp
 
 > `optional` **sessionOp?**: `"install"` \| `"revoke"`
 
-Defined in: [packages/core/src/types.ts:154](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L154)
+Defined in: [packages/core/src/types.ts:154](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L154)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [packages/core/src/types.ts:154](https://github.com/bucks-pay/bucksp
 
 > **signatureExpirationLedger**: `number`
 
-Defined in: [packages/core/src/types.ts:148](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L148)
+Defined in: [packages/core/src/types.ts:148](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L148)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [packages/core/src/types.ts:148](https://github.com/bucks-pay/bucksp
 
 > **to**: `string`
 
-Defined in: [packages/core/src/types.ts:144](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L144)
+Defined in: [packages/core/src/types.ts:144](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L144)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [packages/core/src/types.ts:144](https://github.com/bucks-pay/bucksp
 
 > **token**: `string`
 
-Defined in: [packages/core/src/types.ts:142](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L142)
+Defined in: [packages/core/src/types.ts:142](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L142)
 
 ***
 
@@ -80,4 +80,4 @@ Defined in: [packages/core/src/types.ts:142](https://github.com/bucks-pay/bucksp
 
 > **value**: `string`
 
-Defined in: [packages/core/src/types.ts:145](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L145)
+Defined in: [packages/core/src/types.ts:145](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L145)

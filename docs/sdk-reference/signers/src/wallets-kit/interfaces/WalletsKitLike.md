@@ -6,7 +6,7 @@
 
 # Interface: WalletsKitLike
 
-Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:4](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/wallets-kit/kit-factory.ts#L4)
+Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:4](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/wallets-kit/kit-factory.ts#L4)
 
 Minimal structural type of the kit the signer needs (avoids a value import).
 
@@ -16,7 +16,7 @@ Minimal structural type of the kit the signer needs (avoids a value import).
 
 > **getAddress**(): `Promise`\<\{ `address`: `string`; \}\>
 
-Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:6](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/wallets-kit/kit-factory.ts#L6)
+Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:6](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/wallets-kit/kit-factory.ts#L6)
 
 #### Returns
 
@@ -28,7 +28,7 @@ Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:6](https://github.c
 
 > **setWallet**(`id`): `void`
 
-Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:5](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/wallets-kit/kit-factory.ts#L5)
+Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:5](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/wallets-kit/kit-factory.ts#L5)
 
 #### Parameters
 
@@ -46,7 +46,7 @@ Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:5](https://github.c
 
 > **signAuthEntry**(`preimageXdr`, `opts`): `Promise`\<\{ `signedAuthEntry`: `string`; \}\>
 
-Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:7](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/wallets-kit/kit-factory.ts#L7)
+Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:7](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/wallets-kit/kit-factory.ts#L7)
 
 #### Parameters
 
@@ -74,7 +74,7 @@ Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:7](https://github.c
 
 > **signTransaction**(`txXdr`, `opts`): `Promise`\<\{ `signedTxXdr`: `string`; \}\>
 
-Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:11](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/wallets-kit/kit-factory.ts#L11)
+Defined in: [packages/signers/src/wallets-kit/kit-factory.ts:11](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/wallets-kit/kit-factory.ts#L11)
 
 #### Parameters
 

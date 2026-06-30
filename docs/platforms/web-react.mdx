@@ -1,6 +1,6 @@
 ---
-title: "Web — @buckspay/react"
-description: "BuckspayProvider, useWallet, and useStellarPay — React hooks for gasless USDC payments in web apps."
+title: "Web - @buckspay/react"
+description: "BuckspayProvider, useWallet, and useStellarPay - React hooks for gasless USDC payments in web apps."
 ---
 
 `@buckspay/react` wraps the core client in idiomatic hooks. Wrap your component tree once with
@@ -63,7 +63,7 @@ function ConnectButton() {
   if (wallet) return null;
   return (
     <button onClick={() => void connect()} disabled={status === "connecting"} aria-live="polite">
-      {status === "connecting" ? "Connecting…" : "Connect wallet"}
+      {status === "connecting" ? "Connecting..." : "Connect wallet"}
     </button>
   );
 }
@@ -73,17 +73,17 @@ function ConnectButton() {
 
 `useStellarPay()` returns `{ pay, prepare, sign, status, receipt, error, reset }`.
 
-- `pay(calls)` — one-shot: prepare → sign → send in a single call.
-- `prepare(calls)` / `sign(intent)` — split flow for apps that validate the signed intent in a
+- `pay(calls)` - one-shot: prepare -> sign -> send in a single call.
+- `prepare(calls)` / `sign(intent)` - split flow for apps that validate the signed intent in a
   BFF before sending. See [Facilitator and BFF](/concepts/facilitator-and-bff).
-- `reset()` — returns the store to `idle` so the user can retry.
+- `reset()` - returns the store to `idle` so the user can retry.
 
 #### Status machine
 
 `status` follows the path:
 
 ```
-idle → connecting → ready → signing → relaying → success | error
+idle -> connecting -> ready -> signing -> relaying -> success | error
 ```
 
 Render `error.code` (a `BuckspayErrorCode`) for user-facing messages, and announce state
@@ -97,7 +97,7 @@ The component below is the compiled, type-checked reference implementation.
 
 {/* @snippet:start 05-react-pay.tsx */}
 ```tsx
-// React hooks — full pay component. Compiles against @types/react 19 + the real hook types.
+// React hooks - full pay component. Compiles against @types/react 19 + the real hook types.
 import { useMemo, type CSSProperties } from "react";
 import { Address, nativeToScVal } from "@stellar/stellar-sdk";
 import { useWallet, useStellarPay } from "@buckspay/react";
@@ -126,14 +126,14 @@ export function PayButton() {
   if (!wallet) {
     return (
       <button onClick={() => void connect()} style={btn} disabled={wStatus === "connecting"} aria-live="polite">
-        {wStatus === "connecting" ? "Connecting…" : "Connect"}
+        {wStatus === "connecting" ? "Connecting..." : "Connect"}
       </button>
     );
   }
   return (
     <div>
       <button onClick={() => transferCall && void pay([transferCall])} style={btn} disabled={busy || !transferCall}>
-        {busy ? "Paying…" : "Pay 1.50 USDC (free)"}
+        {busy ? "Paying..." : "Pay 1.50 USDC (free)"}
       </button>
       {receipt && <p aria-live="polite">settled: {receipt.transferTx}</p>}
       {shownError && (

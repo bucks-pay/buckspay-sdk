@@ -6,7 +6,7 @@
 
 # Interface: NativePasskeyOptions
 
-Defined in: [packages/react-native/src/native-passkey.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react-native/src/native-passkey.ts#L20)
+Defined in: [packages/react-native/src/native-passkey.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react-native/src/native-passkey.ts#L20)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/react-native/src/native-passkey.ts:20](https://github.com/
 
 > **rpId**: `string`
 
-Defined in: [packages/react-native/src/native-passkey.ts:21](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react-native/src/native-passkey.ts#L21)
+Defined in: [packages/react-native/src/native-passkey.ts:21](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react-native/src/native-passkey.ts#L21)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [packages/react-native/src/native-passkey.ts:21](https://github.com/
 
 > `optional` **rpName?**: `string`
 
-Defined in: [packages/react-native/src/native-passkey.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react-native/src/native-passkey.ts#L22)
+Defined in: [packages/react-native/src/native-passkey.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react-native/src/native-passkey.ts#L22)

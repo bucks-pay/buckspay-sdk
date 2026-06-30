@@ -6,7 +6,7 @@
 
 # Interface: AccountAdapter
 
-Defined in: [packages/core/src/types.ts:110](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L110)
+Defined in: [packages/core/src/types.ts:110](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L110)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types.ts:110](https://github.com/bucks-pay/bucksp
 
 > `readonly` **model**: [`AccountModel`](../type-aliases/AccountModel.md)
 
-Defined in: [packages/core/src/types.ts:111](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L111)
+Defined in: [packages/core/src/types.ts:111](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L111)
 
 ## Methods
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types.ts:111](https://github.com/bucks-pay/bucksp
 
 > **assembleSignedEntry**(`input`): `Promise`\<`string`\>
 
-Defined in: [packages/core/src/types.ts:122](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L122)
+Defined in: [packages/core/src/types.ts:122](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L122)
 
 returns the SIGNED auth entry as base64 XDR.
 
@@ -42,11 +42,11 @@ returns the SIGNED auth entry as base64 XDR.
 
 > `optional` **buildSessionInstallEntry**(`input`): `SorobanAuthorizationEntry`
 
-Defined in: [packages/core/src/types.ts:126](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L126)
+Defined in: [packages/core/src/types.ts:126](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L126)
 
 Contract account model only: the UNSIGNED entry that installs a policy-scoped session signer
  (the account self-administers, authorized by the root signer at assemble time). Classic adapters
- omit it → the session flow refuses with INVALID_CONFIG.
+ omit it -> the session flow refuses with INVALID_CONFIG.
 
 #### Parameters
 
@@ -64,7 +64,7 @@ Contract account model only: the UNSIGNED entry that installs a policy-scoped se
 
 > `optional` **buildSessionRevokeEntry**(`input`): `SorobanAuthorizationEntry`
 
-Defined in: [packages/core/src/types.ts:128](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L128)
+Defined in: [packages/core/src/types.ts:128](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L128)
 
 Contract account model only: the UNSIGNED entry that revokes a session signer.
 
@@ -84,11 +84,11 @@ Contract account model only: the UNSIGNED entry that revokes a session signer.
 
 > **buildUnsignedBatchEntry**(`input`): `SorobanAuthorizationEntry`
 
-Defined in: [packages/core/src/types.ts:120](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L120)
+Defined in: [packages/core/src/types.ts:120](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L120)
 
 Build ONE unsigned auth entry covering an atomic batch of calls. For N>1 it is the pinned
  Multicall router's `batch_transfer(payer, token, Vec<(to, amount)>)` invocation with the N
- transfers as sub-invocations (one nonce, one signature for the whole batch — SAME shape for
+ transfers as sub-invocations (one nonce, one signature for the whole batch - SAME shape for
  classic and contract, only the signer differs). A batch of 1 MUST equal buildUnsignedEntry of
  the same call (golden no-regression invariant).
 
@@ -108,7 +108,7 @@ Build ONE unsigned auth entry covering an atomic batch of calls. For N>1 it is t
 
 > **buildUnsignedEntry**(`input`): `SorobanAuthorizationEntry`
 
-Defined in: [packages/core/src/types.ts:114](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L114)
+Defined in: [packages/core/src/types.ts:114](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L114)
 
 #### Parameters
 
@@ -126,7 +126,7 @@ Defined in: [packages/core/src/types.ts:114](https://github.com/bucks-pay/bucksp
 
 > **ensureReady**(`input`): `Promise`\<`void`\>
 
-Defined in: [packages/core/src/types.ts:113](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L113)
+Defined in: [packages/core/src/types.ts:113](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L113)
 
 #### Parameters
 
@@ -144,7 +144,7 @@ Defined in: [packages/core/src/types.ts:113](https://github.com/bucks-pay/bucksp
 
 > **resolveAddress**(`signer`): `Promise`\<`string`\>
 
-Defined in: [packages/core/src/types.ts:112](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L112)
+Defined in: [packages/core/src/types.ts:112](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L112)
 
 #### Parameters
 

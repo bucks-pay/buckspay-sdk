@@ -6,7 +6,7 @@
 
 # Interface: SessionManager
 
-Defined in: [packages/core/src/types.ts:303](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L303)
+Defined in: [packages/core/src/types.ts:303](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L303)
 
 Grant / revoke policy-scoped session keys on a contract account.
 
@@ -16,7 +16,7 @@ Grant / revoke policy-scoped session keys on a contract account.
 
 > **grantSession**(`grant`): `Promise`\<\{ `receipt`: [`Receipt`](Receipt.md); `session`: [`Session`](Session.md); \}\>
 
-Defined in: [packages/core/src/types.ts:304](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L304)
+Defined in: [packages/core/src/types.ts:304](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L304)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [packages/core/src/types.ts:304](https://github.com/bucks-pay/bucksp
 
 > **revokeSession**(`session`): `Promise`\<[`Receipt`](Receipt.md)\>
 
-Defined in: [packages/core/src/types.ts:305](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L305)
+Defined in: [packages/core/src/types.ts:305](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L305)
 
 #### Parameters
 

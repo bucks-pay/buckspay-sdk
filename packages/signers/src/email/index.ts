@@ -1,11 +1,11 @@
-// @buckspay/signers/email — email/OTP signer.
+// @buckspay/signers/email - email/OTP signer.
 //
 // `emailSigner({ proxyUrl, network })` returns a `BuckspaySigner` (type "email") plus a
 // `requestOtp(email)` helper. The OTP-derived Stellar ed25519 key is custodied SERVER-SIDE
 // by the facilitator (`POST /auth/email`) and reached only through the app's signer-proxy:
-//   - requestOtp(email)            → proxy { action: "issue",  email }
-//   - authenticate({ email, otp }) → proxy { action: "verify", email, otp } → { publicKey, sessionToken }
-//   - signAuthEntry(payload)       → proxy { action: "sign", sessionToken, preimageXdr } → { signature }
+//   - requestOtp(email)            -> proxy { action: "issue",  email }
+//   - authenticate({ email, otp }) -> proxy { action: "verify", email, otp } -> { publicKey, sessionToken }
+//   - signAuthEntry(payload)       -> proxy { action: "sign", sessionToken, preimageXdr } -> { signature }
 // The private key NEVER reaches this bundle; the signer holds only the public key, an opaque
 // session token, and the returned 64-byte signatures.
 import { z } from "zod";
@@ -49,7 +49,7 @@ export function emailSigner(opts: EmailSignerOptions, deps: EmailSignerDeps = {}
     throw new BuckspayError("INVALID_CONFIG", "emailSigner: proxyUrl is required (the OTP backend is server-side only)");
   }
   const proxyUrl = opts.proxyUrl;
-  // Global fetch's Response structurally satisfies FetchLike's { ok, status, json } — no cast needed.
+  // Global fetch's Response structurally satisfies FetchLike's { ok, status, json } - no cast needed.
   const doFetch: FetchLike = deps.fetchImpl ?? ((input, init) => fetch(input, init));
 
   let connectedKey: string | null = null;

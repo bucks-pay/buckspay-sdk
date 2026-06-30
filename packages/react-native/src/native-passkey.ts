@@ -2,10 +2,10 @@
  * Native (iOS/Android) WebAuthn passkey signer for React Native.
  *
  * This is NOT a second WebAuthn implementation. `@buckspay/signers/passkey` owns the whole
- * cryptographic pipeline (challenge = sha256(preimage), DER→raw r‖s low-S, the OZ
- * `WebAuthnSigData` __check_auth scval, COSE→65-byte pubkey). `nativePasskey` supplies a
+ * cryptographic pipeline (challenge = sha256(preimage), DER->raw r‖s low-S, the OZ
+ * `WebAuthnSigData` __check_auth scval, COSE->65-byte pubkey). `nativePasskey` supplies a
  * `WebAuthnLike` backed by `react-native-passkey` and delegates to `passkey({ webauthn })`, so
- * the signer the OZ contract account binds is byte-for-byte the web one — only the authenticator
+ * the signer the OZ contract account binds is byte-for-byte the web one - only the authenticator
  * transport differs. The private key never leaves the device secure enclave.
  *
  * iOS vs Android divergence is absorbed by `react-native-passkey` (the native module) and the
@@ -22,21 +22,21 @@ export interface NativePasskeyOptions {
   rpName?: string;
 }
 
-/** base64url (RFC 4648 §5, no padding) → bytes. */
+/** base64url (RFC 4648 §5, no padding) -> bytes. */
 function fromB64Url(s: string): Uint8Array {
   const pad = s.length % 4 === 0 ? "" : "=".repeat(4 - (s.length % 4));
   const b64 = s.replace(/-/g, "+").replace(/_/g, "/") + pad;
   return new Uint8Array(Buffer.from(b64, "base64"));
 }
-/** bytes → base64url, no padding (the challenge react-native-passkey expects). */
+/** bytes -> base64url, no padding (the challenge react-native-passkey expects). */
 function toB64Url(b: Uint8Array): string {
   return Buffer.from(b).toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
 /**
  * `WebAuthnLike` over react-native-passkey. `create()` returns the attested authenticatorData,
- * which carries the COSE_Key — fed to the SHARED `extractCoseKey`/`coseToUncompressed`. `get()`
- * returns the assertion fields the shared `passkeySignAuthEntry` consumes (it does the DER→raw work).
+ * which carries the COSE_Key - fed to the SHARED `extractCoseKey`/`coseToUncompressed`. `get()`
+ * returns the assertion fields the shared `passkeySignAuthEntry` consumes (it does the DER->raw work).
  */
 function reactNativePasskeyWebAuthn(): WebAuthnLike {
   return {

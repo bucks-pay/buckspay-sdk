@@ -6,7 +6,7 @@
 
 # Interface: BuckspayState
 
-Defined in: [packages/core/src/types.ts:323](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L323)
+Defined in: [packages/core/src/types.ts:323](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L323)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types.ts:323](https://github.com/bucks-pay/bucksp
 
 > **address**: `string` \| `null`
 
-Defined in: [packages/core/src/types.ts:325](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L325)
+Defined in: [packages/core/src/types.ts:325](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L325)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types.ts:325](https://github.com/bucks-pay/bucksp
 
 > **error**: [`BuckspayError`](../classes/BuckspayError.md) \| `null`
 
-Defined in: [packages/core/src/types.ts:327](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L327)
+Defined in: [packages/core/src/types.ts:327](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L327)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types.ts:327](https://github.com/bucks-pay/bucksp
 
 > **receipt**: [`Receipt`](Receipt.md) \| `null`
 
-Defined in: [packages/core/src/types.ts:326](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L326)
+Defined in: [packages/core/src/types.ts:326](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L326)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [packages/core/src/types.ts:326](https://github.com/bucks-pay/bucksp
 
 > **status**: `"idle"` \| `"connecting"` \| `"ready"` \| `"signing"` \| `"relaying"` \| `"success"` \| `"error"`
 
-Defined in: [packages/core/src/types.ts:324](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L324)
+Defined in: [packages/core/src/types.ts:324](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L324)

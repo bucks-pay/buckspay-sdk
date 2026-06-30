@@ -6,7 +6,7 @@ export interface OzContractOptions {
   /** Advisory: pinned OZ Wasm hash (the facilitator enforces the real pin). */
   wasmHash?: string;
   /**
-   * Sponsor (deployer) address — the facilitator's public sponsor account. Required to
+   * Sponsor (deployer) address - the facilitator's public sponsor account. Required to
    * derive the C-address offline (the SDK never holds the sponsor secret). The contract
    * model needs this for `BuckspayClient.connect()` (which calls resolveAddress first).
    */
@@ -20,7 +20,7 @@ export interface OzContractOptions {
 
 /**
  * MUST match facilitator `contractSalt`: sha256(pubkeyBytes). Uses the
- * stellar-sdk's isomorphic `hash` (NOT node:crypto) so the SDK runs in the browser —
+ * stellar-sdk's isomorphic `hash` (NOT node:crypto) so the SDK runs in the browser -
  * same SHA-256 as the facilitator, so the derivation stays byte-identical.
  */
 export function contractSalt(passkeyPublicKey: string): Buffer {
@@ -31,7 +31,7 @@ export function contractSalt(passkeyPublicKey: string): Buffer {
  * Deterministic C-address from (deployer=sponsor, salt=sha256(pubkey), networkId).
  * BYTE-IDENTICAL to the facilitator's `derivedContractAddress` (validated
  * on-chain): same `ContractIdPreimage::Address` preimage. The contract id depends only
- * on deployer + salt + network — NOT on the Wasm hash or constructor args.
+ * on deployer + salt + network - NOT on the Wasm hash or constructor args.
  */
 export function deriveContractAddress(
   passkeyPublicKey: string,

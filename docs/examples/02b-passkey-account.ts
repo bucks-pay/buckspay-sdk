@@ -1,4 +1,4 @@
-// Recipe B — passkey smart account (C…), the hero flow. Browser only (uses window).
+// Recipe B - passkey smart account (C...), the hero flow. Browser only (uses window).
 import { createBuckspayClient, createRpcSimContext, type BuckspayConfig } from "@buckspay/core";
 import { ozContractAccount } from "@buckspay/accounts/oz-contract";
 import { passkey } from "@buckspay/signers/passkey";

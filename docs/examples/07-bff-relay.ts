@@ -1,4 +1,4 @@
-// SERVER-ONLY — this file holds the facilitator API key. NEVER import it in a browser
+// SERVER-ONLY - this file holds the facilitator API key. NEVER import it in a browser
 // bundle. It is the BFF boundary: the browser POSTs a SignedIntent here; this validates
 // and forwards to the facilitator with the secret key server-side.
 import { createBuckspayClient, createRpcSimContext, type Receipt, type SignedIntent } from "@buckspay/core";
@@ -15,7 +15,7 @@ const server = createBuckspayClient(
     signer: walletsKit({ network: "testnet" }),
     relayer: buckspayFacilitator({
       url: process.env.FACILITATOR_URL ?? "http://localhost:3000",
-      // server-side secret — never shipped to the browser
+      // server-side secret - never shipped to the browser
       ...(process.env.FACILITATOR_API_KEY ? { apiKey: process.env.FACILITATOR_API_KEY } : {}),
       network: "testnet"
     }),

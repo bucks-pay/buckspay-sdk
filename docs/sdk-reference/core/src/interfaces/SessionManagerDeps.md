@@ -6,7 +6,7 @@
 
 # Interface: SessionManagerDeps
 
-Defined in: [packages/core/src/session-manager.ts:21](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L21)
+Defined in: [packages/core/src/session-manager.ts:21](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L21)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/session-manager.ts:21](https://github.com/bucks-p
 
 > **account**: [`AccountAdapter`](AccountAdapter.md)
 
-Defined in: [packages/core/src/session-manager.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L22)
+Defined in: [packages/core/src/session-manager.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L22)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/session-manager.ts:22](https://github.com/bucks-p
 
 > **address**: `string`
 
-Defined in: [packages/core/src/session-manager.ts:27](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L27)
+Defined in: [packages/core/src/session-manager.ts:27](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L27)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/session-manager.ts:27](https://github.com/bucks-p
 
 > **network**: [`Network`](../type-aliases/Network.md)
 
-Defined in: [packages/core/src/session-manager.ts:25](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L25)
+Defined in: [packages/core/src/session-manager.ts:25](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L25)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/core/src/session-manager.ts:25](https://github.com/bucks-p
 
 > **now**: () => `number`
 
-Defined in: [packages/core/src/session-manager.ts:28](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L28)
+Defined in: [packages/core/src/session-manager.ts:28](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L28)
 
 #### Returns
 
@@ -50,7 +50,7 @@ Defined in: [packages/core/src/session-manager.ts:28](https://github.com/bucks-p
 
 > `optional` **randomNonce?**: () => `bigint`
 
-Defined in: [packages/core/src/session-manager.ts:29](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L29)
+Defined in: [packages/core/src/session-manager.ts:29](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L29)
 
 #### Returns
 
@@ -62,7 +62,7 @@ Defined in: [packages/core/src/session-manager.ts:29](https://github.com/bucks-p
 
 > **relayer**: [`Relayer`](Relayer.md)
 
-Defined in: [packages/core/src/session-manager.ts:24](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L24)
+Defined in: [packages/core/src/session-manager.ts:24](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L24)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [packages/core/src/session-manager.ts:24](https://github.com/bucks-p
 
 > **signer**: [`BuckspaySigner`](BuckspaySigner.md)
 
-Defined in: [packages/core/src/session-manager.ts:23](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L23)
+Defined in: [packages/core/src/session-manager.ts:23](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L23)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [packages/core/src/session-manager.ts:23](https://github.com/bucks-p
 
 > **sim**: [`AccountSimContext`](AccountSimContext.md)
 
-Defined in: [packages/core/src/session-manager.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/session-manager.ts#L26)
+Defined in: [packages/core/src/session-manager.ts:26](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/session-manager.ts#L26)

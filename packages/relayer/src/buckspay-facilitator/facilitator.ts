@@ -52,7 +52,7 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
   function headers(): Record<string, string> {
     const h: Record<string, string> = { "Content-Type": "application/json" };
     // SERVER-SIDE ONLY: the raw apiKey is a secret. In the browser `opts.apiKey`
-    // is undefined and the BFF injects the header — the key never reaches the bundle.
+    // is undefined and the BFF injects the header - the key never reaches the bundle.
     if (opts.apiKey !== undefined && opts.apiKey !== "") h["x-api-key"] = opts.apiKey;
     return h;
   }
@@ -118,7 +118,7 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
           },
           swap(): Promise<Receipt> {
             // The existing /swap/submit rail consumes an EIP-712 batchSignature from the payer's EVM
-            // wallet — NOT the SDK's Soroban BuckspaySigner. The realistic wiring is the app's BFF
+            // wallet - NOT the SDK's Soroban BuckspaySigner. The realistic wiring is the app's BFF
             // (@buckspay/nextjs createRelayRoute) forwarding the wallet-signed typed data to /swap/submit.
             // quoteSwap (above) is signer-agnostic and works end-to-end; this submit leg is fail-closed
             // until the EVM wallet path (or a native Stellar/Soroswap rail) is wired.
@@ -126,7 +126,7 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
               new BuckspayError(
                 "SWAP_FAILED",
                 "swap submit requires an EVM typed-data signature from the caller's wallet; wire it via the " +
-                  "app BFF (@buckspay/nextjs) → /swap/submit before enabling submit"
+                  "app BFF (@buckspay/nextjs) -> /swap/submit before enabling submit"
               )
             );
           }
@@ -171,7 +171,7 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
     },
 
     async getAccountState(address: string): Promise<AccountState> {
-      // Contract (C…) accounts read from /stellar/contract/:address; classic (G…) from
+      // Contract (C...) accounts read from /stellar/contract/:address; classic (G...) from
       // /stellar/account/:pk. Both return the same AccountState shape.
       const path = address.startsWith("C")
         ? `/stellar/contract/${address}?chain=${chain}`
@@ -197,7 +197,7 @@ export function buckspayFacilitator(opts: FacilitatorOptions, deps: Deps = {}): 
           cause: parsed.error
         });
       }
-      // `nothingToDo` (already onboarded) → no tx to sign.
+      // `nothingToDo` (already onboarded) -> no tx to sign.
       return { xdr: parsed.data.nothingToDo === true ? "" : (parsed.data.unsignedTxXdr ?? "") };
     },
 

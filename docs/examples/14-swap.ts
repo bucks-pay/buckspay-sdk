@@ -1,5 +1,5 @@
-// Recipe 14 — SWAP (STRETCH, optional). Gasless token swap via the facilitator's existing
-// /swap rail. NOTE: this is the first feature cut if the cycle tightens — the core surface does
+// Recipe 14 - SWAP (STRETCH, optional). Gasless token swap via the facilitator's existing
+// /swap rail. NOTE: this is the first feature cut if the cycle tightens - the core surface does
 // NOT depend on it. The submit leg uses the EVM wallet typed-data signature through your BFF.
 import { createBuckspayClient, createRpcSimContext, type SwapQuote } from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
@@ -13,7 +13,7 @@ const client = createBuckspayClient(
     signer: walletsKit({ network: "testnet" }),
     // `swapChain` enables quoteSwap/swap; without it the relayer omits them (fails closed).
     relayer: buckspayFacilitator({
-      url: "/api/gasless", // your BFF — the facilitator API key stays server-side
+      url: "/api/gasless", // your BFF - the facilitator API key stays server-side
       network: "testnet",
       swapChain: "base-sepolia"
     }),

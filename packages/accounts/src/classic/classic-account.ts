@@ -28,8 +28,8 @@ type SignTxFn = (txXdr: string, opts: { network: Network; address: string }) => 
 /**
  * wallets-kit signers also sign full onboarding transactions (the sponsor
  * sandwich), exposed via the optional `signTransaction` member of BuckspaySigner
- * (web3-stellar/wallet.signStellarTx). Passkey signers omit it — they cannot
- * sign a classic `G…` transaction — so the classic onboarding path rejects them.
+ * (web3-stellar/wallet.signStellarTx). Passkey signers omit it - they cannot
+ * sign a classic `G...` transaction - so the classic onboarding path rejects them.
  * Returns a stable bound reference (narrowing of an optional method does not
  * survive the `await` between build and submit).
  */
@@ -40,7 +40,7 @@ function resolveTxSigner(signer: BuckspaySigner): SignTxFn | null {
 }
 
 /**
- * Classic (`G…`) account adapter — the strangler extraction of the dashboard's
+ * Classic (`G...`) account adapter - the strangler extraction of the dashboard's
  * `web3-stellar/{sign,onboard,wallet}.ts` behind the core `AccountAdapter` port.
  * Holds no key material: both the onboarding tx and the auth-entry are signed
  * inside the wallet via the injected `BuckspaySigner`.
@@ -58,7 +58,7 @@ export function classicAccount(opts: ClassicAccountOptions = {}): AccountAdapter
       const { address, relayer, signer, network } = input;
 
       const state = await relayer.getAccountState(address);
-      if (state.exists && state.hasUsdcTrustline) return; // already onboarded — no-op
+      if (state.exists && state.hasUsdcTrustline) return; // already onboarded - no-op
 
       const signTransaction = resolveTxSigner(signer);
       if (!signTransaction) {
@@ -111,7 +111,7 @@ export function classicAccount(opts: ClassicAccountOptions = {}): AccountAdapter
       if (!first) {
         throw new BuckspayError("INVALID_CONFIG", "buildUnsignedBatchEntry requires at least one call");
       }
-      // Batch of 1 → byte-identical to the single-call entry (golden invariant).
+      // Batch of 1 -> byte-identical to the single-call entry (golden invariant).
       if (input.calls.length === 1) {
         return this.buildUnsignedEntry({ from: input.from, call: first, nonce: input.nonce });
       }

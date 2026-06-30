@@ -3,7 +3,7 @@ title: "Threat model"
 description: "STRIDE-style analysis of the six security surfaces in the Buckspay SDK."
 ---
 
-STRIDE-style rows for the six surfaces. Status ∈ {mitigated · accepted · deferred-to-audit}.
+STRIDE-style rows for the six surfaces. Status ∈ {mitigated, accepted, deferred-to-audit}.
 Verified present by `scripts/check-threat-model.sh`.
 
 ## 1. Signer custody
@@ -11,7 +11,7 @@ Verified present by `scripts/check-threat-model.sh`.
 **Threat:** key extraction / unauthorized signing.
 
 **Mitigation:** keys live only in the wallet (Wallets Kit) or the authenticator (WebAuthn
-secp256r1). `BuckspaySigner` returns **only** public keys + signatures — there is no
+secp256r1). `BuckspaySigner` returns **only** public keys + signatures - there is no
 code path that reads a secret. The Ed25519 signer used in tests is a test-only double under
 `e2e/`. **Status: mitigated by design.**
 
@@ -19,7 +19,7 @@ code path that reads a secret. The Ed25519 signer used in tests is a test-only d
 
 **Threat:** a malicious/compromised facilitator returns a fake receipt or substitutes the transfer.
 
-**Mitigation:** the facilitator can only *submit* what the payer signed — the on-chain auth
+**Mitigation:** the facilitator can only *submit* what the payer signed - the on-chain auth
 entry binds `from/to/amount/contract` (`facilitator/src/stellarSubmit.ts validateInvocation`),
 so the relayer **cannot alter** the transfer. The SDK validates the `Receipt` shape with zod
 before trusting `transferTx`. `Relayer` is an interface, so a neutral relayer is droppable later.
@@ -29,7 +29,7 @@ before trusting `transferTx`. `Relayer` is an interface, so a neutral relayer is
 
 **Threat:** the facilitator's sponsor secret (`STELLAR_SPONSOR_SECRET_*`) leaks.
 
-**Mitigation:** the sponsor secret lives only in the facilitator env — never in the SDK or any
+**Mitigation:** the sponsor secret lives only in the facilitator env - never in the SDK or any
 client; the SDK never references it. Onboarding/deploy txs are sponsor-sandwich validated
 server-side (`facilitator/src/stellar.ts ALLOWED_ONBOARD_OPS`). **Status: mitigated**; key
 rotation + spend caps tracked in [Key handling](/production/security/key-handling).

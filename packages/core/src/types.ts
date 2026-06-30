@@ -14,7 +14,7 @@ export type SignerType = "wallets-kit" | "passkey" | "social" | "email";
 
 export interface SignerKey {
   type: "ed25519" | "secp256r1";
-  /** ed25519 → Stellar G-address (StrKey). secp256r1 → 65-byte uncompressed pubkey, hex. */
+  /** ed25519 -> Stellar G-address (StrKey). secp256r1 -> 65-byte uncompressed pubkey, hex. */
   publicKey: string;
 }
 
@@ -71,13 +71,13 @@ export interface EnsureReadyInput {
 }
 
 export interface BuildEntryInput {
-  from: string; // G… (classic) or C… (contract)
+  from: string; // G... (classic) or C... (contract)
   call: Call;
   nonce: bigint;
 }
 
 export interface BuildBatchEntryInput {
-  from: string; // G… (classic) or C… (contract)
+  from: string; // G... (classic) or C... (contract)
   calls: Call[];
   nonce: bigint;
   // The active network selects the per-network pinned Multicall router C-address (the router
@@ -114,7 +114,7 @@ export interface AccountAdapter {
   buildUnsignedEntry(input: BuildEntryInput): xdr.SorobanAuthorizationEntry;
   /** Build ONE unsigned auth entry covering an atomic batch of calls. For N>1 it is the pinned
    *  Multicall router's `batch_transfer(payer, token, Vec<(to, amount)>)` invocation with the N
-   *  transfers as sub-invocations (one nonce, one signature for the whole batch — SAME shape for
+   *  transfers as sub-invocations (one nonce, one signature for the whole batch - SAME shape for
    *  classic and contract, only the signer differs). A batch of 1 MUST equal buildUnsignedEntry of
    *  the same call (golden no-regression invariant). */
   buildUnsignedBatchEntry(input: BuildBatchEntryInput): xdr.SorobanAuthorizationEntry;
@@ -122,7 +122,7 @@ export interface AccountAdapter {
   assembleSignedEntry(input: AssembleInput): Promise<string>;
   /** Contract account model only: the UNSIGNED entry that installs a policy-scoped session signer
    *  (the account self-administers, authorized by the root signer at assemble time). Classic adapters
-   *  omit it → the session flow refuses with INVALID_CONFIG. */
+   *  omit it -> the session flow refuses with INVALID_CONFIG. */
   buildSessionInstallEntry?(input: SessionInstallInput): xdr.SorobanAuthorizationEntry;
   /** Contract account model only: the UNSIGNED entry that revokes a session signer. */
   buildSessionRevokeEntry?(input: SessionRevokeInput): xdr.SorobanAuthorizationEntry;
@@ -139,17 +139,17 @@ export interface AccountState {
 
 /** EXACT shape of facilitator stellarSorobanSchema. */
 export interface RelayPayload {
-  token: string; // C…
-  from: string; // G… (classic) or C… (contract account model)
-  to: string; // G…
+  token: string; // C...
+  from: string; // G... (classic) or C... (contract account model)
+  to: string; // G...
   value: string; // stroops, decimal string
   authorizationEntryXdr: string; // base64, signed
   nonce: string; // decimal string
   signatureExpirationLedger: number;
-  // gas mode "token" — signals the facilitator to validate a forward() invocation
+  // gas mode "token" - signals the facilitator to validate a forward() invocation
   // (the authorizationEntryXdr above IS the forward() entry; there is no separate fee entry).
   feeToken?: string;
-  // Session install/revoke marker — the facilitator relays this as an ordinary contract call (no
+  // Session install/revoke marker - the facilitator relays this as an ordinary contract call (no
   // separate route). Absent for ordinary transfers.
   sessionOp?: "install" | "revoke";
 }
@@ -182,7 +182,7 @@ export interface Relayer {
    *  does not support session accounts omits it; the policy-account adapter then refuses to deploy
    *  with INVALID_CONFIG. POST /stellar/session-account/deploy */
   deploySessionAccount?(input: { rootPublicKey: string }): Promise<{ address: string }>;
-  /** STRETCH: gasless swap via the facilitator's EXISTING /swap/* rail. OPTIONAL — a relayer
+  /** STRETCH: gasless swap via the facilitator's EXISTING /swap/* rail. OPTIONAL - a relayer
    *  without swap support (no swapChain) omits these; `BuckspayClient.swap` then fails closed with
    *  SWAP_FAILED. */
   quoteSwap?(req: SwapQuoteRequest): Promise<SwapQuote>;
@@ -275,7 +275,7 @@ export interface PreparedIntent {
   network: Network;
   unsignedEntry: xdr.SorobanAuthorizationEntry;
   preimageXdr: string;
-  // gas mode "token" — `unsignedEntry`/`preimageXdr` above describe the single forward()
+  // gas mode "token" - `unsignedEntry`/`preimageXdr` above describe the single forward()
   // invocation; `feeQuote` is the quote it was built from. No separate fee entry.
   feeQuote?: FeeQuote;
 }
@@ -289,7 +289,7 @@ export interface SignedIntent {
   signatureExpirationLedger: number;
   network: Network;
   authorizationEntryXdr: string; // signed, base64
-  // gas mode "token" — `authorizationEntryXdr` IS the signed forward() entry; this names the fee token.
+  // gas mode "token" - `authorizationEntryXdr` IS the signed forward() entry; this names the fee token.
   feeToken?: string;
 }
 
@@ -315,7 +315,7 @@ export interface BuckspayConfig {
    * Explicit mainnet (pubnet) opt-in for environments with no `process.env`
    * (browsers). ORed with the Node env `BUCKSPAY_ALLOW_MAINNET=1`. Pubnet stays
    * refused unless at least one signal is present; testnet ignores this flag.
-   * `resolveNetwork` remains the single gate — this flag only feeds it.
+   * `resolveNetwork` remains the single gate - this flag only feeds it.
    */
   allowMainnet?: boolean;
 }

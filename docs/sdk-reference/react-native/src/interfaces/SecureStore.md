@@ -6,7 +6,7 @@
 
 # Interface: SecureStore
 
-Defined in: [packages/react-native/src/secure-storage.ts:17](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react-native/src/secure-storage.ts#L17)
+Defined in: [packages/react-native/src/secure-storage.ts:17](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react-native/src/secure-storage.ts#L17)
 
 ## Methods
 
@@ -14,7 +14,7 @@ Defined in: [packages/react-native/src/secure-storage.ts:17](https://github.com/
 
 > **delete**(`key`): `Promise`\<`void`\>
 
-Defined in: [packages/react-native/src/secure-storage.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react-native/src/secure-storage.ts#L20)
+Defined in: [packages/react-native/src/secure-storage.ts:20](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react-native/src/secure-storage.ts#L20)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [packages/react-native/src/secure-storage.ts:20](https://github.com/
 
 > **get**(`key`): `Promise`\<`string` \| `null`\>
 
-Defined in: [packages/react-native/src/secure-storage.ts:18](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react-native/src/secure-storage.ts#L18)
+Defined in: [packages/react-native/src/secure-storage.ts:18](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react-native/src/secure-storage.ts#L18)
 
 #### Parameters
 
@@ -50,7 +50,7 @@ Defined in: [packages/react-native/src/secure-storage.ts:18](https://github.com/
 
 > **set**(`key`, `value`): `Promise`\<`void`\>
 
-Defined in: [packages/react-native/src/secure-storage.ts:19](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/react-native/src/secure-storage.ts#L19)
+Defined in: [packages/react-native/src/secure-storage.ts:19](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/react-native/src/secure-storage.ts#L19)
 
 #### Parameters
 

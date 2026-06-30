@@ -1,4 +1,4 @@
-// Recipe 16 — EMAIL / OTP LOGIN → gasless USDC. Browser app.
+// Recipe 16 - EMAIL / OTP LOGIN -> gasless USDC. Browser app.
 //
 // The user enters their email, receives a one-time code, and verifies it. The OTP backend
 // and the derived ed25519 key are custodied by the facilitator; the browser only ever sees
@@ -33,11 +33,11 @@ export const emailClient = createBuckspayClient(
 export async function payWithEmailLogin(email: string, otpFromInbox: string): Promise<void> {
   // 1. Issue the code (UI then collects it from the user's inbox).
   await signer.requestOtp(email);
-  // 2. Verify the code → resolves the custodied Stellar ed25519 key.
+  // 2. Verify the code -> resolves the custodied Stellar ed25519 key.
   const details = await signer.authenticate?.({ email, otp: otpFromInbox });
   console.log("signed in as", details?.publicKey, "via", details?.provider);
 
-  // 3. Ordinary gasless payment — accounts/relayer/engine are untouched.
+  // 3. Ordinary gasless payment - accounts/relayer/engine are untouched.
   await emailClient.connect();
   const call = emailClient.transfer({ token: USDC_SAC_TESTNET, to: MERCHANT, amount: "2.00" });
   const receipt = await emailClient.pay([call]);

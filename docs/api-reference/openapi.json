@@ -3,7 +3,7 @@
   "info": {
     "title": "Buckspay Facilitator & BFF API",
     "version": "0.2.0",
-    "description": "HTTP wire contract for the Buckspay SDK. The SDK calls these endpoints internally via `@buckspay/relayer`; this reference is for teams building their own BFF relay route or calling the facilitator from server-side code.\n\nAll facilitator endpoints require the `x-api-key` header. **The API key is a server-side secret — it must only appear in BFF or server-side code and must never be shipped to a browser bundle.** Use `createRelayRoute` and `createSignerProxyRoute` from `@buckspay/nextjs` to build compliant BFF handlers."
+    "description": "HTTP wire contract for the Buckspay SDK. The SDK calls these endpoints internally via `@buckspay/relayer`; this reference is for teams building their own BFF relay route or calling the facilitator from server-side code.\n\nAll facilitator endpoints require the `x-api-key` header. **The API key is a server-side secret - it must only appear in BFF or server-side code and must never be shipped to a browser bundle.** Use `createRelayRoute` and `createSignerProxyRoute` from `@buckspay/nextjs` to build compliant BFF handlers."
   },
   "servers": [
     {
@@ -570,7 +570,7 @@
     },
     "/auth/social": {
       "post": {
-        "summary": "Social identity → Stellar key",
+        "summary": "Social identity -> Stellar key",
         "operationId": "postAuthSocial",
         "tags": ["Auth"],
         "description": "Signer-proxy endpoint. The BFF (`createSignerProxyRoute({ provider: 'web3auth', ... })`) forwards this request to the facilitator's `/auth/social` with the server-held API key injected. The facilitator verifies the provider identity token, derives or recovers the user's Stellar key, and returns it.\n\n**Never call the facilitator's `/auth/social` directly from the browser.** Use the BFF route: the SDK's `@buckspay/signers/social` posts to your same-origin BFF which proxies the call.\n\nThe request body is provider-specific (Web3Auth / web3auth verifier). The response `publicKey` is a Stellar G-address (ed25519 StrKey).",
@@ -628,7 +628,7 @@
     },
     "/auth/email": {
       "post": {
-        "summary": "Email OTP → Stellar key",
+        "summary": "Email OTP -> Stellar key",
         "operationId": "postAuthEmail",
         "tags": ["Auth"],
         "description": "Signer-proxy endpoint. The BFF (`createSignerProxyRoute({ provider: 'email', ... })`) forwards this request to the facilitator's `/auth/email`. The facilitator verifies the one-time code and returns the user's derived Stellar public key.\n\n**Never call the facilitator's `/auth/email` directly from the browser.** Use the BFF route: the SDK's `@buckspay/signers/email` posts to your same-origin BFF which proxies the call.\n\nThe request body is provider-specific (email address + OTP code). The response `publicKey` is a Stellar G-address (ed25519 StrKey).",
@@ -789,7 +789,7 @@
           },
           "from": {
             "allOf": [{ "$ref": "#/components/schemas/StellarAddress" }],
-            "description": "Payer address — either a classic G-address or a smart-contract C-address."
+            "description": "Payer address - either a classic G-address or a smart-contract C-address."
           },
           "to": {
             "allOf": [{ "$ref": "#/components/schemas/StellarPublicKey" }],
@@ -1195,7 +1195,7 @@
           },
           "message": {
             "type": "string",
-            "description": "Optional human-readable detail. Never log raw upstream messages — they may contain addresses or sensitive information."
+            "description": "Optional human-readable detail. Never log raw upstream messages - they may contain addresses or sensitive information."
           },
           "details": {
             "type": "object",

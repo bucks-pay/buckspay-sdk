@@ -3,7 +3,7 @@ import { BuckspayError } from "./errors";
 
 /**
  * Atomic-batch ceiling, set by the multicall constraints (classic op-limit /
- * contract Multicall resource budget). `build()` refuses to exceed it — fail closed.
+ * contract Multicall resource budget). `build()` refuses to exceed it - fail closed.
  */
 export const MAX_BATCH_CALLS = 16;
 

@@ -6,7 +6,7 @@
 
 # Interface: BuckspayWallet
 
-Defined in: [packages/core/src/types.ts:296](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L296)
+Defined in: [packages/core/src/types.ts:296](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L296)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types.ts:296](https://github.com/bucks-pay/bucksp
 
 > **address**: `string`
 
-Defined in: [packages/core/src/types.ts:297](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L297)
+Defined in: [packages/core/src/types.ts:297](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L297)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types.ts:297](https://github.com/bucks-pay/bucksp
 
 > **model**: [`AccountModel`](../type-aliases/AccountModel.md)
 
-Defined in: [packages/core/src/types.ts:298](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L298)
+Defined in: [packages/core/src/types.ts:298](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L298)
 
 ## Methods
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types.ts:298](https://github.com/bucks-pay/bucksp
 
 > **getState**(): `Promise`\<[`AccountState`](AccountState.md)\>
 
-Defined in: [packages/core/src/types.ts:299](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L299)
+Defined in: [packages/core/src/types.ts:299](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L299)
 
 #### Returns
 

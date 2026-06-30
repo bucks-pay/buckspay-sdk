@@ -6,7 +6,7 @@
 
 # Interface: SessionInstallInput
 
-Defined in: [packages/core/src/types.ts:97](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L97)
+Defined in: [packages/core/src/types.ts:97](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L97)
 
 Input to build the unsigned session-install entry (contract account model). The session's
  on-chain expiry is derived from `grant.expiresAt`.
@@ -17,7 +17,7 @@ Input to build the unsigned session-install entry (contract account model). The 
 
 > **from**: `string`
 
-Defined in: [packages/core/src/types.ts:98](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L98)
+Defined in: [packages/core/src/types.ts:98](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L98)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [packages/core/src/types.ts:98](https://github.com/bucks-pay/buckspa
 
 > **grant**: [`SessionGrant`](SessionGrant.md)
 
-Defined in: [packages/core/src/types.ts:99](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L99)
+Defined in: [packages/core/src/types.ts:99](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L99)
 
 ***
 
@@ -33,4 +33,4 @@ Defined in: [packages/core/src/types.ts:99](https://github.com/bucks-pay/buckspa
 
 > **nonce**: `bigint`
 
-Defined in: [packages/core/src/types.ts:100](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L100)
+Defined in: [packages/core/src/types.ts:100](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L100)

@@ -1,4 +1,4 @@
-// Recipe 11 — SESSIONS (contract/passkey accounts only). Grant a scoped session key with on-chain
+// Recipe 11 - SESSIONS (contract/passkey accounts only). Grant a scoped session key with on-chain
 // policies (spend limit + allowlist), serialize it for later, then revoke it. Sessions are refused on
 // the classic model: grantSession throws BuckspayError("INVALID_CONFIG").
 import { Keypair } from "@stellar/stellar-sdk";
@@ -28,7 +28,7 @@ const client = createBuckspayClient(
 export async function runSession(): Promise<void> {
   await client.connect();
 
-  // The session key is the ONE key the app deliberately mints — scoped + revocable, never the root
+  // The session key is the ONE key the app deliberately mints - scoped + revocable, never the root
   // account key. Store its secret in secure storage; the SDK only ever needs its public key.
   const sessionKp = Keypair.random();
 
@@ -43,7 +43,7 @@ export async function runSession(): Promise<void> {
   const blob = serializeSession(session);
   console.log("serialized session blob length", blob.length);
 
-  // …the session key now pays within its policies, with no per-action root prompts…
+  // ...the session key now pays within its policies, with no per-action root prompts...
 
   // Revoke when done (root-signed); the session key no longer authorizes anything.
   const revokeReceipt = await client.revokeSession(session);

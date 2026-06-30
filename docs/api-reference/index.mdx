@@ -30,20 +30,20 @@ compliant BFF handlers without handling the key injection yourself.
 
 | Group | Paths | Purpose |
 |-------|-------|---------|
-| **Relay** | `POST /relay` | Submit a signed `RelayPayload` → `Receipt` |
+| **Relay** | `POST /relay` | Submit a signed `RelayPayload` -> `Receipt` |
 | **Fee** | `POST /fee/quote` | Quote gas-in-token fee before building the `forward()` entry |
-| **Account State** | `GET /stellar/account/{pk}` · `GET /stellar/contract/{addr}` | Read on-chain balances and trustline status |
-| **Onboarding** | `POST /stellar/onboard/build` · `/submit` · `/contract/deploy` · `/session-account/deploy` | Sponsor-funded account setup and smart-contract deploy |
-| **Auth** | `POST /auth/social` · `POST /auth/email` | Signer-proxy: verify provider identity → Stellar key |
+| **Account State** | `GET /stellar/account/{pk}`, `GET /stellar/contract/{addr}` | Read on-chain balances and trustline status |
+| **Onboarding** | `POST /stellar/onboard/build`, `/submit`, `/contract/deploy`, `/session-account/deploy` | Sponsor-funded account setup and smart-contract deploy |
+| **Auth** | `POST /auth/social`, `POST /auth/email` | Signer-proxy: verify provider identity -> Stellar key |
 | **Swap** | `POST /swap/quote` | EVM gasless swap quote (requires `swapChain` config) |
 
 ## Schema sources
 
 All request and response schemas are derived directly from the SDK's own zod validators:
 
-- **`RelayPayload` / `Receipt`** — `packages/core/src/types.ts` + `packages/relayer/src/buckspay-facilitator/internals.ts` (`receiptSchema`)
-- **`FeeQuote`** — `packages/relayer/src/buckspay-facilitator/internals.ts` (`feeQuoteSchema`)
-- **`AccountState`** — `packages/relayer/src/buckspay-facilitator/internals.ts` (`accountStateSchema`)
-- **`AuthKeyResponse`** — `packages/core/src/types.ts` (`AuthDetails`)
-- **`SwapQuoteResponse`** — `packages/relayer/src/buckspay-facilitator/internals.ts` (`swapQuoteResponseSchema`)
-- **BFF relay / auth request validation** — `packages/nextjs/src/routes.ts` (`relayPayloadSchema`, `bodyObjectSchema`)
+- **`RelayPayload` / `Receipt`** - `packages/core/src/types.ts` + `packages/relayer/src/buckspay-facilitator/internals.ts` (`receiptSchema`)
+- **`FeeQuote`** - `packages/relayer/src/buckspay-facilitator/internals.ts` (`feeQuoteSchema`)
+- **`AccountState`** - `packages/relayer/src/buckspay-facilitator/internals.ts` (`accountStateSchema`)
+- **`AuthKeyResponse`** - `packages/core/src/types.ts` (`AuthDetails`)
+- **`SwapQuoteResponse`** - `packages/relayer/src/buckspay-facilitator/internals.ts` (`swapQuoteResponseSchema`)
+- **BFF relay / auth request validation** - `packages/nextjs/src/routes.ts` (`relayPayloadSchema`, `bodyObjectSchema`)

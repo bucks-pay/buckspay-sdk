@@ -6,7 +6,7 @@
 
 # Interface: CreateRelayRouteDeps
 
-Defined in: [packages/nextjs/src/routes.ts:39](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L39)
+Defined in: [packages/nextjs/src/routes.ts:39](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L39)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/nextjs/src/routes.ts:39](https://github.com/bucks-pay/buck
 
 > `optional` **fetchImpl?**: \{(`input`, `init?`): `Promise`\<`Response`\>; (`input`, `init?`): `Promise`\<`Response`\>; \}
 
-Defined in: [packages/nextjs/src/routes.ts:41](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L41)
+Defined in: [packages/nextjs/src/routes.ts:41](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L41)
 
 Test seam: inject fetch (defaults to global fetch).
 

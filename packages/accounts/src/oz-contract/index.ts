@@ -1,5 +1,5 @@
 /**
- * OpenZeppelin Smart Account adapter for `C…` contract accounts + passkey
+ * OpenZeppelin Smart Account adapter for `C...` contract accounts + passkey
  * (`@buckspay/accounts/oz-contract`).
  *
  * `ozContractAccount(opts?)` returns an `AccountAdapter` (model "contract") that derives
@@ -47,7 +47,7 @@ export function ozContractAccount(opts: OzContractOptions = {}): AccountAdapter 
       if (!first) {
         throw new BuckspayError("INVALID_CONFIG", "buildUnsignedBatchEntry requires at least one call");
       }
-      // Batch of 1 → byte-identical to the single-call __check_auth entry (golden invariant).
+      // Batch of 1 -> byte-identical to the single-call __check_auth entry (golden invariant).
       if (input.calls.length === 1) {
         return buildContractEntry({ from: input.from, call: first, nonce: input.nonce });
       }

@@ -5,14 +5,14 @@ description: "How Stellar's native account-abstraction primitives make the payer
 
 Stellar has two orthogonal mechanisms that together make a payment genuinely gasless for the
 end user. Understanding them clarifies why Buckspay needs no fee-abstraction layer bolted on
-from the outside — it uses what the protocol already provides.
+from the outside - it uses what the protocol already provides.
 
 ## Sponsor fee-bump and sponsored reserves
 
 Every Stellar transaction consumes a small XLM fee, and every account must maintain a minimum
 XLM reserve to exist on-chain. Normally that burden falls on the account owner. Stellar's
 **fee-bump** transaction wraps a signed inner transaction with an outer envelope that designates
-a different account — the *sponsor* — as the fee source. The ledger debits the sponsor, not
+a different account - the *sponsor* - as the fee source. The ledger debits the sponsor, not
 the inner-transaction signer.
 
 The same sponsor pattern applies to **reserves**: when an account or trustline is created
@@ -20,7 +20,7 @@ inside a `BEGIN_SPONSORING_FUTURE_RESERVES` / `END_SPONSORING_FUTURE_RESERVES` s
 the reserve is charged to the sponsor's balance, not the new account's.
 
 <Note>
-  The payer needs zero XLM — not to send a payment, and not even to appear on-chain for the
+  The payer needs zero XLM - not to send a payment, and not even to appear on-chain for the
   first time. Buckspay's facilitator is the sponsor for both the fee and the reserve.
 </Note>
 
@@ -30,8 +30,8 @@ fee, and submits to the network. The user's account balance is never consulted f
 
 ## `__check_auth` for contract accounts
 
-Classic Stellar accounts (`G…`) authenticate via Ed25519 — the network verifies the signature
-directly. Contract accounts (`C…`) follow a different path: the network calls the contract's
+Classic Stellar accounts (`G...`) authenticate via Ed25519 - the network verifies the signature
+directly. Contract accounts (`C...`) follow a different path: the network calls the contract's
 `__check_auth` entry point with the authorization payload and the signature(s), and the
 contract decides whether to accept or reject.
 
@@ -49,7 +49,7 @@ For a passkey account payment:
    authorization entries.
 2. The user's authenticator signs the authorization entry (secp256r1 via WebAuthn).
 3. `send()` (via the BFF) hands the signed intent to the facilitator.
-4. The facilitator wraps the transaction in a fee-bump and submits — the contract's
+4. The facilitator wraps the transaction in a fee-bump and submits - the contract's
    `__check_auth` validates the passkey signature on-chain; the sponsor covers the fee.
 
 The result: the user taps an authenticator prompt and the payment settles. No seed phrases,
@@ -57,17 +57,17 @@ no XLM balance, no transaction approval dialog.
 
 {/* @snippet:start 03-gasless-sponsored.ts */}
 ```ts
-// Gasless modes — v1 ships exactly one: sponsored. The facilitator's sponsor account
+// Gasless modes - v1 ships exactly one: sponsored. The facilitator's sponsor account
 // pays the XLM fee; the payer needs zero XLM.
 import type { GasConfig } from "@buckspay/core";
 
 export const sponsored: GasConfig = { mode: "sponsored" };
 
-// Roadmap (NOT available in v1 — do not pass these):
+// Roadmap (NOT available in v1 - do not pass these):
 //   { mode: "token", token: "USDC:GA5..." }  // pay gas in USDC via FeeForwarder
 //   { mode: "self" }                          // payer pays their own fee
 // The GasConfig type only admits `{ mode: "sponsored" }` today, so an unimplemented
-// mode fails to type-check — the docs can't drift into an unsupported config.
+// mode fails to type-check - the docs can't drift into an unsupported config.
 ```
 {/* @snippet:end */}
 
@@ -77,7 +77,7 @@ export const sponsored: GasConfig = { mode: "sponsored" };
   <Card title="Account models" href="/concepts/account-models">
     Classic G-addresses vs. passkey smart-contract accounts.
   </Card>
-  <Card title="Prepare → Sign → Send" href="/concepts/prepare-sign-send">
+  <Card title="Prepare -> Sign -> Send" href="/concepts/prepare-sign-send">
     The three-phase flow every Buckspay payment follows.
   </Card>
 </CardGroup>

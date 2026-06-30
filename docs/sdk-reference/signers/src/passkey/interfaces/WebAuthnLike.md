@@ -6,7 +6,7 @@
 
 # Interface: WebAuthnLike
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:29](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L29)
+Defined in: [packages/signers/src/passkey/webauthn.ts:29](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L29)
 
 ## Methods
 
@@ -14,7 +14,7 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:29](https://github.com/buc
 
 > **create**(`input`): `Promise`\<[`CreateOutput`](CreateOutput.md)\>
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L30)
+Defined in: [packages/signers/src/passkey/webauthn.ts:30](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L30)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:30](https://github.com/buc
 
 > **get**(`input`): `Promise`\<[`GetOutput`](GetOutput.md)\>
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:31](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L31)
+Defined in: [packages/signers/src/passkey/webauthn.ts:31](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L31)
 
 #### Parameters
 

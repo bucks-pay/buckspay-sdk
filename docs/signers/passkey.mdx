@@ -1,6 +1,6 @@
 ---
 title: "Passkey"
-description: "WebAuthn / secp256r1 signing on a smart contract account — the private key never leaves the authenticator."
+description: "WebAuthn / secp256r1 signing on a smart contract account - the private key never leaves the authenticator."
 ---
 
 The passkey signer lets users authenticate with their device's built-in WebAuthn authenticator
@@ -30,7 +30,7 @@ const signer = passkey({ rpId: "app.example.com", rpName: "My App" });
 
 <Note>
   `rpId` is bound permanently to the credential at registration time. If you change it, existing
-  users cannot authenticate — their credential is tied to the original domain. Use
+  users cannot authenticate - their credential is tied to the original domain. Use
   `window.location.hostname` for consistency, or a stable parent domain for cross-subdomain apps.
   This is the WebAuthn anti-phishing mechanism: a credential registered at `app.example.com`
   cannot be used on `evil.example.net`.
@@ -39,7 +39,7 @@ const signer = passkey({ rpId: "app.example.com", rpName: "My App" });
 ## Required account type
 
 `passkey` must be paired with `ozContractAccount`. The contract's `__check_auth` method
-verifies the WebAuthn signature on-chain; a classic `G…` account cannot accept secp256r1
+verifies the WebAuthn signature on-chain; a classic `G...` account cannot accept secp256r1
 signatures.
 
 ```ts
@@ -50,8 +50,8 @@ const account = ozContractAccount({ network: "testnet", sponsorAddress: SPONSOR_
 const signer  = passkey({ rpId: "app.example.com", rpName: "My App" });
 ```
 
-`sponsorAddress` is the facilitator's public `G…` address, needed to derive the deterministic
-`C…` address offline before the contract is deployed.
+`sponsorAddress` is the facilitator's public `G...` address, needed to derive the deterministic
+`C...` address offline before the contract is deployed.
 
 ## Example
 
@@ -60,8 +60,8 @@ of one call is equivalent to `pay([call])`.
 
 {/* @snippet:start 10-batch.ts */}
 ```ts
-// Recipe 10 — ATOMIC BATCH (sendCalls). N USDC transfers settle all-or-nothing in ONE tx via the
-// pinned Multicall router's `batch_transfer` — the smart account (or classic wallet) authorizes the
+// Recipe 10 - ATOMIC BATCH (sendCalls). N USDC transfers settle all-or-nothing in ONE tx via the
+// pinned Multicall router's `batch_transfer` - the smart account (or classic wallet) authorizes the
 // whole batch with a SINGLE signature. A batch of 1 is exactly pay([call]).
 import {
   createBuckspayClient,

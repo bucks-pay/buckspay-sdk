@@ -19,7 +19,7 @@ All `@buckspay/*` packages follow [SemVer 2.0.0](https://semver.org/) and are ma
 - `@buckspay/react`
 
 `@buckspay/react@0.3.0` always pairs with `@buckspay/core@0.3.0`. This removes the
-compatibility matrix — one version number answers "which packages work together?"
+compatibility matrix - one version number answers "which packages work together?"
 
 ### Bump rules while pre-1.0
 
@@ -27,15 +27,15 @@ The SDK is currently in `0.x`. The bump rules below apply **until `1.0.0`**:
 
 | Change | Bump | Example |
 |---|---|---|
-| Breaking API change (rename, remove, behavior change) | **minor** | `0.3.0 → 0.4.0` |
-| New backward-compatible feature | patch | `0.3.0 → 0.3.1` |
-| Bug fix | patch | `0.3.0 → 0.3.1` |
+| Breaking API change (rename, remove, behavior change) | **minor** | `0.3.0 -> 0.4.0` |
+| New backward-compatible feature | patch | `0.3.0 -> 0.3.1` |
+| Bug fix | patch | `0.3.0 -> 0.3.1` |
 
 `major` is reserved for the one-time graduation to `1.0.0`. It is never used before then.
 
 ### How `^` behaves on a `0.x` version
 
-npm's caret on a `0.x` range **behaves like a tilde — it allows patch updates only**:
+npm's caret on a `0.x` range **behaves like a tilde - it allows patch updates only**:
 
 | Pin | Resolves to |
 |---|---|
@@ -63,19 +63,19 @@ upgrading across a `minor` bump to understand what the breaking change requires.
 
 ## Migrating to a new version
 
-### Patch updates (`0.x.y → 0.x.z`)
+### Patch updates (`0.x.y -> 0.x.z`)
 
 No action required. Your `^0.x.y` pin resolves the new patch automatically. No public API
 changed.
 
-### Minor updates (`0.x.y → 0.(x+1).0`) — breaking changes
+### Minor updates (`0.x.y -> 0.(x+1).0`) - breaking changes
 
 A minor bump signals a **breaking API change** under the pre-1.0 rules. Steps:
 
 1. **Read the CHANGELOG** for each affected package. The changeset summary describes exactly
    what changed and what the replacement looks like.
 2. **Update your pin** in `package.json` from `^0.x.y` to `^0.(x+1).0`.
-3. **Update all five packages together** — because they are lockstep, mixing versions
+3. **Update all five packages together** - because they are lockstep, mixing versions
    (e.g. `core@0.4.0` with `react@0.3.x`) is unsupported and may cause type errors at build time.
 4. **Fix call sites** per the CHANGELOG. Breaking changes are accompanied by a migration note
    that shows the before/after.
@@ -89,5 +89,5 @@ notes will be published in each package's `CHANGELOG.md`.
 
 <Note>
   Breaking changes in `1.x+` cost a `major` bump, so `^1.0.0` will never silently take a
-  breaking change — this is the standard SemVer guarantee that `0.x` does not provide.
+  breaking change - this is the standard SemVer guarantee that `0.x` does not provide.
 </Note>

@@ -51,12 +51,12 @@ export function createSorobanSimulator(
     async simulate({ from, call, network }) {
       const op = new Contract(call.contract).call(call.fn, ...call.args);
       // A recording sim must be framed by an account that EXISTS on-chain: the host resolves
-      // the invocation — and the SAC balance footprint — against that account's ledger state.
-      // For the classic model `from` is itself a real G…. For the contract model `from` is a
-      // C… (which `Account` rejects anyway), so we frame with `simSource` — the facilitator
-      // sponsor's public key: a funded, existing G…, mirroring the on-chain-validated behavior.
+      // the invocation - and the SAC balance footprint - against that account's ledger state.
+      // For the classic model `from` is itself a real G.... For the contract model `from` is a
+      // C... (which `Account` rejects anyway), so we frame with `simSource` - the facilitator
+      // sponsor's public key: a funded, existing G..., mirroring the on-chain-validated behavior.
       // A throwaway/non-existent placeholder makes simulateTransaction resolve the footprint
-      // against a state that can't see the contract's balance → spurious "zero balance" reverts.
+      // against a state that can't see the contract's balance -> spurious "zero balance" reverts.
       let sourceId: string;
       if (from.startsWith("G")) {
         sourceId = from;
@@ -65,7 +65,7 @@ export function createSorobanSimulator(
       } else {
         throw new BuckspayError(
           "INVALID_CONFIG",
-          "contract-model simulation needs a funded G-address `simSource` (the facilitator sponsor's public key) to frame the recording sim — pass it via createRpcSimContext(rpcUrl, { simSource })"
+          "contract-model simulation needs a funded G-address `simSource` (the facilitator sponsor's public key) to frame the recording sim - pass it via createRpcSimContext(rpcUrl, { simSource })"
         );
       }
       const tx = new TransactionBuilder(new Account(sourceId, "0"), {
@@ -120,7 +120,7 @@ export function createSorobanSimulator(
  * same Soroban RPC. Pass it as the second argument to `createBuckspayClient` /
  * `createBuckspayConfig`.
  *
- * For the **contract/passkey** account model, pass `deps.simSource` — a funded,
+ * For the **contract/passkey** account model, pass `deps.simSource` - a funded,
  * existing G-address (the facilitator sponsor's public key). A C-address can't
  * frame a transaction, and the recording sim must run against an account that
  * exists on-chain or the SAC balance footprint resolves to zero. The classic
@@ -139,13 +139,13 @@ export function createRpcSimContext(
 
 /**
  * Mainnet (pubnet) sim-context preset. The **contract/passkey** account model's
- * recording sim must be framed by a funded, existing G-address — the facilitator
- * sponsor's PUBLIC key — because a C-address can't frame a transaction and a
+ * recording sim must be framed by a funded, existing G-address - the facilitator
+ * sponsor's PUBLIC key - because a C-address can't frame a transaction and a
  * throwaway source resolves the SAC balance footprint to zero (see
  * `createSorobanSimulator`). This convenience forces that `simSource` so a pubnet
  * caller can never omit it; it is otherwise `createRpcSimContext` unchanged.
  *
- * `sponsorAddress` is PUBLIC (a `G…`); the SDK never holds the sponsor secret.
+ * `sponsorAddress` is PUBLIC (a `G...`); the SDK never holds the sponsor secret.
  * The classic model also works through this (its `from` is already a real G, so
  * the simSource is simply unused).
  */

@@ -1,18 +1,18 @@
 ---
 title: "Social login"
-description: "Sign users in with Google, Apple, or Discord via web3auth — the provider secret stays server-side, never in the browser bundle."
+description: "Sign users in with Google, Apple, or Discord via web3auth - the provider secret stays server-side, never in the browser bundle."
 ---
 
 The social signer lets users authenticate with an OAuth provider (Google, Apple, Discord) through
 web3auth. The OAuth public flow runs in the browser; the provider secret and verifier callback are
-handled by your backend signer-proxy. A Stellar ed25519 key backs the resulting account — the user
+handled by your backend signer-proxy. A Stellar ed25519 key backs the resulting account - the user
 never manages a seed phrase.
 
 ## When to use
 
 Choose `socialSigner` when you want a familiar sign-in button (Google, Apple, Discord) without
 requiring your users to install a wallet or remember a seed phrase. The resulting key backs a
-classic `G…` account.
+classic `G...` account.
 
 <Warning>
   The web3auth **client secret** must never be included in a browser bundle. Configure a
@@ -39,7 +39,7 @@ const signer = socialSigner({
 | Option | Type | Required | Description |
 |---|---|---|---|
 | `provider` | `"web3auth"` | Yes | OAuth provider backend (only `"web3auth"` in v1) |
-| `clientId` | `string` | Yes | Your web3auth project client ID (public — safe in browser) |
+| `clientId` | `string` | Yes | Your web3auth project client ID (public - safe in browser) |
 | `network` | `"testnet" \| "pubnet"` | Yes | Stellar network to target |
 | `proxyUrl` | `string` | No | Same-origin route to the `@buckspay/nextjs` signer-proxy |
 
@@ -50,7 +50,7 @@ resolves an `AuthDetails` object:
 
 ```ts
 const details = await signer.authenticate?.({ loginProvider: "google" });
-// details: AuthDetails { publicKey: "G…", provider: "web3auth" }
+// details: AuthDetails { publicKey: "G...", provider: "web3auth" }
 ```
 
 After `authenticate()` returns, the signer's `getPublicKey()` and `signAuthEntry()` are ready.
@@ -67,18 +67,18 @@ export const POST = createSignerProxyRoute({ provider: "web3auth", network: "tes
 ```
 
 The proxy receives the OAuth callback and calls the facilitator's `POST /auth/social` endpoint
-with the secret — only public key material is returned to the browser.
+with the secret - only public key material is returned to the browser.
 
 ## Example
 
 {/* @snippet:start 12-social-login.ts */}
 ```ts
-// Recipe 12 — SOCIAL LOGIN (web3auth) → gasless USDC. Browser app.
+// Recipe 12 - SOCIAL LOGIN (web3auth) -> gasless USDC. Browser app.
 //
 // The user signs in with Google/Apple/Discord via web3auth. The PUBLIC OAuth runs in the
 // browser; the SECRET verifier callback is completed by YOUR backend's signer-proxy
-// (`@buckspay/nextjs` createSignerProxyRoute → facilitator POST /auth/social). web3auth
-// hands back a Stellar ed25519 key — the smart-account signer. No web3auth secret and no
+// (`@buckspay/nextjs` createSignerProxyRoute -> facilitator POST /auth/social). web3auth
+// hands back a Stellar ed25519 key - the smart-account signer. No web3auth secret and no
 // private key ever reach this bundle.
 import { createBuckspayClient, createRpcSimContext, type BuckspayConfig } from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
@@ -112,11 +112,11 @@ export const socialClient = createBuckspayClient(
 );
 
 export async function payWithSocialLogin(): Promise<void> {
-  // 1. Run the provider OAuth flow → resolves the Stellar ed25519 key.
+  // 1. Run the provider OAuth flow -> resolves the Stellar ed25519 key.
   const details = await signer.authenticate?.({ loginProvider: "google" });
   console.log("signed in as", details?.publicKey, "via", details?.provider);
 
-  // 2. From here it is an ordinary gasless payment — accounts/relayer/engine are untouched.
+  // 2. From here it is an ordinary gasless payment - accounts/relayer/engine are untouched.
   await socialClient.connect();
   const call = socialClient.transfer({ token: USDC_SAC_TESTNET, to: MERCHANT, amount: "1.50" });
   const receipt = await socialClient.pay([call]);
@@ -129,7 +129,7 @@ export async function payWithSocialLogin(): Promise<void> {
 
 <CardGroup cols={2}>
   <Card title="Email OTP" href="/signers/email-otp">
-    No OAuth required — authenticate with a code sent to the user's inbox.
+    No OAuth required - authenticate with a code sent to the user's inbox.
   </Card>
   <Card title="Facilitator and BFF" href="/concepts/facilitator-and-bff">
     How the signer-proxy and API key work together server-side.

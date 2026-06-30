@@ -1,10 +1,10 @@
 ---
 title: "Spend limit policy"
-description: "Cap a session key's cumulative token spend over a rolling period — enforced on-chain in __check_auth."
+description: "Cap a session key's cumulative token spend over a rolling period - enforced on-chain in __check_auth."
 ---
 
 `spendLimit` caps how much of a given token a session key may spend over a rolling time
-window. The limit is enforced **on-chain** in the contract's `__check_auth` — not in the
+window. The limit is enforced **on-chain** in the contract's `__check_auth` - not in the
 SDK, not in the facilitator. A stolen session blob still cannot exceed its configured cap.
 
 ## Usage

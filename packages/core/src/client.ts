@@ -60,7 +60,7 @@ export class BuckspayClient {
     // default/forgotten config cannot move real funds. Two equivalent signals, ORed:
     //   - Node env `BUCKSPAY_ALLOW_MAINNET=1` (servers / CI), and
     //   - config `allowMainnet: true` (browsers, which have no `process.env`).
-    // `resolveNetwork` stays the single gate — this only computes the boolean it takes.
+    // `resolveNetwork` stays the single gate - this only computes the boolean it takes.
     const envOptIn = typeof process !== "undefined" && process.env.BUCKSPAY_ALLOW_MAINNET === "1";
     const allowMainnet = envOptIn || config.allowMainnet === true;
     resolveNetwork(config.network, { allowMainnet });
@@ -110,7 +110,7 @@ export class BuckspayClient {
     // An atomic batch routes through prepareBatch. The single-call path below is
     // left BYTE-IDENTICAL to the original single-call (sponsored) path (a batch of 1 never reaches prepareBatch).
     if (calls.length > 1) return this.prepareBatch(calls);
-    const call = calls[0]; // v1 single-transfer path — byte-identical to the original sponsored path, untouched
+    const call = calls[0]; // v1 single-transfer path - byte-identical to the original sponsored path, untouched
     if (!call) {
       throw new BuckspayError("INVALID_CONFIG", "prepare() requires at least one call");
     }
@@ -148,7 +148,7 @@ export class BuckspayClient {
     const gas = this.config.gas;
     if (gas.mode === "token") {
       // gas-in-token: the user pays Soroban gas in `gas.token`. The SDK
-      // does NOT relay the direct transfer — it relays a SINGLE FeeForwarder `forward(...)` invocation
+      // does NOT relay the direct transfer - it relays a SINGLE FeeForwarder `forward(...)` invocation
       // that pays the merchant AND the relayer's gas in one auth entry. The facilitator quotes the fee +
       // forwarder + collector; the user signs ONE entry whose tree is forward() + the two sub-transfers.
       const relayer = this.config.relayer;
@@ -160,7 +160,7 @@ export class BuckspayClient {
       }
       const quote = await relayer.feeQuote({ from, token: gas.token, calls });
 
-      // Refuse a quote above the ceiling BEFORE building/signing — the relayer can never charge more.
+      // Refuse a quote above the ceiling BEFORE building/signing - the relayer can never charge more.
       if (gas.maxFee !== undefined && BigInt(quote.tokenAmount) > BigInt(gas.maxFee)) {
         throw new BuckspayError(
           "TOKEN_GAS_REJECTED",
@@ -180,7 +180,7 @@ export class BuckspayClient {
       const forwardArgs = [fromScv, tokenScv, merchantScv, paymentScv, collectorScv, feeScv];
       const forwardCall: Call = { contract: quote.forwarder, fn: "forward", args: forwardArgs };
 
-      // Recording sim of the actual forward() call — fails closed if the payer can't afford payment + fee.
+      // Recording sim of the actual forward() call - fails closed if the payer can't afford payment + fee.
       await simulateRecording({
         from,
         call: forwardCall,
@@ -206,7 +206,7 @@ export class BuckspayClient {
       return { ...base, unsignedEntry, preimageXdr, feeQuote: quote };
     }
 
-    // sponsored — byte-identical to the original single-call entry: the direct transfer entry, no fee fields.
+    // sponsored - byte-identical to the original single-call entry: the direct transfer entry, no fee fields.
     await simulateRecording({ from, call, network: this.config.network, simulator: this.sim.simulator });
     const unsignedEntry = this.config.account.buildUnsignedEntry({ from, call, nonce });
     const preimageXdr = this.toPreimageXdr(unsignedEntry, signatureExpirationLedger);
@@ -240,8 +240,8 @@ export class BuckspayClient {
       network: intent.network,
       authorizationEntryXdr
     };
-    // gas mode "token": the signed authorizationEntryXdr IS the forward() entry — name the fee token so
-    // the facilitator validates a forward() invocation. Sponsored intents carry no feeQuote → no feeToken.
+    // gas mode "token": the signed authorizationEntryXdr IS the forward() entry - name the fee token so
+    // the facilitator validates a forward() invocation. Sponsored intents carry no feeQuote -> no feeToken.
     if (intent.feeQuote) {
       return { ...signed, feeToken: intent.feeQuote.token };
     }
@@ -343,7 +343,7 @@ export class BuckspayClient {
   }
 
   /** Revoke a granted session by its object or id (contract account model only). Takes effect
-   *  immediately on-chain — the session key no longer authorizes anything. */
+   *  immediately on-chain - the session key no longer authorizes anything. */
   async revokeSession(session: Session | string): Promise<Receipt> {
     return this.sessionManager().revokeSession(session);
   }
@@ -364,7 +364,7 @@ export class BuckspayClient {
   /**
    * Atomic multi-call prepare (calls.length > 1). One nonce, one expiration, one batched auth
    * entry (the Multicall `batch_transfer` invocation); the facilitator settles all-or-nothing
-   * through the existing /relay. `value` = sum of transfer amounts, `to` = the LAST recipient —
+   * through the existing /relay. `value` = sum of transfer amounts, `to` = the LAST recipient -
    * the entry binds the exact list, so to/value are informational aggregates. Sponsored gas only
    * (batch + gas-in-token is a later combination). Fails closed over the ceiling BEFORE any work.
    */

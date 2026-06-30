@@ -6,7 +6,7 @@
 
 # Interface: CreateSignerProxyRouteOptions
 
-Defined in: [packages/nextjs/src/routes.ts:79](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L79)
+Defined in: [packages/nextjs/src/routes.ts:79](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L79)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/nextjs/src/routes.ts:79](https://github.com/bucks-pay/buck
 
 > **network**: [`Network`](../type-aliases/Network.md)
 
-Defined in: [packages/nextjs/src/routes.ts:81](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L81)
+Defined in: [packages/nextjs/src/routes.ts:81](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L81)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [packages/nextjs/src/routes.ts:81](https://github.com/bucks-pay/buck
 
 > **provider**: `"email"` \| `"web3auth"`
 
-Defined in: [packages/nextjs/src/routes.ts:80](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/nextjs/src/routes.ts#L80)
+Defined in: [packages/nextjs/src/routes.ts:80](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/nextjs/src/routes.ts#L80)

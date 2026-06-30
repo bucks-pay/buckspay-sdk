@@ -8,7 +8,7 @@
 
 > **buildInstallArgs**(`input`): `ScVal`[]
 
-Defined in: [packages/accounts/src/policy/install.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/accounts/src/policy/install.ts#L22)
+Defined in: [packages/accounts/src/policy/install.ts:22](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/accounts/src/policy/install.ts#L22)
 
 Args for the policy account's `add_signer(session_key: BytesN<32>, policy: Policy)` install call:
 `[BytesN(sessionKey), <compiled Policy struct>]`. `sessionKey` is the session signer's ed25519

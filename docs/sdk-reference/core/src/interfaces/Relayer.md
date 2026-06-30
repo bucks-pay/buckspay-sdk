@@ -6,7 +6,7 @@
 
 # Interface: Relayer
 
-Defined in: [packages/core/src/types.ts:171](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L171)
+Defined in: [packages/core/src/types.ts:171](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L171)
 
 ## Methods
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types.ts:171](https://github.com/bucks-pay/bucksp
 
 > **buildOnboard**(`input`): `Promise`\<\{ `xdr`: `string`; \}\>
 
-Defined in: [packages/core/src/types.ts:178](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L178)
+Defined in: [packages/core/src/types.ts:178](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L178)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [packages/core/src/types.ts:178](https://github.com/bucks-pay/bucksp
 
 > **deployContract**(`input`): `Promise`\<\{ `address`: `string`; \}\>
 
-Defined in: [packages/core/src/types.ts:180](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L180)
+Defined in: [packages/core/src/types.ts:180](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L180)
 
 #### Parameters
 
@@ -54,7 +54,7 @@ Defined in: [packages/core/src/types.ts:180](https://github.com/bucks-pay/bucksp
 
 > `optional` **deploySessionAccount**(`input`): `Promise`\<\{ `address`: `string`; \}\>
 
-Defined in: [packages/core/src/types.ts:184](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L184)
+Defined in: [packages/core/src/types.ts:184](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L184)
 
 Deploy a policy-scoped session account bound to an ed25519 root key. OPTIONAL: a relayer that
  does not support session accounts omits it; the policy-account adapter then refuses to deploy
@@ -78,7 +78,7 @@ Deploy a policy-scoped session account bound to an ed25519 root key. OPTIONAL: a
 
 > `optional` **feeQuote**(`input`): `Promise`\<[`FeeQuote`](FeeQuote.md)\>
 
-Defined in: [packages/core/src/types.ts:176](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L176)
+Defined in: [packages/core/src/types.ts:176](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L176)
 
 Quote the fee-token amount + forwarder/collector for paying Soroban gas in `token` (gas mode "token").
  OPTIONAL: a relayer that does not support gas-in-token omits it; `prepare()` then refuses token mode
@@ -110,7 +110,7 @@ Quote the fee-token amount + forwarder/collector for paying Soroban gas in `toke
 
 > **getAccountState**(`address`): `Promise`\<[`AccountState`](AccountState.md)\>
 
-Defined in: [packages/core/src/types.ts:177](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L177)
+Defined in: [packages/core/src/types.ts:177](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L177)
 
 #### Parameters
 
@@ -128,9 +128,9 @@ Defined in: [packages/core/src/types.ts:177](https://github.com/bucks-pay/bucksp
 
 > `optional` **quoteSwap**(`req`): `Promise`\<[`SwapQuote`](SwapQuote.md)\>
 
-Defined in: [packages/core/src/types.ts:188](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L188)
+Defined in: [packages/core/src/types.ts:188](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L188)
 
-STRETCH: gasless swap via the facilitator's EXISTING /swap/* rail. OPTIONAL — a relayer
+STRETCH: gasless swap via the facilitator's EXISTING /swap/* rail. OPTIONAL - a relayer
  without swap support (no swapChain) omits these; `BuckspayClient.swap` then fails closed with
  SWAP_FAILED.
 
@@ -150,7 +150,7 @@ STRETCH: gasless swap via the facilitator's EXISTING /swap/* rail. OPTIONAL — 
 
 > **relay**(`payload`): `Promise`\<[`Receipt`](Receipt.md)\>
 
-Defined in: [packages/core/src/types.ts:172](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L172)
+Defined in: [packages/core/src/types.ts:172](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L172)
 
 #### Parameters
 
@@ -168,7 +168,7 @@ Defined in: [packages/core/src/types.ts:172](https://github.com/bucks-pay/bucksp
 
 > **submitOnboard**(`input`): `Promise`\<\{ `ok`: `boolean`; \}\>
 
-Defined in: [packages/core/src/types.ts:179](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L179)
+Defined in: [packages/core/src/types.ts:179](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L179)
 
 #### Parameters
 
@@ -192,7 +192,7 @@ Defined in: [packages/core/src/types.ts:179](https://github.com/bucks-pay/bucksp
 
 > `optional` **swap**(`req`): `Promise`\<[`Receipt`](Receipt.md)\>
 
-Defined in: [packages/core/src/types.ts:189](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L189)
+Defined in: [packages/core/src/types.ts:189](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L189)
 
 #### Parameters
 

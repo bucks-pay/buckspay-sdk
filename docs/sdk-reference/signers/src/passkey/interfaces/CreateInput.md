@@ -6,7 +6,7 @@
 
 # Interface: CreateInput
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:6](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L6)
+Defined in: [packages/signers/src/passkey/webauthn.ts:6](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L6)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:6](https://github.com/buck
 
 > **challenge**: `Uint8Array`
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:10](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L10)
+Defined in: [packages/signers/src/passkey/webauthn.ts:10](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L10)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:10](https://github.com/buc
 
 > **rpId**: `string`
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:7](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L7)
+Defined in: [packages/signers/src/passkey/webauthn.ts:7](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L7)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:7](https://github.com/buck
 
 > **rpName**: `string`
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:8](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L8)
+Defined in: [packages/signers/src/passkey/webauthn.ts:8](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L8)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [packages/signers/src/passkey/webauthn.ts:8](https://github.com/buck
 
 > **userName**: `string`
 
-Defined in: [packages/signers/src/passkey/webauthn.ts:9](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/signers/src/passkey/webauthn.ts#L9)
+Defined in: [packages/signers/src/passkey/webauthn.ts:9](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/signers/src/passkey/webauthn.ts#L9)

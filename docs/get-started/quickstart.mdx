@@ -20,19 +20,19 @@ pnpm add @buckspay/core @buckspay/accounts @buckspay/signers @buckspay/relayer
 
 ### Run the full example
 
-The snippet below is the complete, runnable file — compiled and type-checked in CI. It:
+The snippet below is the complete, runnable file - compiled and type-checked in CI. It:
 
 1. **Creates a client** with a classic G-address account, a Wallets Kit browser signer, and
    your backend BFF route as the relayer. `createRpcSimContext` gives `prepare()` a
    recording simulator over the Soroban RPC.
 2. **Connects** the user's wallet and ensures the account is ready on-chain.
 3. **Calls `transfer`** to build the payment intent.
-4. **Calls `pay`** — which runs prepare → sign → send in one call.
+4. **Calls `pay`** - which runs prepare -> sign -> send in one call.
 5. **Logs the settled receipt** (`receipt.transferTx`).
 
 {/* @snippet:start 01-quickstart-classic.ts */}
 ```ts
-// Quickstart — classic gasless USDC transfer (browser; NO apiKey).
+// Quickstart - classic gasless USDC transfer (browser; NO apiKey).
 import { createBuckspayClient, createRpcSimContext } from "@buckspay/core";
 import { classicAccount } from "@buckspay/accounts/classic";
 import { walletsKit } from "@buckspay/signers/wallets-kit";
@@ -57,7 +57,7 @@ export async function quickstart(): Promise<void> {
 
   await buckspay.connect(); // wallet + ensureReady
   const call = buckspay.transfer({ token: USDC_SAC, to: MERCHANT, amount: "1.50" });
-  const receipt = await buckspay.pay([call]); // prepare → sign → send
+  const receipt = await buckspay.pay([call]); // prepare -> sign -> send
   console.log(receipt.transferTx); // settled on testnet
 }
 ```
@@ -77,7 +77,7 @@ export async function quickstart(): Promise<void> {
   via: "buckspay_self",
   token: "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
   chain: "stellar-testnet",
-  transferTx: "a1b2c3…",   // transaction hash — verify on Stellar Expert
+  transferTx: "a1b2c3...",   // transaction hash - verify on Stellar Expert
   ledger: 54321,
   status: "SUCCESS"
 }
@@ -98,6 +98,6 @@ the payment landed.
     Sponsored, fee-forwarding, and session-based gas strategies.
   </Card>
   <Card title="React hooks" href="/platforms/web-react">
-    Drop-in hooks for React apps — `useWallet`, `useStellarPay`, and `BuckspayProvider`.
+    Drop-in hooks for React apps - `useWallet`, `useStellarPay`, and `BuckspayProvider`.
   </Card>
 </CardGroup>

@@ -6,7 +6,7 @@
 
 # Interface: BuckspaySigner
 
-Defined in: [packages/core/src/types.ts:35](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L35)
+Defined in: [packages/core/src/types.ts:35](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L35)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types.ts:35](https://github.com/bucks-pay/buckspa
 
 > `readonly` **type**: [`SignerType`](../type-aliases/SignerType.md)
 
-Defined in: [packages/core/src/types.ts:36](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L36)
+Defined in: [packages/core/src/types.ts:36](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L36)
 
 ## Methods
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types.ts:36](https://github.com/bucks-pay/buckspa
 
 > `optional` **authenticate**(`params?`): `Promise`\<[`AuthDetails`](AuthDetails.md)\>
 
-Defined in: [packages/core/src/types.ts:52](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L52)
+Defined in: [packages/core/src/types.ts:52](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L52)
 
 Social/email signers only: run the provider's auth flow and
 resolve the Stellar key. wallets-kit / passkey signers omit it. After it
@@ -44,7 +44,7 @@ resolves, getPublicKey()/signAuthEntry() operate on the provider-issued key.
 
 > **getPublicKey**(): `Promise`\<[`SignerKey`](SignerKey.md)\>
 
-Defined in: [packages/core/src/types.ts:37](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L37)
+Defined in: [packages/core/src/types.ts:37](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L37)
 
 #### Returns
 
@@ -56,7 +56,7 @@ Defined in: [packages/core/src/types.ts:37](https://github.com/bucks-pay/buckspa
 
 > **signAuthEntry**(`payload`): `Promise`\<[`Signature`](Signature.md)\>
 
-Defined in: [packages/core/src/types.ts:38](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L38)
+Defined in: [packages/core/src/types.ts:38](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L38)
 
 #### Parameters
 
@@ -74,7 +74,7 @@ Defined in: [packages/core/src/types.ts:38](https://github.com/bucks-pay/buckspa
 
 > `optional` **signTransaction**(`txXdr`, `ctx`): `Promise`\<`string`\>
 
-Defined in: [packages/core/src/types.ts:46](https://github.com/bucks-pay/buckspay-sdk/blob/6c133be3ba8b60ab91aeb175d16a4229a853f4b6/packages/core/src/types.ts#L46)
+Defined in: [packages/core/src/types.ts:46](https://github.com/bucks-pay/buckspay-sdk/blob/43ad599d2776cb5d657043c36847b3318093ccf4/packages/core/src/types.ts#L46)
 
 Sign a full transaction envelope (classic sponsored onboarding signs the
 sponsor-sandwich tx, not an auth-entry). Optional: only external-wallet

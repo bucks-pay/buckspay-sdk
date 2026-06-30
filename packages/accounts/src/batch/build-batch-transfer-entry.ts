@@ -3,12 +3,12 @@ import { BuckspayError, buildUnsignedCallEntry } from "@buckspay/core";
 import type { BuildBatchEntryInput, SubInvocation } from "@buckspay/core";
 
 /**
- * Shared atomic-batch entry builder for BOTH account models (classic G… and contract C…): the
+ * Shared atomic-batch entry builder for BOTH account models (classic G... and contract C...): the
  * unsigned entry is identical across models; only the signer differs.
  *
  * For N>1 same-token `transfer` calls it builds ONE auth entry whose root invocation is the pinned
  * Multicall router's `batch_transfer(payer, token, Vec<(to, amount)>)` with the N transfers as
- * sub-invocations — so the user authorizes the whole batch with a single signature and it settles
+ * sub-invocations - so the user authorizes the whole batch with a single signature and it settles
  * all-or-nothing through the EXISTING `/relay` (one host-function op; Soroban allows only one).
  *
  * Encoding ported verbatim from the multicall reference (`buildBatchTransferArgs`):
@@ -47,7 +47,7 @@ export function buildBatchTransferEntry(
     if (!toArg || !amountArg) {
       throw new BuckspayError("INVALID_CONFIG", "each batch transfer must include (from, to, amount) args");
     }
-    // tuple (to, amount) — reuse the original ScVals so the encoding is byte-exact.
+    // tuple (to, amount) - reuse the original ScVals so the encoding is byte-exact.
     transferTuples.push(xdr.ScVal.scvVec([toArg, amountArg]));
     // the SAC transfer the Multicall performs on the payer's behalf, declared in the auth tree.
     subInvocations.push({ contract: token, fn: "transfer", args: call.args });
