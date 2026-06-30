@@ -1,5 +1,25 @@
 # @buckspay/core
 
+## 0.2.1
+
+### Patch Changes
+
+- ccc52f1: **Policy session accounts.** `@buckspay/accounts` adds the `@buckspay/accounts/policy-account` adapter:
+  an ed25519-root contract account whose on-chain `__check_auth` enforces session-key spend-limit,
+  allow-list and expiry policies. It derives a deterministic, counterfactual C-address (offline, from the
+  sponsor + root key), assembles auth entries as an ed25519 `SigData`, and pairs with `grantSession` /
+  `revokeSession` and the policy compiler. `@buckspay/core` adds the optional `Relayer.deploySessionAccount`
+  hook and the adapter's `ensureReady` deploys the account (sponsored) on first connect; `@buckspay/relayer`
+  implements it against the facilitator. A granted session key then transacts within its policies — and an
+  over-limit, off-allow-list, expired or revoked attempt is rejected with `SESSION_POLICY_VIOLATION`.
+- 3a8497c: **Session manager.** `@buckspay/core` adds `BuckspayClient.grantSession` / `revokeSession` (contract
+  account model only — `INVALID_CONFIG` on the classic model) plus `sessionId` / `serializeSession` /
+  `deserializeSession` (clock-injected; a past session throws `SESSION_EXPIRED`) and `createSessionManager`.
+  The root signer authorizes the session install once; thereafter the scoped session key transacts within
+  its spend-limit + allowlist policies without per-action prompts, and a revoke takes effect immediately
+  on-chain. The contract account builds the `add_signer` / `remove_signer` entries, and the relayer
+  surfaces host policy rejections as `SESSION_POLICY_VIOLATION` / `SESSION_EXPIRED`.
+
 ## 0.2.0
 
 ### Minor Changes

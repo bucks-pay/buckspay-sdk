@@ -1,5 +1,14 @@
 # @buckspay/nextjs
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [ccc52f1]
+- Updated dependencies [3a8497c]
+  - @buckspay/core@0.2.1
+  - @buckspay/relayer@0.2.1
+
 ## 0.2.0
 
 ### Patch Changes

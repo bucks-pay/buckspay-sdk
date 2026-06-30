@@ -1,5 +1,14 @@
 # @buckspay/react-native
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [ccc52f1]
+- Updated dependencies [3a8497c]
+  - @buckspay/core@0.2.1
+  - @buckspay/react@0.2.1
+
 ## 0.2.0
 
 ### Patch Changes
