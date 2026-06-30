@@ -11,7 +11,7 @@
       "description": "Buckspay facilitator (all endpoints). Set via BUCKSPAY_FACILITATOR_URL on the server.",
       "variables": {
         "facilitatorUrl": {
-          "default": "https://facilitator.buckspay.com",
+          "default": "https://facilitator.buckspay.xyz",
           "description": "Base URL of the Buckspay facilitator service."
         }
       }

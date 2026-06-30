@@ -1,10 +1,10 @@
 # @buckspay/core
 
-Framework-agnostic core of the **Buckspay SDK** — gasless Stellar (Soroban) USDC payments.
+Framework-agnostic core of the **Buckspay SDK** - gasless Stellar (Soroban) USDC payments.
 
-It carries the gas-abstraction engine, the `prepare → sign → send` client, the typed
+It carries the gas-abstraction engine, the `prepare -> sign -> send` client, the typed
 `AccountAdapter` / `BuckspaySigner` / `Relayer` ports, and `BuckspayError`. It holds **no secrets**
-and makes **no network calls** of its own — the adapters do that.
+and makes **no network calls** of its own - the adapters do that.
 
 ## Install
 
@@ -13,7 +13,7 @@ pnpm add @buckspay/core
 ```
 
 Pair it with an account adapter (`@buckspay/accounts`), a signer (`@buckspay/signers`), and a
-relayer (`@buckspay/relayer`) — or use `@buckspay/react` in a React app.
+relayer (`@buckspay/relayer`) - or use `@buckspay/react` in a React app.
 
 ## Usage
 
@@ -34,9 +34,9 @@ const { client, store } = createBuckspayConfig({
 
 await client.connect();
 const call = client.transfer({ token: USDC_SAC, to, amount: "1.5" });
-const receipt = await client.pay([call]); // prepare → sign → send
+const receipt = await client.pay([call]); // prepare -> sign -> send
 ```
 
 ## License
 
-MIT — part of [buckspay-sdk](https://github.com/bucks-pay/buckspay-sdk).
+MIT - part of [buckspay-sdk](https://github.com/bucks-pay/buckspay-sdk).

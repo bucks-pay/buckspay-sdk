@@ -1,6 +1,6 @@
 # @buckspay/signers
 
-Signers for the **Buckspay SDK** — they produce the signature, never hold a key.
+Signers for the **Buckspay SDK** - they produce the signature, never hold a key.
 
 ## `@buckspay/signers/wallets-kit`
 
@@ -28,4 +28,4 @@ Pass the signer to `createBuckspayConfig` (see `@buckspay/core`).
 
 ## License
 
-MIT — part of [buckspay-sdk](https://github.com/bucks-pay/buckspay-sdk).
+MIT - part of [buckspay-sdk](https://github.com/bucks-pay/buckspay-sdk).

@@ -1,6 +1,6 @@
 # @buckspay/react
 
-React 19 hooks for the **Buckspay SDK** — gasless Stellar (Soroban) USDC payments.
+React 19 hooks for the **Buckspay SDK** - gasless Stellar (Soroban) USDC payments.
 
 A thin binding over the framework-agnostic store from `createBuckspayConfig`. Hooks subscribe via
 `useSyncExternalStore` (tearing-free, concurrent-safe). It contains **no** Stellar/crypto logic and
@@ -31,7 +31,7 @@ function App({ config }) {
 function Pay() {
   const { address, connect, status } = useWallet();
   const { pay, prepare, sign, receipt } = useStellarPay();
-  // connect(), then pay(calls) — or prepare()+sign() and relay via your BFF.
+  // connect(), then pay(calls) - or prepare()+sign() and relay via your BFF.
 }
 ```
 
@@ -39,4 +39,4 @@ function Pay() {
 
 ## License
 
-MIT — part of [buckspay-sdk](https://github.com/bucks-pay/buckspay-sdk).
+MIT - part of [buckspay-sdk](https://github.com/bucks-pay/buckspay-sdk).

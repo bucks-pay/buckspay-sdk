@@ -49,16 +49,16 @@
 
 - 7ae6cfa: Mainnet (Stellar pubnet) is now supported via explicit opt-in.
 
-  Gasless USDC payments — both the classic (G-account + Wallets Kit) and the
-  contract/passkey (C-account, OpenZeppelin Smart Account) flows — run on pubnet
+  Gasless USDC payments - both the classic (G-account + Wallets Kit) and the
+  contract/passkey (C-account, OpenZeppelin Smart Account) flows - run on pubnet
   when the caller explicitly opts in (`allowMainnet: true` in the browser config /
   `BUCKSPAY_ALLOW_MAINNET=1` in Node). Mainnet is OFF by default: without the opt-in,
-  `resolveNetwork("pubnet", …)` throws `INVALID_CONFIG`, so no default or forgotten
+  `resolveNetwork("pubnet", ...)` throws `INVALID_CONFIG`, so no default or forgotten
   configuration can move real funds. The real pubnet path is proven by a guarded e2e
   smoke (tiny 0.0001 USDC transfers) and gated behind the mainnet cutover runbook.
 
   No breaking changes: testnet behavior and the public API surface (README §4) are
-  unchanged. Pre-1.0 → patch per VERSIONING.md §4.1.
+  unchanged. Pre-1.0 -> patch per VERSIONING.md §4.1.
 
 - Updated dependencies [77d7b43]
 - Updated dependencies [7ae6cfa]
@@ -70,17 +70,17 @@
 
 - Hero hardening, all backward-compatible:
 
-  - **`@buckspay/accounts`** — browser-safe **isomorphic SHA-256** for the C-address salt
+  - **`@buckspay/accounts`** - browser-safe **isomorphic SHA-256** for the C-address salt
     (was `node:crypto`, which broke the browser build of `oz-contract`); same hash, so the
     derivation stays byte-identical. Plus an OZ Smart Account **Wasm-hash pin guard**
-    (`assertPinnedWasmHash`) — `ozContractAccount` refuses any Wasm hash but the pinned one.
-  - **`@buckspay/core`** — `boundExpirationLedger` caps `signatureExpirationLedger` to
+    (`assertPinnedWasmHash`) - `ozContractAccount` refuses any Wasm hash but the pinned one.
+  - **`@buckspay/core`** - `boundExpirationLedger` caps `signatureExpirationLedger` to
     `MAX_EXPIRATION_LEDGERS` (no widened replay window), and a **mainnet gate**: `pubnet` is
     refused unless `BUCKSPAY_ALLOW_MAINNET=1`.
-  - **`@buckspay/react`** — `BuckspayProvider` accepts an optional `sim` prop, enabling
+  - **`@buckspay/react`** - `BuckspayProvider` accepts an optional `sim` prop, enabling
     `useStellarPay().pay()` (the recording simulator for `prepare()`).
 
-  Pre-1.0 fix + backward-compatible feature → `patch` per VERSIONING.md (0.1.2 → 0.1.3, lockstep).
+  Pre-1.0 fix + backward-compatible feature -> `patch` per VERSIONING.md (0.1.2 -> 0.1.3, lockstep).
 
 - Updated dependencies
   - @buckspay/core@0.1.3
@@ -102,7 +102,7 @@
 
 ### Minor Changes
 
-- Initial public release of the Buckspay SDK — the classic Stellar (Soroban) gasless USDC path: the core `prepare → sign → send` client + gas-abstraction engine, the Stellar Wallets Kit signer, the classic `G…` account adapter with sponsored onboarding, the facilitator relayer, and the React 19 binding (`BuckspayProvider` / `useWallet` / `useStellarPay`).
+- Initial public release of the Buckspay SDK - the classic Stellar (Soroban) gasless USDC path: the core `prepare -> sign -> send` client + gas-abstraction engine, the Stellar Wallets Kit signer, the classic `G...` account adapter with sponsored onboarding, the facilitator relayer, and the React 19 binding (`BuckspayProvider` / `useWallet` / `useStellarPay`).
 
 ### Patch Changes
 
