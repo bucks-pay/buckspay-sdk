@@ -1,5 +1,16 @@
 # @buckspay/example-passkey-hero
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [6c133be]
+  - @buckspay/core@0.2.4
+  - @buckspay/relayer@0.2.4
+  - @buckspay/signers@0.2.4
+  - @buckspay/accounts@0.2.4
+  - @buckspay/react@0.2.4
+
 ## 0.0.6
 
 ### Patch Changes

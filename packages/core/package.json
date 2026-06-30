@@ -1,6 +1,6 @@
 {
   "name": "@buckspay/core",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "type": "module",
   "license": "MIT",
   "description": "Framework-agnostic core of the Buckspay SDK: gas-abstraction engine, prepare/sign/send client, and the typed account/signer/relayer ports for gasless Stellar (Soroban) USDC payments.",
