@@ -76,8 +76,7 @@ export const onboardSubmitSchema = z.object({
   ok: z.boolean()
 });
 
-/** POST /stellar/contract/deploy response (plan 01): `{ ok?, address: C…, chain?, txHash?, ledger? }`. */
-/** POST /fee/quote response (README §4.1 FeeQuote). Amounts are unsigned stroop strings. */
+/** POST /fee/quote response — the FeeQuote shape. Amounts are unsigned stroop strings. */
 export const feeQuoteSchema = z.object({
   forwarder: z.string().regex(/^C[A-Z2-7]{55}$/, "forwarder must be a C address"),
   collector: z.string().regex(/^[GC][A-Z2-7]{55}$/, "collector must be a G or C address"),
@@ -110,6 +109,8 @@ export function mapFacilitatorError(status: number, body: FacilitatorErrorBody):
   const message = body.message ?? (code !== "" ? code : `facilitator returned HTTP ${String(status)}`);
 
   if (code === "auth_expired") return new BuckspayError("AUTH_EXPIRED", message);
+  if (code === "session_policy_violation") return new BuckspayError("SESSION_POLICY_VIOLATION", message);
+  if (code === "session_expired") return new BuckspayError("SESSION_EXPIRED", message);
   if (code === "simulation_failed") return new BuckspayError("SIMULATION_FAILED", message);
   if (code === "sponsor_not_configured" || code === "sponsor_unavailable") {
     return new BuckspayError("INSUFFICIENT_SPONSOR", message);

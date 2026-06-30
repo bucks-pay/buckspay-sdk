@@ -11,8 +11,12 @@ import type {
   SignedIntent
 } from "./types";
 
-export function createBuckspayClient(config: BuckspayConfig, sim?: AccountSimContext): BuckspayClient {
-  return new BuckspayClient(config, sim);
+export function createBuckspayClient(
+  config: BuckspayConfig,
+  sim?: AccountSimContext,
+  opts?: { now?: () => number }
+): BuckspayClient {
+  return new BuckspayClient(config, sim, opts);
 }
 
 function toBuckspayError(err: unknown): BuckspayError {

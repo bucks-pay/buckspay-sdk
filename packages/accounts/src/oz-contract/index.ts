@@ -14,7 +14,9 @@ import type {
   BuildBatchEntryInput,
   BuildEntryInput,
   BuckspaySigner,
-  EnsureReadyInput
+  EnsureReadyInput,
+  SessionInstallInput,
+  SessionRevokeInput
 } from "@buckspay/core";
 import { resolveContractAddress } from "./resolveAddress.js";
 import { ensureContractReady } from "./ensureReady.js";
@@ -24,6 +26,7 @@ import type { OzContractOptions } from "./resolveAddress.js";
 import { assertPinnedWasmHash, OZ_SMART_ACCOUNT_WASM_HASH } from "./wasm-pin.js";
 import { buildBatchTransferEntry } from "../batch/build-batch-transfer-entry.js";
 import { resolveMulticallContract } from "../batch/multicall-pin.js";
+import { buildSessionInstallEntry, buildSessionRevokeEntry } from "./session.js";
 
 export type { OzContractOptions } from "./resolveAddress.js";
 export { deriveContractAddress, contractSalt } from "./resolveAddress.js";
@@ -50,6 +53,8 @@ export function ozContractAccount(opts: OzContractOptions = {}): AccountAdapter 
       }
       return buildBatchTransferEntry(input, resolveMulticallContract(input.network, opts.multicallContract));
     },
-    assembleSignedEntry: (input: AssembleInput) => assembleContractEntry(input)
+    assembleSignedEntry: (input: AssembleInput) => assembleContractEntry(input),
+    buildSessionInstallEntry: (input: SessionInstallInput) => buildSessionInstallEntry(input),
+    buildSessionRevokeEntry: (input: SessionRevokeInput) => buildSessionRevokeEntry(input)
   };
 }

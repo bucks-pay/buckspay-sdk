@@ -9,7 +9,7 @@ describe("§4.3 relayer types", () => {
     expectTypeOf<AccountState["usdcBalance"]>().toEqualTypeOf<string | undefined>();
   });
 
-  it("RelayPayload matches facilitator stellarSorobanSchema fields (+ optional SP-2 fee fields)", () => {
+  it("RelayPayload matches facilitator stellarSorobanSchema fields (+ optional fee + session fields)", () => {
     expectTypeOf<RelayPayload>().toEqualTypeOf<{
       token: string;
       from: string;
@@ -19,6 +19,7 @@ describe("§4.3 relayer types", () => {
       nonce: string;
       signatureExpirationLedger: number;
       feeToken?: string;
+      sessionOp?: "install" | "revoke";
     }>();
   });
 

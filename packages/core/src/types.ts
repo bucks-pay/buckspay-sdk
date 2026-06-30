@@ -90,6 +90,21 @@ export interface AssembleInput {
   network: Network;
 }
 
+/** Input to build the unsigned session-install entry (contract account model). The session's
+ *  on-chain expiry is derived from `grant.expiresAt`. */
+export interface SessionInstallInput {
+  from: string; // the connected smart-account C-address (self-administers)
+  grant: SessionGrant;
+  nonce: bigint;
+}
+
+/** Input to build the unsigned session-revoke entry (contract account model). */
+export interface SessionRevokeInput {
+  from: string; // the connected smart-account C-address
+  sessionKey: string; // ed25519 G-address of the session signer to revoke
+  nonce: bigint;
+}
+
 export interface AccountAdapter {
   readonly model: AccountModel;
   resolveAddress(signer: BuckspaySigner): Promise<string>;
@@ -103,6 +118,12 @@ export interface AccountAdapter {
   buildUnsignedBatchEntry(input: BuildBatchEntryInput): xdr.SorobanAuthorizationEntry;
   /** returns the SIGNED auth entry as base64 XDR. */
   assembleSignedEntry(input: AssembleInput): Promise<string>;
+  /** Contract account model only: the UNSIGNED entry that installs a policy-scoped session signer
+   *  (the account self-administers, authorized by the root signer at assemble time). Classic adapters
+   *  omit it → the session flow refuses with INVALID_CONFIG. */
+  buildSessionInstallEntry?(input: SessionInstallInput): xdr.SorobanAuthorizationEntry;
+  /** Contract account model only: the UNSIGNED entry that revokes a session signer. */
+  buildSessionRevokeEntry?(input: SessionRevokeInput): xdr.SorobanAuthorizationEntry;
 }
 
 // ── §4.3 Relayer (mirrors facilitator endpoints 1:1) ───────────────────────
@@ -126,6 +147,9 @@ export interface RelayPayload {
   // gas mode "token" — signals the facilitator to validate a forward() invocation
   // (the authorizationEntryXdr above IS the forward() entry; there is no separate fee entry).
   feeToken?: string;
+  // Session install/revoke marker — the facilitator relays this as an ordinary contract call (no
+  // separate route). Absent for ordinary transfers.
+  sessionOp?: "install" | "revoke";
 }
 
 /** EXACT shape of facilitator /relay response (soroban). The relayer adapter maps
@@ -237,6 +261,12 @@ export interface BuckspayWallet {
   address: string;
   model: AccountModel;
   getState(): Promise<AccountState>;
+}
+
+/** Grant / revoke policy-scoped session keys on a contract account. */
+export interface SessionManager {
+  grantSession(grant: SessionGrant): Promise<{ session: Session; receipt: Receipt }>;
+  revokeSession(session: Session | string): Promise<Receipt>;
 }
 
 export interface BuckspayConfig {

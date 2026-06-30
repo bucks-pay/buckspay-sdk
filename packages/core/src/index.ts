@@ -49,11 +49,17 @@ export type { AccountSimContext } from "./client";
 export { createBuckspayClient, createBuckspayConfig } from "./config";
 export { batch, MAX_BATCH_CALLS } from "./batch";
 export type { BatchBuilder } from "./batch";
+export { sessionId, serializeSession, deserializeSession } from "./session";
+export { createSessionManager } from "./session-manager";
+export type { SessionManagerDeps } from "./session-manager";
 export type {
   AuthDetails,
   FeeQuote,
   Session,
   SessionGrant,
+  SessionInstallInput,
+  SessionManager,
   SessionPolicy,
+  SessionRevokeInput,
   SwapQuote
 } from "./types";

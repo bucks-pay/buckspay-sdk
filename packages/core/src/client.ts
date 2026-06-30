@@ -11,6 +11,7 @@ import { MAX_BATCH_CALLS } from "./batch";
 import { boundExpirationLedger } from "./expiration";
 import { resolveNetwork } from "./network-gate";
 import { BuckspayError } from "./errors";
+import { createSessionManager } from "./session-manager";
 import type {
   AccountState,
   BuckspayConfig,
@@ -19,6 +20,9 @@ import type {
   Network,
   PreparedIntent,
   Receipt,
+  Session,
+  SessionGrant,
+  SessionManager,
   SignedIntent
 } from "./types";
 
@@ -45,9 +49,11 @@ export class BuckspayClient {
   private readonly config: BuckspayConfig;
   private readonly engine: GasAbstractionEngine;
   private readonly sim: AccountSimContext | null;
+  private readonly now: () => number;
   private address: string | null = null;
+  private sessionMgr: SessionManager | null = null;
 
-  constructor(config: BuckspayConfig, sim?: AccountSimContext) {
+  constructor(config: BuckspayConfig, sim?: AccountSimContext, opts?: { now?: () => number }) {
     // Mainnet gate: pubnet is refused unless a deliberate opt-in is present, so a
     // default/forgotten config cannot move real funds. Two equivalent signals, ORed:
     //   - Node env `BUCKSPAY_ALLOW_MAINNET=1` (servers / CI), and
@@ -59,6 +65,7 @@ export class BuckspayClient {
     this.config = config;
     this.engine = new GasAbstractionEngine(config.gas);
     this.sim = sim ?? null;
+    this.now = opts?.now ?? (() => Date.now()); // single impure clock boundary; tests inject it
   }
 
   async connect(): Promise<BuckspayWallet> {
@@ -254,6 +261,39 @@ export class BuckspayClient {
     const intent = await this.prepare(calls);
     const signed = await this.sign(intent);
     return this.send(signed);
+  }
+
+  private sessionManager(): SessionManager {
+    if (!this.address) {
+      throw new BuckspayError("ACCOUNT_NOT_READY", "not connected; call connect() before sessions");
+    }
+    if (!this.sim) {
+      throw new BuckspayError("ACCOUNT_NOT_READY", "no simulation context wired (needed for the ledger clock)");
+    }
+    this.sessionMgr ??= createSessionManager({
+      account: this.config.account,
+      signer: this.config.signer,
+      relayer: this.config.relayer,
+      network: this.config.network,
+      sim: this.sim,
+      address: this.address,
+      now: this.now,
+      ...(this.sim.randomNonce ? { randomNonce: this.sim.randomNonce } : {})
+    });
+    return this.sessionMgr;
+  }
+
+  /** Grant a policy-scoped session key (contract account model only; throws INVALID_CONFIG on classic).
+   *  The root signer authorizes the install once; thereafter the session key transacts within its
+   *  on-chain policies (spend limit + allowlist) without per-action root prompts. */
+  async grantSession(grant: SessionGrant): Promise<{ session: Session; receipt: Receipt }> {
+    return this.sessionManager().grantSession(grant);
+  }
+
+  /** Revoke a granted session by its object or id (contract account model only). Takes effect
+   *  immediately on-chain — the session key no longer authorizes anything. */
+  async revokeSession(session: Session | string): Promise<Receipt> {
+    return this.sessionManager().revokeSession(session);
   }
 
   /** EIP-5792-style alias of pay(calls): submit an atomic, all-or-nothing batch. Enforces the

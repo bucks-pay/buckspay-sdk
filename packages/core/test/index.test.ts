@@ -24,10 +24,14 @@ describe("@buckspay/core public entry", () => {
         "createBuckspayClient",
         "createBuckspayConfig",
         "createRpcSimContext",
+        "createSessionManager",
         "createSorobanSimulator",
+        "deserializeSession",
         "getLatestLedger",
         "mainnetSimContext",
         "randomNonce",
+        "serializeSession",
+        "sessionId",
         "simulateRecording",
         "toStroops"
       ].sort()
