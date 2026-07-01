@@ -39,17 +39,15 @@ function routingToken(policies: SessionPolicy[], fallback: string): string {
 export function createSessionManager(deps: SessionManagerDeps): SessionManager {
   const registry = new Map<string, Session>();
 
-  function assertContract(): void {
-    if (
-      deps.account.model !== "contract" ||
-      !deps.account.buildSessionInstallEntry ||
-      !deps.account.buildSessionRevokeEntry
-    ) {
+  function requireSessionBuilders() {
+    const { buildSessionInstallEntry, buildSessionRevokeEntry } = deps.account;
+    if (deps.account.model !== "contract" || !buildSessionInstallEntry || !buildSessionRevokeEntry) {
       throw new BuckspayError(
         "INVALID_CONFIG",
         "sessions require the contract account model (the classic model has no policy signer)"
       );
     }
+    return { buildSessionInstallEntry, buildSessionRevokeEntry };
   }
 
   async function relaySigned(
@@ -90,7 +88,7 @@ export function createSessionManager(deps: SessionManagerDeps): SessionManager {
 
   return {
     async grantSession(grant: SessionGrant) {
-      assertContract();
+      const { buildSessionInstallEntry } = requireSessionBuilders();
       if (grant.policies.length === 0) {
         throw new BuckspayError(
           "INVALID_CONFIG",
@@ -101,7 +99,7 @@ export function createSessionManager(deps: SessionManagerDeps): SessionManager {
         throw new BuckspayError("SESSION_EXPIRED", "grant.expiresAt is in the past");
       }
       const nonce = (deps.randomNonce ?? defaultRandomNonce)();
-      const unsigned = deps.account.buildSessionInstallEntry!({ from: deps.address, grant, nonce });
+      const unsigned = buildSessionInstallEntry({ from: deps.address, grant, nonce });
       const receipt = await relaySigned(unsigned, "install", routingToken(grant.policies, deps.address), nonce);
       const session: Session = {
         id: sessionId({ account: deps.address, sessionKey: grant.sessionKey.publicKey, expiresAt: grant.expiresAt }),
@@ -115,7 +113,7 @@ export function createSessionManager(deps: SessionManagerDeps): SessionManager {
     },
 
     async revokeSession(session: Session | string) {
-      assertContract();
+      const { buildSessionRevokeEntry } = requireSessionBuilders();
       const resolved = typeof session === "string" ? registry.get(session) : session;
       if (!resolved) {
         throw new BuckspayError(
@@ -130,7 +128,7 @@ export function createSessionManager(deps: SessionManagerDeps): SessionManager {
         );
       }
       const nonce = (deps.randomNonce ?? defaultRandomNonce)();
-      const unsigned = deps.account.buildSessionRevokeEntry!({
+      const unsigned = buildSessionRevokeEntry({
         from: deps.address,
         sessionKey: resolved.sessionKey,
         nonce

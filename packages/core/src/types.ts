@@ -123,9 +123,9 @@ export interface AccountAdapter {
   /** Contract account model only: the UNSIGNED entry that installs a policy-scoped session signer
    *  (the account self-administers, authorized by the root signer at assemble time). Classic adapters
    *  omit it -> the session flow refuses with INVALID_CONFIG. */
-  buildSessionInstallEntry?(input: SessionInstallInput): xdr.SorobanAuthorizationEntry;
+  buildSessionInstallEntry?: (input: SessionInstallInput) => xdr.SorobanAuthorizationEntry;
   /** Contract account model only: the UNSIGNED entry that revokes a session signer. */
-  buildSessionRevokeEntry?(input: SessionRevokeInput): xdr.SorobanAuthorizationEntry;
+  buildSessionRevokeEntry?: (input: SessionRevokeInput) => xdr.SorobanAuthorizationEntry;
 }
 
 // ── §4.3 Relayer (mirrors facilitator endpoints 1:1) ───────────────────────

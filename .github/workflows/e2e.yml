@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 11.5.2
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
@@ -34,15 +34,25 @@ jobs:
           E2E_USDC_TESTNET_SAC: ${{ secrets.E2E_USDC_TESTNET_SAC }}
           E2E_SPONSOR_G: ${{ secrets.E2E_SPONSOR_G }}
 
+  # secrets are not allowed in a job-level `if`, so a tiny gate job reads it into an output.
+  secrets-gate:
+    runs-on: ubuntu-latest
+    outputs:
+      has_facilitator: ${{ steps.check.outputs.has_facilitator }}
+    steps:
+      - id: check
+        run: echo "has_facilitator=${{ secrets.FACILITATOR_API_KEY != '' }}" >> "$GITHUB_OUTPUT"
+
   web:
     runs-on: ubuntu-latest
-    # Only on the trusted runner where the facilitator secret exists; forks skip cleanly.
-    if: ${{ secrets.FACILITATOR_API_KEY != '' }}
+    needs: secrets-gate
+    # Only where the facilitator secret exists; forks and unconfigured repos skip cleanly.
+    if: needs.secrets-gate.outputs.has_facilitator == 'true'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 11.5.2
       - uses: actions/setup-node@v4
         with:
           node-version: 20
